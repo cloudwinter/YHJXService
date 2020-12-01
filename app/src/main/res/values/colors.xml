@@ -7,7 +7,7 @@
     <color name="white">#FFFFFF</color>
 
     <!-- 背景色 -->
-    <color name="bg_main">#EAEAEA</color>
+    <color name="bg_main">#ffffff</color>
     <!-- 按钮文字颜色 -->
     <color name="btn_text">#F75A2D</color>
     <!-- 黑色文字 -->
