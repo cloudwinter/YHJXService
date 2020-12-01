@@ -1,0 +1,43 @@
+package com.yhjx.networker.coverter;
+
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
+import com.yhjx.networker.retrofit.Converter;
+import com.yhjx.networker.retrofit.Retrofit;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+
+/**
+ * Created by xiayundong on 2019/5/21.
+ */
+
+public class SSCoverterfactory extends Converter.Factory {
+
+	private Gson gson;
+
+	public SSCoverterfactory() {
+		gson = new Gson();
+	}
+
+	public SSCoverterfactory(Gson gson) {
+		this.gson = gson;
+	}
+
+	@Override
+	public Converter<ResponseBody, ?> responseBodyConverter(Type type,
+			Annotation[] annotations, Retrofit retrofit) {
+		TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
+		return new SSResponseBodyCoverter<>(adapter);
+	}
+
+	@Override
+	public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+		TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
+		return new SSRequestBodyConverter<>(gson, adapter);
+	}
+}
