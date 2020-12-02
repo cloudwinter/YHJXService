@@ -54,6 +54,11 @@ public class ToastUtils {
         mToast.show();
     }
 
+
+    public static void showNotNetwork(Context context) {
+        showToast(context,"网络异常，请检查网络");
+    }
+
     /**
      * 取消
      */

@@ -6,9 +6,9 @@ package com.yhjx.networker.callback;
 
 public class BaseResult<T> {
 
-    public T resultData;
+    public T data;
 
-    public String resultCode;
+    public String code;
 
-    public String resultMsg;
+    public String msg;
 }

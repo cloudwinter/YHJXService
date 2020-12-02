@@ -14,6 +14,8 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.yhjx.yhservice.core.AppUncaughtExceptionHandler;
 import com.yhjx.yhservice.file.FileUtils;
 import com.yhjx.yhservice.util.LogUtils;
@@ -51,36 +53,18 @@ public class MyApplication extends Application {
     }
 
     @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        LogUtils.e("---", "[MyApplication] onLowMemory");
-    }
-
-    @Override
-    public void onTerminate() {
-        LogUtils.e("---", "[MyApplication] onTerminate");
-        super.onTerminate();
-    }
-
-    @Override
-    public void onTrimMemory(int level) {
-        LogUtils.e("---", "[MyApplication] onTrimMemory level:"+level);
-        super.onTrimMemory(level);
-    }
-
-    @Override
     public void onCreate() {
         LogUtils.e("---", "[MyApplication] onCreate");
         super.onCreate();
-
         instance = this;
+        RunningContext.init(this);
         AppUncaughtExceptionHandler.getInstance().init(this);
         initImageLoader();
         initFilePath();
         x.Ext.init(this);
 
         // 初始化Bugly
-//        initBugly();
+        initBugly();
 
         // 初始化LoggerView
         LoggerView.init(this);
@@ -190,27 +174,27 @@ public class MyApplication extends Application {
         objectInputStream.close();
         return SceneList;
     }
-//    private void initBugly() {
-//        /* Bugly SDK初始化
-//        * 参数1：上下文对象
-//        * 参数2：APPID，平台注册时得到,注意替换成你的appId
-//        * 参数3：是否开启调试模式，调试模式下会输出'CrashReport'tag的日志
-//        * 注意：如果您之前使用过Bugly SDK，请将以下这句注释掉。
-//        */
-//        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
-//        strategy.setAppVersion("1");
-//        strategy.setAppPackageName("com.sn.dianqi");
-//        strategy.setAppReportDelay(20000);                          //Bugly会在启动20s后联网同步数据
-//
-//        /*  第三个参数为SDK调试模式开关，调试模式的行为特性如下：
-//            输出详细的Bugly SDK的Log；
-//            每一条Crash都会被立即上报；
-//            自定义日志将会在Logcat中输出。
-//            建议在测试阶段建议设置成true，发布时设置为false。*/
-//
-//        CrashReport.initCrashReport(getApplicationContext(), "53df956f2f", true ,strategy);
-//
-//        Bugly.init(getApplicationContext(), "53df956f2f", false);
-//    }
+    private void initBugly() {
+        /* Bugly SDK初始化
+        * 参数1：上下文对象
+        * 参数2：APPID，平台注册时得到,注意替换成你的appId
+        * 参数3：是否开启调试模式，调试模式下会输出'CrashReport'tag的日志
+        * 注意：如果您之前使用过Bugly SDK，请将以下这句注释掉。
+        */
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
+        strategy.setAppVersion("1");
+        strategy.setAppPackageName("com.yhjx.yhservice");
+        strategy.setAppReportDelay(20000);                          //Bugly会在启动20s后联网同步数据
+
+        /*  第三个参数为SDK调试模式开关，调试模式的行为特性如下：
+            输出详细的Bugly SDK的Log；
+            每一条Crash都会被立即上报；
+            自定义日志将会在Logcat中输出。
+            建议在测试阶段建议设置成true，发布时设置为false。*/
+
+        CrashReport.initCrashReport(getApplicationContext(), "53df956f2f", true ,strategy);
+
+        Bugly.init(getApplicationContext(), "53df956f2f", false);
+    }
 
 }

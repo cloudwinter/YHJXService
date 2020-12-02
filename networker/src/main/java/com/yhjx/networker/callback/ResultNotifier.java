@@ -27,7 +27,7 @@ public interface ResultNotifier<T> {
 	 * @param errMsg
 	 *            本地错误描述
 	 */
-	void notifyFailure(int errCode, String errMsg);
+	void notifyFailure(String errCode, String errMsg);
 
 	/**
 	 * 结束

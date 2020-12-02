@@ -29,7 +29,7 @@ public class StorageUtils {
      * 获取登录信息
      * @return
      */
-    public LoginUserInfo getLoginInfo() {
+    public static LoginUserInfo getLoginInfo() {
         String val = PreferenceUtil.getString(KEY.LOGIN_USER_KEY, null);
         if (TextUtils.isEmpty(val)) {
             return null;

@@ -3,6 +3,7 @@ package com.yhjx.networker.callback;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 /**
  * Created by xiayundong on 2019/5/22.
@@ -10,7 +11,13 @@ import android.os.Message;
 
 public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> {
 
+	public static final String TAG = "ResultHandler";
+
     protected abstract void onSuccess(T date);
+
+	protected void onFailed(String errCode, String errMsg) {
+		Log.d(TAG,"ResultHandler.onFailed 返回结果：errCode = " + errCode + " | errMsg = " + errMsg);
+	}
 
 
 	private MainHandler handler;
@@ -29,8 +36,15 @@ public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> 
 		@Override
 		public void handleMessage(Message msg) {
             if (msg.what == 200) {
-                T data = (T) msg.obj;
-                onSuccess(data);
+				BaseResult<T> result = (BaseResult<T>) msg.obj;
+				if (result == null) {
+					onFailed("-8","返回结果异常");
+				}
+				if (result.code.equals("200")) {
+					onSuccess(result.data);
+				} else {
+					onFailed(result.code,result.msg);
+				}
             }
         }
 	}
@@ -45,15 +59,15 @@ public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> 
         if (data != null) {
             Message message = Message.obtain();
             message.what = 200;
-            message.obj = data.resultData;
+            message.obj = data;
             handler.sendMessage(message);
         }
     }
 
 
     @Override
-	public void notifyFailure(int errCode, String errMsg) {
-
+	public void notifyFailure(String errCode, String errMsg) {
+		onFailed(errCode, errMsg);
 	}
 
 	@Override
