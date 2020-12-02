@@ -38,7 +38,7 @@
         android:hint="请输入手机号"
         android:textColorHint="#9fa0a6"
         android:textSize="14dp"
-        android:inputType="number"
+        android:inputType="phone"
         android:layout_marginTop="7dp"
         android:paddingLeft="17dp"
         android:maxLength="11"/>
@@ -63,7 +63,7 @@
         android:layout_marginLeft="37dp"
         android:layout_marginRight="37dp"
         android:background="@drawable/edittext_background"
-        android:hint="请输入密码"
+        android:hint="密码"
         android:textColorHint="#9fa0a6"
         android:textSize="14dp"
         android:inputType="textPassword"
