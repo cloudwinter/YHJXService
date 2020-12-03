@@ -19,6 +19,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 import com.yhjx.yhservice.core.AppUncaughtExceptionHandler;
 import com.yhjx.yhservice.file.FileUtils;
 import com.yhjx.yhservice.util.LogUtils;
+import com.yhjx.yhservice.util.PreferenceUtil;
 import com.yhjx.yhservice.util.ScreenUtils;
 import com.yhjx.yhservice.view.LoggerView;
 
@@ -57,14 +58,15 @@ public class MyApplication extends Application {
         LogUtils.e("---", "[MyApplication] onCreate");
         super.onCreate();
         instance = this;
-        RunningContext.init(this);
+        //初始化PreferenceUtil
+        PreferenceUtil.init(this);
         AppUncaughtExceptionHandler.getInstance().init(this);
         initImageLoader();
         initFilePath();
         x.Ext.init(this);
-
         // 初始化Bugly
         initBugly();
+        RunningContext.init(this);
 
         // 初始化LoggerView
         LoggerView.init(this);

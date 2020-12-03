@@ -64,8 +64,4 @@ public class LoginUserInfo implements Serializable {
      */
     public String userFlag;
 
-    /**
-     * 审核人名称
-     */
-    public String auditorName;
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/text_station_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:textColor="#4B4F57"
+        android:text="南京市江宁服务站"
+        />
+
+    <TextView
+        android:id="@+id/text_station_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:textColor="#4B4F57"
+        android:text="地址：江苏省南京市雨花台区丰盛商汇"
+        android:layout_marginTop="8dp"
+        />
+
+</LinearLayout>

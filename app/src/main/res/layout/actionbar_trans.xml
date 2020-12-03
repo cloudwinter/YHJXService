@@ -37,7 +37,7 @@
 
             <TextView
                 android:id="@+id/tv_actionbar_left"
-                style="@style/text_white"
+                style="@style/text_title"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/iv_actionbar_left"
@@ -49,10 +49,10 @@
 
         <TextView
             android:id="@+id/tv_actionbar_title"
-            style="@style/text_white"
+            style="@style/text_title"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text=""
+            android:text="注册"
             android:textSize="18dp" />
 
         <RelativeLayout
@@ -72,7 +72,7 @@
 
             <TextView
                 android:id="@+id/tv_actionbar_right"
-                style="@style/text_white"
+                style="@style/text_title"
                 android:layout_centerInParent="true"
                 android:layout_marginRight="12dp"
                 android:gravity="center_vertical"

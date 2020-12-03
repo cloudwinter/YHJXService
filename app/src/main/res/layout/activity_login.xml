@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="账号"
         android:textColor="#ff242831"
-        android:textSize="14sp"
+        android:textSize="14dp"
         android:layout_marginTop="70dp"
         android:layout_marginLeft="45dp"
         />
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:text="请输入密码"
         android:textColor="#ff242831"
-        android:textSize="14sp"
+        android:textSize="14dp"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="45dp"
         android:inputType="number"
@@ -83,6 +83,17 @@
         android:layout_marginTop="35dp"/>
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="忘记密码请联系英虎后台人员重置密码"
+        android:textColor="#ff979da7"
+        android:textSize="12sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        />
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="30dp"
@@ -91,14 +102,6 @@
         android:layout_marginLeft="37dp"
         android:gravity="center_vertical">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="忘记密码请联系英虎后台人员重置密码"
-            android:textColor="#ff979da7"
-            android:textSize="12sp"
-            />
 
         <View
             android:layout_width="wrap_content"
@@ -112,7 +115,7 @@
             android:layout_height="match_parent"
             android:text="新用户注册"
             android:textColor="#E94558"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:paddingRight="37dp"
             android:gravity="center"
             />

@@ -6,6 +6,8 @@ import com.yhjx.networker.http.Body;
 import com.yhjx.networker.http.POST;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserRegisterReq;
+import com.yhjx.yhservice.api.domain.request.StationListReq;
+import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
 
@@ -19,5 +21,10 @@ public interface ApiService {
     // 登录接口
     @POST("/app/service/user/login")
     SSCall<BaseResult<ServiceUser>> login(@Body ServiceUserLoginReq req);
+
+    // 查询服务站列表
+    @POST("/app/service/common/stationList")
+    SSCall<BaseResult<ServiceStationListRes>> queryStationList(@Body StationListReq req);
+
 
 }

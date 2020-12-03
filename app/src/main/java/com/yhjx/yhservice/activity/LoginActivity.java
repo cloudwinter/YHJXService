@@ -1,9 +1,11 @@
 package com.yhjx.yhservice.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.base.BaseActivity;
+import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.PatternUtils;
 import com.yhjx.yhservice.util.ToastUtils;
@@ -32,13 +35,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public static final String TAG = "LoginActivity";
 
     @BindView(R.id.edit_tel)
-    private EditText editTextTel;
+    protected EditText editTextTel;
     @BindView(R.id.edit_password)
-    private EditText editTextPassword;
+    protected EditText editTextPassword;
     @BindView(R.id.btn_login)
-    private Button buttonLogin;
+    protected Button buttonLogin;
     @BindView(R.id.text_register)
-    private TextView textViewRegister;
+    protected TextView textViewRegister;
 
     private String useTel;
     private String userPassword;
@@ -48,6 +51,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        buttonLogin.setOnClickListener(this);
+        textViewRegister.setOnClickListener(this);
     }
 
     @Override
@@ -107,6 +112,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 } else {
                     if ("2".equals(user.userFlag)) {
                         ToastUtils.showToast(LoginActivity.this,"登录成功");
+                        // 保存用户信息
+                        LoginUserInfo loginUserInfo = copyByServiceUser(user);
+                        RunningContext.setLoginUserInfo(loginUserInfo);
+
                         // TODO 跳转到主页
 
                     } else if ("0".equals(user.userFlag)) {
@@ -124,6 +133,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ToastUtils.showToast(LoginActivity.this,"登录失败，请重试！");
             }
         });
+    }
 
+
+    private LoginUserInfo copyByServiceUser(ServiceUser user) {
+        if (user == null) {
+            return null;
+        }
+        LoginUserInfo loginUserInfo = new LoginUserInfo();
+        loginUserInfo.id = user.id;
+        loginUserInfo.userNo = user.userNo;
+        loginUserInfo.userName = user.userName;
+        loginUserInfo.userTel = user.userTel;
+        loginUserInfo.userPassword = user.userPassword;
+        loginUserInfo.stationId = user.stationId;
+        loginUserInfo.stagnationStationId = user.stagnationStationId;
+        loginUserInfo.stagnationStationId = user.stagnationStationId;
+        loginUserInfo.stagnationStationName = user.stagnationStationName;
+        loginUserInfo.stagnationStationAddress = user.stagnationStationAddress;
+        loginUserInfo.stagnationStationLongitude = user.stagnationStationLongitude;
+        loginUserInfo.stagnationStationLatitude = user.stagnationStationLatitude;
+        loginUserInfo.userFlag = user.userFlag;
+        loginUserInfo.userFlag = user.userFlag;
+        return loginUserInfo;
     }
 }

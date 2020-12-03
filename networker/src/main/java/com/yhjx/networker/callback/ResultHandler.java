@@ -13,7 +13,7 @@ public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> 
 
 	public static final String TAG = "ResultHandler";
 
-    protected abstract void onSuccess(T date);
+    protected abstract void onSuccess(T data);
 
 	protected void onFailed(String errCode, String errMsg) {
 		Log.d(TAG,"ResultHandler.onFailed 返回结果：errCode = " + errCode + " | errMsg = " + errMsg);
