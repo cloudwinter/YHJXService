@@ -14,16 +14,16 @@ import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
 public interface ApiService {
 
     // 注册接口
-    @POST("/app/service/user/register")
+    @POST("app/service/user/register")
     SSCall<BaseResult<ServiceUserRegisterRes>> register(@Body ServiceUserRegisterReq req);
 
 
     // 登录接口
-    @POST("/app/service/user/login")
+    @POST("app/service/user/login")
     SSCall<BaseResult<ServiceUser>> login(@Body ServiceUserLoginReq req);
 
     // 查询服务站列表
-    @POST("/app/service/common/stationList")
+    @POST("app/service/common/stationList")
     SSCall<BaseResult<ServiceStationListRes>> queryStationList(@Body StationListReq req);
 
 

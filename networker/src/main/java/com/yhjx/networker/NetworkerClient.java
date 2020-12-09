@@ -1,5 +1,7 @@
 package com.yhjx.networker;
 
+import android.util.Log;
+
 import com.yhjx.networker.calladater.SSCallAdapterFactory;
 import com.yhjx.networker.coverter.SSCoverterfactory;
 import com.yhjx.networker.http.Body;
@@ -7,6 +9,7 @@ import com.yhjx.networker.http.POST;
 import com.yhjx.networker.retrofit.Retrofit;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -14,6 +17,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Created by xiayundong on 2019/5/10.
@@ -148,6 +152,15 @@ public class NetworkerClient {
 		builder.addCallAdapterFactory(new SSCallAdapterFactory())
 				.addConverterFactory(new SSCoverterfactory())
 				.baseUrl(baseUrl);
+		OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+			@Override
+			public void log(String message) {
+				SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String sysTime = sf.format(System.currentTimeMillis());//系统当前时间
+				Log.e(System.currentTimeMillis()+"=====log======"+sysTime, message);
+			}
+		}).setLevel(HttpLoggingInterceptor.Level.BODY)).build();
+		builder.client(client);
 		return builder;
 	}
 
@@ -157,5 +170,6 @@ public class NetworkerClient {
 		}
 		return sBuilder.build().create(service);
 	}
+
 
 }

@@ -1,9 +1,12 @@
 package com.yhjx.yhservice;
 
+import android.Manifest;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.StorageUtils;
@@ -13,10 +16,17 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class RunningContext {
 
+    public static boolean mock = true;
+    public static boolean debug = false;
+
+
     /**
-     *
+     * FIXME 更新接口地址
      */
-    public static String BASEURL = "";
+    public static String BASEURL = "http://47.116.73.239:3000/mock/27/";
+
+
+    public static final int PERMISSION_REQUEST_CODE = 99;
 
     /**
      * 登录用户信息
@@ -114,6 +124,29 @@ public class RunningContext {
             }
         }
         return false;
+    }
+
+
+    /**
+     * 检查网络权限
+     * @return
+     */
+    public static boolean checkNetworkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return sAppContext.checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED;
+        }
+        return true;
+    }
+
+    /**
+     * 检查定位权限
+     * @return
+     */
+    public static boolean checkLocationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return sAppContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        }
+        return true;
     }
 
 }

@@ -5,6 +5,9 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by xiayundong on 2019/5/22.
  */
@@ -13,8 +16,15 @@ public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> 
 
 	public static final String TAG = "ResultHandler";
 
+	private static int MSG_WHAT_SUC = 200;
+	private static int MSG_WHAT_FAILED = 201;
+	private static String FAILED_ERROR_CODE_KEY = "errCode";
+	private static String FAILED_ERROR_MSG_KEY = "errMsg";
+
+	// 主线程回调
     protected abstract void onSuccess(T data);
 
+    // 主线程回调
 	protected void onFailed(String errCode, String errMsg) {
 		Log.d(TAG,"ResultHandler.onFailed 返回结果：errCode = " + errCode + " | errMsg = " + errMsg);
 	}
@@ -45,7 +55,14 @@ public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> 
 				} else {
 					onFailed(result.code,result.msg);
 				}
-            }
+            } else if (msg.what == 201){
+				Map<String, String> errorMap = (Map<String, String>) msg.obj;
+				if (errorMap == null) {
+					onFailed("-8","返回结果异常");
+				} else {
+					onFailed(errorMap.get(FAILED_ERROR_CODE_KEY),errorMap.get(FAILED_ERROR_MSG_KEY));
+				}
+			}
         }
 	}
 
@@ -67,7 +84,13 @@ public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> 
 
     @Override
 	public void notifyFailure(String errCode, String errMsg) {
-		onFailed(errCode, errMsg);
+		Map<String, String> errorMap = new HashMap<>();
+		errorMap.put(FAILED_ERROR_CODE_KEY, errCode);
+		errorMap.put(FAILED_ERROR_MSG_KEY, errMsg);
+		Message message = Message.obtain();
+		message.what = 201;
+		message.obj = errorMap;
+		handler.sendMessage(message);
 	}
 
 	@Override

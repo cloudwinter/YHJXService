@@ -103,7 +103,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         req.userTel = useTel;
         req.userPassword = userPassword;
         LogUtils.d(TAG, "login 请求 参数：" + new Gson().toJson(req));
-        new ApiModel().login(req, new ResultHandler<ServiceUser>() {
+        new ApiModel(this).login(req, new ResultHandler<ServiceUser>() {
             @Override
             protected void onSuccess(ServiceUser user) {
                 LogUtils.d(TAG, "login 返回成功：" + new Gson().toJson(user));

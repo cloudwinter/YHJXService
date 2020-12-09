@@ -2,6 +2,7 @@ package com.yhjx.yhservice.util;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -17,7 +18,7 @@ public class ToastUtils {
 
     private static Toast mToast;
 
-    private static Handler mhandler = new Handler();
+    private static Handler mhandler = new Handler(Looper.getMainLooper());
     private static Runnable r = new Runnable() {
         public void run() {
             mToast.cancel();

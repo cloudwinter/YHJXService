@@ -13,12 +13,17 @@ import android.widget.TextView;
 
 import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
+import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.adapter.StationListAdapter;
 import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.base.BaseActivity;
+import com.yhjx.yhservice.model.StationModel;
 import com.yhjx.yhservice.util.LogUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -64,11 +69,24 @@ public class StationSelectedActivity extends BaseActivity {
         if (TextUtils.isEmpty(searchVal)) {
             return;
         }
+        if (RunningContext.mock) {
+            List<StationModel> list = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                StationModel model = new StationModel();
+                model.stationName = "江宁服务站";
+                model.stationAddress = "江苏省南京市雨花区丰盛商汇5号楼501";
+                list.add(model);
+            }
+            mStationListAdapter.setData(list);
+            return;
+        }
+
+
         StationListReq req = new StationListReq();
         req.pageNo = 0;
         req.pageSize = 10;
         req.stationName = searchVal.trim();
-        new ApiModel().queryStationList(req, new ResultHandler<ServiceStationListRes>() {
+        new ApiModel(this).queryStationList(req, new ResultHandler<ServiceStationListRes>() {
             @Override
             protected void onSuccess(ServiceStationListRes data) {
                 LogUtils.d(TAG, "StationSelectedActivity.searchStation 返回结果：" + data);
@@ -105,7 +123,6 @@ public class StationSelectedActivity extends BaseActivity {
     private AdapterView.OnItemClickListener mOnItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // TODO
             finish();
         }
     };

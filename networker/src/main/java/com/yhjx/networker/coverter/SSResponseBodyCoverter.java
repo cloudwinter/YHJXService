@@ -1,6 +1,5 @@
 package com.yhjx.networker.coverter;
 
-import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.yhjx.networker.retrofit.Converter;
 

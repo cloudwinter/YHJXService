@@ -60,6 +60,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
         actionBar.setData("注册", R.mipmap.ic_back, null, 0, null, this);
@@ -78,9 +81,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 // 选择服务站
                 intent.setClass(RegisterActivity.this, StationSelectedActivity.class);
                 startActivityForResult(intent,STATION_REQUEST_CODE);
-                break;
             case R.id.edit_stagnation_service_station:
                 // 选择归属服务站
+                intent.setClass(RegisterActivity.this, StationSelectedActivity.class);
+                startActivityForResult(intent,STATION_REQUEST_CODE);
                 break;
             case R.id.btn_register:
                 register();

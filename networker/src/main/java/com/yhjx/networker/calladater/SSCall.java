@@ -33,11 +33,6 @@ public class SSCall<T> {
         delegate.enqueue(new Callback<T>() {
             @Override
             public void onResponse(Call<T> call, Response<T> response) {
-				try {
-					Log.i(TAG, "onResponse: " + new Gson().toJson(response));
-				} catch (Exception e) {
-					Log.e(TAG, "onResponse: 结果解析异常：" + e.getMessage());
-				}
                 callbackResult(notifier, response);
             }
 
