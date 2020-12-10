@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/item_task_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_task_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="任务订单号：YH20200801001"
+            android:textColor="#ff4b4f57"
+            android:textSize="14sp"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            />
+
+
+        <TextView
+            android:id="@+id/text_task_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="待接单"
+            android:textColor="#ffe94558"
+            android:textSize="14sp"
+            android:layout_marginRight="15dp"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F2F3F7"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_vin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="车架号：YH20200801001"
+            android:textColor="#ff4b4f57"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/text_customer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客户：张希新"
+            android:textColor="#ff4b4f57"
+            android:textSize="14sp"
+            android:layout_marginTop="12dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/lv_customer_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="12dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="5dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/text_customer_tel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电话：18809098787"
+                android:textColor="#ff4b4f57"
+                android:textSize="14sp"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:background="@mipmap/ic_telphone"
+                android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/lv_customer_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="12dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="2dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/text_customer_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="地址：江苏省南京市雨花区软件大道丰盛商汇5号楼501"
+                android:lineSpacingExtra="4dp"
+                android:textColor="#ff4b4f57"
+                android:textSize="14sp"
+                android:layout_weight="1"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:background="@mipmap/ic_map"
+                android:layout_marginLeft="5dp"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/text_fault_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="故障描述：发动机不工作发动机不工作发动机不工作发动机不工作发动机不工作发动机不工作发动机不工作"
+            android:textColor="#ff4b4f57"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginRight="12dp"
+            />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F2F3F7"/>
+
+
+    <!-- 按钮 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+
+        <Button
+            android:id="@+id/but_task_receive"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:text="接单"
+            android:textSize="14dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/item_task_button_text_selector"
+            android:background="@drawable/item_task_button_bg_selector"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+        <Button
+            android:id="@+id/but_task_start"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:text="开工"
+            android:textSize="14dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/item_task_button_text_selector"
+            android:background="@drawable/item_task_button_bg_selector"
+            style="?android:attr/borderlessButtonStyle"
+            android:enabled="false"
+            />
+
+        <Button
+            android:id="@+id/but_task_end"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:text="完工"
+            android:textSize="14dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/item_task_button_text_selector"
+            android:background="@drawable/item_task_button_bg_selector"
+            style="?android:attr/borderlessButtonStyle"
+            android:enabled="false"
+            />
+
+        <Button
+            android:id="@+id/but_task_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:text="取消"
+            android:textSize="14dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/item_task_button_text_selector"
+            android:background="@drawable/item_task_button_bg_selector"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_common">
+
+    <com.yhjx.yhservice.view.TranslucentActionBar
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.yhjx.yhservice.view.NoScrollViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+
+        <LinearLayout
+            android:id="@+id/bottom_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:layout_marginTop="1dp">
+
+            <LinearLayout
+                android:id="@+id/tab_task"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/tab_task_img"
+                    android:layout_width="20dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="9dp"
+                    android:src="@drawable/tab_renwu" />
+
+                <TextView
+                    android:id="@+id/tab_task_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="任务单"
+                    android:textColor="@color/tab_color_selector"
+                    android:layout_marginTop="3dp"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tab_record"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/tab_record_img"
+                    android:layout_width="20dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="9dp"
+                    android:src="@drawable/tab_record" />
+
+                <TextView
+                    android:id="@+id/tab_record_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="维修记录"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/tab_color_selector"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/tab_user"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/tab_user_img"
+                    android:layout_width="20dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="9dp"
+                    android:src="@drawable/tab_user" />
+
+                <TextView
+                    android:id="@+id/tab_user_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="个人信息"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/tab_color_selector"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -31,6 +31,7 @@
         <activity android:name=".activity.LoginActivity" android:launchMode="singleTop"></activity>
         <activity android:name=".activity.RegisterActivity" ></activity>
         <activity android:name=".activity.StationSelectedActivity"></activity>
+        <activity android:name=".activity.HomeActivity" android:launchMode="singleInstance"></activity>
     </application>
 
 </manifest>

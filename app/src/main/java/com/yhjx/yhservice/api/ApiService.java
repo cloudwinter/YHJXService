@@ -7,9 +7,13 @@ import com.yhjx.networker.http.POST;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserRegisterReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
+import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
+import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
+import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
+import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 
 public interface ApiService {
 
@@ -26,5 +30,13 @@ public interface ApiService {
     @POST("app/service/common/stationList")
     SSCall<BaseResult<ServiceStationListRes>> queryStationList(@Body StationListReq req);
 
+
+    // 查询任务单
+    @POST("app/service/task/getPendingTaskList")
+    SSCall<BaseResult<TaskOrderRes>> queryTaskList(@Body TaskOrderReq req);
+
+    // 查询维修单
+    @POST("app/service/task/getHandlerTaskList")
+    SSCall<BaseResult<TaskRecordRes>> queryRecordList(@Body TaskRecordReq req);
 
 }

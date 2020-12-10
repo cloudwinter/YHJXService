@@ -2,11 +2,12 @@ package com.yhjx.yhservice.api.domain.request;
 
 import java.io.Serializable;
 
-public class StationListReq implements Serializable {
+public class TaskRecordReq implements Serializable {
+
     /**
-     * 根据名称模糊查询
+     * 维修人员用户编号
      */
-    public String stationName;
+    public String userNo;
     public int pageSize;
     public int pageNo;
 }

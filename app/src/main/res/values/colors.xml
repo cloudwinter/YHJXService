@@ -8,6 +8,7 @@
     <color name="color_title">#242831</color>
     <!-- 背景色 -->
     <color name="bg_main">#ffffff</color>
+    <color name="bg_common">#f2f3f7</color>
     <!-- 按钮文字颜色 -->
     <color name="btn_text">#F75A2D</color>
     <!-- 黑色文字 -->

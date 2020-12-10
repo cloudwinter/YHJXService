@@ -18,6 +18,7 @@ public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> 
 
 	private static int MSG_WHAT_SUC = 200;
 	private static int MSG_WHAT_FAILED = 201;
+	private static int MSG_WHAT_FINISH = 202;
 	private static String FAILED_ERROR_CODE_KEY = "errCode";
 	private static String FAILED_ERROR_MSG_KEY = "errMsg";
 
@@ -45,7 +46,7 @@ public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> 
 
 		@Override
 		public void handleMessage(Message msg) {
-            if (msg.what == 200) {
+            if (msg.what == MSG_WHAT_SUC) {
 				BaseResult<T> result = (BaseResult<T>) msg.obj;
 				if (result == null) {
 					onFailed("-8","返回结果异常");
@@ -55,27 +56,29 @@ public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> 
 				} else {
 					onFailed(result.code,result.msg);
 				}
-            } else if (msg.what == 201){
+            } else if (msg.what == MSG_WHAT_FAILED){
 				Map<String, String> errorMap = (Map<String, String>) msg.obj;
 				if (errorMap == null) {
 					onFailed("-8","返回结果异常");
 				} else {
 					onFailed(errorMap.get(FAILED_ERROR_CODE_KEY),errorMap.get(FAILED_ERROR_MSG_KEY));
 				}
+			} else if (msg.what == MSG_WHAT_FINISH) {
+            	onFinish();
 			}
         }
 	}
 
 	@Override
 	public void notifyStart() {
-
+		onStart();
 	}
 
     @Override
     public void notifySuccess(BaseResult<T> data) {
         if (data != null) {
             Message message = Message.obtain();
-            message.what = 200;
+            message.what = MSG_WHAT_SUC;
             message.obj = data;
             handler.sendMessage(message);
         }
@@ -88,19 +91,21 @@ public abstract class ResultHandler<T> implements ResultNotifier<BaseResult<T>> 
 		errorMap.put(FAILED_ERROR_CODE_KEY, errCode);
 		errorMap.put(FAILED_ERROR_MSG_KEY, errMsg);
 		Message message = Message.obtain();
-		message.what = 201;
+		message.what = MSG_WHAT_FAILED;
 		message.obj = errorMap;
 		handler.sendMessage(message);
 	}
 
 	@Override
 	public void notifyFinish() {
-
+		Message message = Message.obtain();
+		message.what = MSG_WHAT_FINISH;
+		handler.sendMessage(message);
 	}
 
 	@Override
 	public void notifyCancel() {
-
+		onCancel();
 	}
 
 	@Override

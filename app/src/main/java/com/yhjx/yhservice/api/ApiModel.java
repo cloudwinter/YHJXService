@@ -13,9 +13,13 @@ import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserRegisterReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
+import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
+import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
+import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
+import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 import com.yhjx.yhservice.util.ToastUtils;
 
 import static com.yhjx.yhservice.RunningContext.PERMISSION_REQUEST_CODE;
@@ -59,7 +63,7 @@ public class ApiModel {
 
 
     /**
-     * 注册接口
+     * 查询服务站接口
      * @param req
      * @param handler
      */
@@ -71,6 +75,40 @@ public class ApiModel {
         SSCall<BaseResult<ServiceStationListRes>> call = apiService.queryStationList(req);
         call.enqueue(handler);
     }
+
+
+
+    /**
+     * 查询任务单接口
+     * @param req
+     * @param handler
+     */
+    public void queryTaskOrder(TaskOrderReq req, ResultHandler<TaskOrderRes> handler) {
+        if (!preCheck()) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<TaskOrderRes>> call = apiService.queryTaskList(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 查询维修记录接口
+     * @param req
+     * @param handler
+     */
+    public void queryRecordOrder(TaskRecordReq req, ResultHandler<TaskRecordRes> handler) {
+        if (!preCheck()) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<TaskRecordRes>> call = apiService.queryRecordList(req);
+        call.enqueue(handler);
+    }
+
+
+
 
 
 
