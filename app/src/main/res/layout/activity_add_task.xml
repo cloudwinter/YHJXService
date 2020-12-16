@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.yhjx.yhservice.view.TranslucentActionBar
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#fff2f3f7"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 车架号 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="车架号"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_vin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入车架号"
+                    android:textColorHint="#9fa0a6"
+                    android:textSize="14dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <!-- 客户 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="客户"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_customer_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入客户名称"
+                    android:textColorHint="#9fa0a6"
+                    android:textSize="14dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <!-- 电话 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="电话"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_customer_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入客户联系电话"
+                    android:textColorHint="#9fa0a6"
+                    android:textSize="14dp"
+                    android:inputType="phone"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <!-- 故障描述 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="故障描述"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+            </LinearLayout>
+
+
+            <!-- 故障描述Edit -->
+            <EditText
+                android:id="@+id/edit_fault_desc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_textarea_bg"
+                android:hint="请输入故障描述"
+                android:textColorHint="#9fa0a6"
+                android:textSize="14dp"
+                android:textColor="@color/black"
+                android:gravity="top"
+                android:minLines="4"
+                android:maxLines="10"
+                />
+
+
+            <!-- 车型 输入车架号后自动带入 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="车型"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_vehicle_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入车架号自动带入车型"
+                    android:textColorHint="#9fa0a6"
+                    android:textSize="14dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:enabled="false"/>
+            </LinearLayout>
+
+
+
+            <!-- 车型 输入车架号后自动带入 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="地点"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_vehicle_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入车架号自动带入地点"
+                    android:textColorHint="#9fa0a6"
+                    android:textSize="14dp"
+                    android:inputType="phone"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:enabled="false"/>
+
+
+                <ImageView
+                    android:id="@+id/img_vehicle_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_map"
+                    android:layout_marginLeft="5dp"
+                    android:paddingRight="12dp"
+                    android:paddingLeft="12dp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingBottom="0dp"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_background"
+            android:textSize="16dp"
+            android:textColor="#ffffff"
+            android:text="提交"
+            android:layout_gravity="center_horizontal"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

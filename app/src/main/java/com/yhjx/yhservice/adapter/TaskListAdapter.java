@@ -23,6 +23,7 @@ import com.yhjx.yhservice.util.ToastUtils;
  */
 public class TaskListAdapter extends BaseListAdapter<TaskOrder> {
 
+
     public ButtonClickListener mButtonClickListener;
 
     public TaskListAdapter(Context context,ButtonClickListener buttonClickListener) {
@@ -37,7 +38,7 @@ public class TaskListAdapter extends BaseListAdapter<TaskOrder> {
         }
 
         final TaskOrder order = getItem(position);
-        if (order != null) {
+        if (order == null) {
             return convertView;
         }
         // 任务单号
@@ -47,6 +48,10 @@ public class TaskListAdapter extends BaseListAdapter<TaskOrder> {
         // 车架号
         TextView vin = getChildView(convertView,R.id.text_vin);
         vin.setText(getFormatValue(R.string.task_item_vin,order.vehicleVin));
+
+        // 车型
+        TextView vehicleName = getChildView(convertView,R.id.text_vehicle_name);
+        vehicleName.setText(getFormatValue(R.string.task_item_vehicle_name,order.vehicleName));
 
         // 客户姓名
         TextView customerName = getChildView(convertView,R.id.text_customer_name);
@@ -63,6 +68,7 @@ public class TaskListAdapter extends BaseListAdapter<TaskOrder> {
         // 故障描述
         TextView faultDesc = getChildView(convertView,R.id.text_fault_desc);
         faultDesc.setText(getFormatValue(R.string.task_item_fault_desc,order.faultDesc));
+
 
         // 拨打电话
         LinearLayout llCustomerTel = getChildView(convertView,R.id.lv_customer_tel);
@@ -124,27 +130,33 @@ public class TaskListAdapter extends BaseListAdapter<TaskOrder> {
         });
 
         // 订单状态
+        TextView textOrderStatus = getChildView(convertView,R.id.text_task_status);
         String orderStatus = order.taskStatus;
         // 设置订单状态
         if (orderStatus.equals("1")) {
             // 已指派，待接单
+            textOrderStatus.setText("待接单");
             receiveBtn.setEnabled(true);
             startBtn.setEnabled(false);
             endBtn.setEnabled(false);
             cancelBtn.setEnabled(true);
         } else if (orderStatus.equals("2")) {
             // 已接单，待开工
+            textOrderStatus.setText("待开工");
             receiveBtn.setEnabled(false);
             startBtn.setEnabled(true);
             endBtn.setEnabled(false);
             cancelBtn.setEnabled(false);
         } else if (orderStatus.equals("3") || orderStatus.equals("4")) {
             // 已开工（正常开工或者异常开工）,待完工
+            textOrderStatus.setText("待完工");
             receiveBtn.setEnabled(false);
             startBtn.setEnabled(false);
             endBtn.setEnabled(true);
             cancelBtn.setEnabled(false);
         } else {
+            // 非操作状态
+            textOrderStatus.setText("");
             // 其他状态都不可以操作
             receiveBtn.setEnabled(false);
             startBtn.setEnabled(false);

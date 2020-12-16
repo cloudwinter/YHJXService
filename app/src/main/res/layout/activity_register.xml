@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/white">
 
     <com.yhjx.yhservice.view.TranslucentActionBar
         android:id="@+id/action_bar"
@@ -23,184 +18,196 @@
         android:layout_height="1dp"
         android:background="#fff2f3f7"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="姓名"
-        android:textColor="#ff242831"
-        android:textSize="14sp"
-        android:layout_marginTop="22dp"
-        android:layout_marginLeft="45dp"
-        />
-
-    <EditText
-        android:id="@+id/edit_name"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginRight="37dp"
-        android:background="@drawable/edittext_background"
-        android:hint="请输入姓名"
-        android:textColorHint="#9fa0a6"
-        android:textSize="14dp"
-        android:layout_marginTop="7dp"
-        android:paddingLeft="17dp"
-        android:maxLength="20"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="手机号"
-        android:textColor="#ff242831"
-        android:textSize="14sp"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="45dp"
-        />
-
-    <EditText
-        android:id="@+id/edit_tel"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginRight="37dp"
-        android:background="@drawable/edittext_background"
-        android:hint="请输入手机号"
-        android:textColorHint="#9fa0a6"
-        android:textSize="14dp"
-        android:layout_marginTop="7dp"
-        android:paddingLeft="17dp"
-        android:inputType="phone"
-        android:maxLength="11"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="密码"
-        android:textColor="#ff242831"
-        android:textSize="14sp"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="45dp"
-        android:inputType="number"
-        android:maxLength="32"
-        />
-
-    <EditText
-        android:id="@+id/edit_password"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginRight="37dp"
-        android:background="@drawable/edittext_background"
-        android:hint="请输入密码"
-        android:textColorHint="#9fa0a6"
-        android:textSize="14dp"
-        android:inputType="textPassword"
-        android:layout_marginTop="7dp"
-        android:paddingLeft="17dp"/>
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="服务站"
-        android:textColor="#ff242831"
-        android:textSize="14sp"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="45dp"
-        android:inputType="number"
-        android:maxLength="32"
-        />
-
-    <EditText
-        android:id="@+id/edit_service_station"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginRight="37dp"
-        android:background="@drawable/edittext_background"
-        android:hint="请选择服务站"
-        android:textColorHint="#9fa0a6"
-        android:textSize="14dp"
-        android:layout_marginTop="7dp"
-        android:paddingLeft="17dp"
-        android:editable="false"/>
-
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="驻点服务站"
-        android:textColor="#ff242831"
-        android:textSize="14sp"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="45dp"
-        android:inputType="number"
-        android:maxLength="32"
-        />
-
-    <EditText
-        android:id="@+id/edit_stagnation_service_station"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginRight="37dp"
-        android:background="@drawable/edittext_background"
-        android:hint="请选择驻点服务站"
-        android:textColorHint="#9fa0a6"
-        android:textSize="14dp"
-        android:layout_marginTop="7dp"
-        android:paddingLeft="17dp"
-        android:editable="false"/>
-
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="244dp"
-        android:layout_height="34dp"
-        android:background="@drawable/btn_background"
-        android:textSize="16dp"
-        android:textColor="#ffffff"
-        android:text="完成注册"
-        android:layout_gravity="center_horizontal"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_marginTop="35dp"/>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="11dp"
-        android:layout_marginLeft="37dp"
-        android:layout_gravity="end">
-
-
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="已有账号？马上"
-            android:textColor="#979DA7"
-            android:textSize="12sp"
-            android:gravity="center"
-            />
-
-        <TextView
-            android:id="@+id/text_login"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="登录"
-            android:textColor="#E94558"
-            android:textSize="12sp"
-            android:paddingRight="37dp"
-            android:gravity="center"
-            />
+            android:orientation="vertical"
+            android:background="@color/white">
 
 
-    </LinearLayout>
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓名"
+                android:textColor="#ff242831"
+                android:textSize="14sp"
+                android:layout_marginTop="22dp"
+                android:layout_marginLeft="45dp"
+                />
 
-</ScrollView>
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:background="@drawable/edittext_background"
+                android:hint="请输入姓名"
+                android:textColorHint="#9fa0a6"
+                android:textSize="14dp"
+                android:layout_marginTop="7dp"
+                android:paddingLeft="17dp"
+                android:maxLength="20"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号"
+                android:textColor="#ff242831"
+                android:textSize="14sp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="45dp"
+                />
+
+            <EditText
+                android:id="@+id/edit_tel"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:background="@drawable/edittext_background"
+                android:hint="请输入手机号"
+                android:textColorHint="#9fa0a6"
+                android:textSize="14dp"
+                android:layout_marginTop="7dp"
+                android:paddingLeft="17dp"
+                android:inputType="phone"
+                android:maxLength="11"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码"
+                android:textColor="#ff242831"
+                android:textSize="14sp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="45dp"
+                android:inputType="number"
+                android:maxLength="32"
+                />
+
+            <EditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:background="@drawable/edittext_background"
+                android:hint="请输入密码"
+                android:textColorHint="#9fa0a6"
+                android:textSize="14dp"
+                android:inputType="textPassword"
+                android:layout_marginTop="7dp"
+                android:paddingLeft="17dp"/>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="服务站"
+                android:textColor="#ff242831"
+                android:textSize="14sp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="45dp"
+                android:inputType="number"
+                android:maxLength="32"
+                />
+
+            <EditText
+                android:id="@+id/edit_service_station"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:background="@drawable/edittext_background"
+                android:hint="请选择服务站"
+                android:textColorHint="#9fa0a6"
+                android:textSize="14dp"
+                android:layout_marginTop="7dp"
+                android:paddingLeft="17dp"
+                android:editable="false"/>
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="驻点服务站"
+                android:textColor="#ff242831"
+                android:textSize="14sp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="45dp"
+                android:inputType="number"
+                android:maxLength="32"
+                />
+
+            <EditText
+                android:id="@+id/edit_stagnation_service_station"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:background="@drawable/edittext_background"
+                android:hint="请选择驻点服务站"
+                android:textColorHint="#9fa0a6"
+                android:textSize="14dp"
+                android:layout_marginTop="7dp"
+                android:paddingLeft="17dp"
+                android:editable="false"/>
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="244dp"
+                android:layout_height="34dp"
+                android:background="@drawable/btn_background"
+                android:textSize="16dp"
+                android:textColor="#ffffff"
+                android:text="完成注册"
+                android:layout_gravity="center_horizontal"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_marginTop="35dp"/>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="11dp"
+                android:layout_marginLeft="37dp"
+                android:layout_gravity="end">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="已有账号？马上"
+                    android:textColor="#979DA7"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/text_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="登录"
+                    android:textColor="#E94558"
+                    android:textSize="12sp"
+                    android:paddingRight="37dp"
+                    android:gravity="center"
+                    />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

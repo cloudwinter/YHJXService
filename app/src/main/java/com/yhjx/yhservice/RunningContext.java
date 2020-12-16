@@ -3,6 +3,7 @@ package com.yhjx.yhservice;
 import android.Manifest;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -107,6 +108,11 @@ public class RunningContext {
     }
 
 
+    /**
+     * 检查网络权限
+     * @param context
+     * @return
+     */
     private static boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -149,4 +155,34 @@ public class RunningContext {
         return true;
     }
 
+
+    /**
+     * 获取版本号Name
+     */
+    public static String getVersionName() {
+        try {
+            PackageManager manager = sAppContext.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(sAppContext.getPackageName(), 0);
+            String version = info.versionName;
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "1.0.0";
+        }
+    }
+
+    /**
+     * 获取版本号Code
+     */
+    public static long getVersionCode() {
+        try {
+            PackageManager manager = sAppContext.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(sAppContext.getPackageName(), 0);
+            long version = info.getLongVersionCode();
+            return version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 1;
+        }
+    }
 }

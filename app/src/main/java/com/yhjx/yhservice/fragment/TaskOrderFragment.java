@@ -1,5 +1,6 @@
 package com.yhjx.yhservice.fragment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,9 @@ import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.adapter.TaskListAdapter;
 import com.yhjx.yhservice.api.ApiModel;
+import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
+import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
 import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.dialog.WaitDialog;
@@ -106,12 +109,13 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            TaskRecordRes data = new TaskRecordRes();
+            final TaskOrderRes data = new TaskOrderRes();
             data.count = 2;
             List<TaskOrder> list = new ArrayList<>();
             data.list = list;
             for (int i = 0; i < 2; i++) {
                 TaskOrder order = new TaskOrder();
+                order.taskNo = "T20201201";
                 order.customerTel = "15261815429";
                 order.customerName = "张三";
                 order.taskStatus = "1";
@@ -122,16 +126,21 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
                 order.faultDesc = "发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障";
                 list.add(order);
             }
-            mWaitDialog.dismiss();
-            swipeRefreshLayout.setRefreshing(false);
-            setData(data);
+            mTaskLV.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mWaitDialog.dismiss();
+                    swipeRefreshLayout.setRefreshing(false);
+                    setData(data);
+                }
+            },1000);
             return;
         }
-        TaskRecordReq req = new TaskRecordReq();
+        TaskOrderReq req = new TaskOrderReq();
         req.userNo = mLoginUserInfo.userNo;
         req.pageNo = 1;
         req.pageSize = 20;
-        new ApiModel(mContext).queryRecordOrder(req, new ResultHandler<TaskRecordRes>() {
+        new ApiModel(mContext).queryTaskOrder(req, new ResultHandler<TaskOrderRes>() {
 
             @Override
             public void onStart() {
@@ -139,19 +148,20 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
             }
 
             @Override
-            protected void onSuccess(TaskRecordRes data) {
+            protected void onSuccess(TaskOrderRes data) {
                 setData(data);
             }
 
             @Override
             public void onFinish() {
                 mWaitDialog.dismiss();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 
 
-    private void setData(TaskRecordRes data) {
+    private void setData(TaskOrderRes data) {
         if (data == null || data.count == 0) {
             mTvTaskNumTV.setText(data.count + "个");
             return;
@@ -169,21 +179,21 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     public void receiveClick(TaskOrder order) {
-        // TODO
+        // TODO 接单
     }
 
     @Override
     public void startClick(TaskOrder order) {
-        // TODO
+        // TODO 开工
     }
 
     @Override
     public void endClick(TaskOrder order) {
-        // TODO
+        // TODO 完工
     }
 
     @Override
     public void cancelClick(TaskOrder order) {
-        // TODO
+        // TODO 取消
     }
 }

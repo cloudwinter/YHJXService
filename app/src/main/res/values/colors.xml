@@ -5,6 +5,7 @@
     <color name="colorAccent">#03DAC5</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="color_title">#242831</color>
     <!-- 背景色 -->
     <color name="bg_main">#ffffff</color>

@@ -28,7 +28,7 @@
             android:id="@+id/text_task_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="待接单"
+            android:text="已完工"
             android:textColor="#ffe94558"
             android:textSize="14sp"
             android:layout_marginRight="15dp"
@@ -66,18 +66,8 @@
             android:layout_marginTop="12dp"
             />
 
-        <TextView
-            android:id="@+id/text_customer_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="客户：张希新"
-            android:textColor="#ff4b4f57"
-            android:textSize="14sp"
-            android:layout_marginTop="12dp"
-            />
 
         <LinearLayout
-            android:id="@+id/lv_customer_tel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -88,6 +78,20 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/text_customer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客户：张希新"
+                android:textColor="#ff4b4f57"
+                android:textSize="14sp"
+                />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <TextView
                 android:id="@+id/text_customer_tel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,12 +99,6 @@
                 android:textColor="#ff4b4f57"
                 android:textSize="14sp"
                 />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:background="@mipmap/ic_telphone"
-                android:layout_marginLeft="5dp"/>
 
         </LinearLayout>
 
@@ -127,11 +125,6 @@
                 android:layout_weight="1"
                 />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:background="@mipmap/ic_map"
-                android:layout_marginLeft="5dp"/>
 
         </LinearLayout>
 
@@ -148,80 +141,27 @@
             android:layout_marginRight="12dp"
             />
 
+        <TextView
+            android:id="@+id/text_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开工时间：2020-12-14 14:00:00"
+            android:textColor="#ff4b4f57"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"
+            />
+
+
+        <TextView
+            android:id="@+id/text_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="完工时间：2020-12-14 16:00:00"
+            android:textColor="#ff4b4f57"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"
+            />
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#F2F3F7"/>
-
-
-    <!-- 按钮 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        >
-
-        <Button
-            android:id="@+id/but_task_receive"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:text="接单"
-            android:textSize="14dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="16dp"
-            android:textColor="@color/item_task_button_text_selector"
-            android:background="@drawable/item_task_button_bg_selector"
-            style="?android:attr/borderlessButtonStyle"
-            />
-
-        <Button
-            android:id="@+id/but_task_start"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:text="开工"
-            android:textSize="14dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="16dp"
-            android:textColor="@color/item_task_button_text_selector"
-            android:background="@drawable/item_task_button_bg_selector"
-            style="?android:attr/borderlessButtonStyle"
-            android:enabled="false"
-            />
-
-        <Button
-            android:id="@+id/but_task_end"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:text="完工"
-            android:textSize="14dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="16dp"
-            android:textColor="@color/item_task_button_text_selector"
-            android:background="@drawable/item_task_button_bg_selector"
-            style="?android:attr/borderlessButtonStyle"
-            android:enabled="false"
-            />
-
-        <Button
-            android:id="@+id/but_task_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:text="取消"
-            android:textSize="14dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textColor="@color/item_task_button_text_selector"
-            android:background="@drawable/item_task_button_bg_selector"
-            style="?android:attr/borderlessButtonStyle"
-            />
-
-
-
-    </LinearLayout>
-
 </LinearLayout>

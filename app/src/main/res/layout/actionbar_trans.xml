@@ -52,7 +52,7 @@
             style="@style/text_title"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="注册"
+            android:text=""
             android:textSize="18dp" />
 
         <RelativeLayout

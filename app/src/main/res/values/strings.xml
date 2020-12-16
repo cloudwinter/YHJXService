@@ -4,10 +4,13 @@
     <string name="task_fragment_show_user_name">%s，欢迎您！</string>
     <string name="task_item_order_no">任务订单号：%s</string>
     <string name="task_item_vin">车架号：%s</string>
+    <string name="task_item_vehicle_name">车型：%s</string>
     <string name="task_item_customer_name">客户：%s</string>
     <string name="task_item_customer_tel">电话：%s</string>
     <string name="task_item_customer_address">地址：%s</string>
     <string name="task_item_fault_desc">故障描述：%s</string>
+    <string name="task_item_start_time">开工时间：%s</string>
+    <string name="task_item_end_time">完工时间：%s</string>
     <!-- 跳转地图的map坐标str 维度，经度 -->
     <string name="intent_map_coordinate_str">geo:%s,%s</string>
 </resources>

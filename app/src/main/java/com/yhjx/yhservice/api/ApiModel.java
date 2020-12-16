@@ -38,7 +38,7 @@ public class ApiModel {
      * @param handler
      */
     public void login(ServiceUserLoginReq req, ResultHandler<ServiceUser> handler) {
-        if (!preCheck()) {
+        if (!preCheck(handler)) {
             return;
         }
         ApiService apiService = buildApiService();
@@ -53,7 +53,7 @@ public class ApiModel {
      * @param handler
      */
     public void register(ServiceUserRegisterReq req, ResultHandler<ServiceUserRegisterRes> handler) {
-        if (!preCheck()) {
+        if (!preCheck(handler)) {
             return;
         }
         ApiService apiService = buildApiService();
@@ -68,7 +68,7 @@ public class ApiModel {
      * @param handler
      */
     public void queryStationList(StationListReq req, ResultHandler<ServiceStationListRes> handler) {
-        if (!preCheck()) {
+        if (!preCheck(handler)) {
             return;
         }
         ApiService apiService = buildApiService();
@@ -84,7 +84,7 @@ public class ApiModel {
      * @param handler
      */
     public void queryTaskOrder(TaskOrderReq req, ResultHandler<TaskOrderRes> handler) {
-        if (!preCheck()) {
+        if (!preCheck(handler)) {
             return;
         }
         ApiService apiService = buildApiService();
@@ -99,7 +99,7 @@ public class ApiModel {
      * @param handler
      */
     public void queryRecordOrder(TaskRecordReq req, ResultHandler<TaskRecordRes> handler) {
-        if (!preCheck()) {
+        if (!preCheck(handler)) {
             return;
         }
         ApiService apiService = buildApiService();
@@ -112,9 +112,10 @@ public class ApiModel {
 
 
 
-    private boolean preCheck() {
+    private <T> boolean preCheck(ResultHandler<T> handler) {
         if (!RunningContext.checkNetWork()) {
             ToastUtils.showNotNetwork(RunningContext.sAppContext);
+            handler.notifyFinish();
             return false;
         }
         if (!RunningContext.checkNetworkPermission()) {
@@ -122,6 +123,7 @@ public class ApiModel {
                 if (mContext instanceof Activity) {
                     Activity activity = (Activity) mContext;
                     activity.requestPermissions(new String[]{Manifest.permission.ACCESS_NETWORK_STATE}, PERMISSION_REQUEST_CODE);
+                    handler.notifyFinish();
                     return false;
                 }
             }
