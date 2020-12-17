@@ -96,6 +96,14 @@ public class RunningContext {
         }
     }
 
+    /**
+     * 全局线程池
+     *
+     * @return
+     */
+    public static ThreadPoolExecutor threadPool() {
+        return sThreadPool;
+    }
 
 
 

@@ -1,9 +1,6 @@
 package com.yhjx.yhservice.api;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 
 import com.yhjx.networker.NetworkerClient;
 import com.yhjx.networker.calladater.SSCall;
@@ -27,7 +24,6 @@ import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
 import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 import com.yhjx.yhservice.util.ToastUtils;
 
-import static com.yhjx.yhservice.RunningContext.PERMISSION_REQUEST_CODE;
 
 public class ApiModel {
 
@@ -185,16 +181,6 @@ public class ApiModel {
             ToastUtils.showNotNetwork(RunningContext.sAppContext);
             handler.notifyFinish();
             return false;
-        }
-        if (!RunningContext.checkNetworkPermission()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (mContext instanceof Activity) {
-                    Activity activity = (Activity) mContext;
-                    activity.requestPermissions(new String[]{Manifest.permission.ACCESS_NETWORK_STATE}, PERMISSION_REQUEST_CODE);
-                    handler.notifyFinish();
-                    return false;
-                }
-            }
         }
         return true;
     }

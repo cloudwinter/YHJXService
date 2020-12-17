@@ -7,10 +7,13 @@ import com.yhjx.yhservice.model.LoginUserInfo;
 
 public class StorageUtils {
 
+    // 登录缓存有效周期1天
+    public static long LOGIN_KEEP_INTERVAL_VALID_TIME = 23 * 60 * 60 * 1000;
+
     static class KEY {
         public static String LOGIN_USER_KEY = "login_user";
+        public static String LOGIN_USER_KEEP_TIME_KEY = "login_user_keep_time";
     }
-
 
     /**
      * 登录成功之后保存用户信息
@@ -21,6 +24,7 @@ public class StorageUtils {
             val = new Gson().toJson(loginUserInfo);
         }
         if (!TextUtils.isEmpty(val)) {
+            setLoginUserExpire();
             PreferenceUtil.commitString(KEY.LOGIN_USER_KEY,val);
         }
     }
@@ -35,5 +39,32 @@ public class StorageUtils {
             return null;
         }
         return new Gson().fromJson(val, LoginUserInfo.class);
+    }
+
+
+    /**
+     * 判断登录缓存有效期是否超期
+     * @return
+     */
+    public static boolean isLoginUserExpire() {
+        long preKeepTime = PreferenceUtil.getLong(KEY.LOGIN_USER_KEEP_TIME_KEY, System.currentTimeMillis());
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - preKeepTime > LOGIN_KEEP_INTERVAL_VALID_TIME) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 设置新的缓存有效期
+     * @return
+     */
+    public static void setLoginUserExpire() {
+        PreferenceUtil.commitLong(KEY.LOGIN_USER_KEEP_TIME_KEY,System.currentTimeMillis());
+    }
+
+
+    public static void clearLogin() {
+        PreferenceUtil.commitString(KEY.LOGIN_USER_KEY,null);
     }
 }
