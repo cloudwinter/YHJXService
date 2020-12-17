@@ -1,5 +1,6 @@
 package com.yhjx.yhservice.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -112,6 +113,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 tabUserImg.setSelected(false);
                 tabUserText.setSelected(false);
 
+                actionBar.setRightVisibility(true);
                 actionBar.setTitle("任务单");
                 break;
             case 2:
@@ -122,6 +124,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 tabUserImg.setSelected(false);
                 tabUserText.setSelected(false);
 
+                actionBar.setRightVisibility(false);
                 actionBar.setTitle("维修记录");
                 break;
             case 3:
@@ -132,6 +135,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 tabUserImg.setSelected(true);
                 tabUserText.setSelected(true);
 
+                actionBar.setRightVisibility(false);
                 actionBar.setTitle("个人信息");
                 break;
         }
@@ -160,6 +164,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onRightClick() {
-        // TODO 跳转到添加任务单界面
+        Intent intent = new Intent(HomeActivity.this, AddTaskActivity.class);
+        startActivity(intent);
     }
 }

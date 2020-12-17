@@ -11,7 +11,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 import com.yhjx.networker.callback.ResultHandler;
-import com.yhjx.yhservice.MainActivity;
 import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.ApiModel;
@@ -84,9 +83,10 @@ public class SplashActivity extends BaseActivity {
     private void animationEnd() {
         Intent intent = new Intent();
         if (mLoginUserInfo == null) {
-            intent.setClass(SplashActivity.this, LoginActivity.class);
+            intent.setClass(SplashActivity.this, HomeActivity.class);
+//            intent.setClass(SplashActivity.this, LoginActivity.class);
         } else {
-            intent.setClass(SplashActivity.this, MainActivity.class);
+            intent.setClass(SplashActivity.this, HomeActivity.class);
         }
         startActivity(intent);
         finish();

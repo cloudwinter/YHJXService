@@ -114,6 +114,18 @@ public final class TranslucentActionBar extends LinearLayout {
     }
 
 
+    public void setRightVisibility(boolean VISIBLE) {
+        if (layRight == null) {
+            return;
+        }
+        if (VISIBLE) {
+            layRight.setVisibility(View.VISIBLE);
+        } else {
+            layRight.setVisibility(View.GONE);
+        }
+    }
+
+
     /**
      * 设置数据
      *

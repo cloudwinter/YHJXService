@@ -18,6 +18,7 @@ import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.base.BaseActivity;
+import com.yhjx.yhservice.dialog.WaitDialog;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.PatternUtils;
@@ -46,6 +47,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private String useTel;
     private String userPassword;
 
+    WaitDialog waitDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         ButterKnife.bind(this);
         buttonLogin.setOnClickListener(this);
         textViewRegister.setOnClickListener(this);
+        waitDialog = new WaitDialog(this);
     }
 
     @Override
@@ -104,6 +108,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         req.userPassword = userPassword;
         LogUtils.d(TAG, "login 请求 参数：" + new Gson().toJson(req));
         new ApiModel(this).login(req, new ResultHandler<ServiceUser>() {
+
+            @Override
+            public void onStart() {
+                waitDialog.show();
+            }
+
             @Override
             protected void onSuccess(ServiceUser user) {
                 LogUtils.d(TAG, "login 返回成功：" + new Gson().toJson(user));
@@ -115,9 +125,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         // 保存用户信息
                         LoginUserInfo loginUserInfo = copyByServiceUser(user);
                         RunningContext.setLoginUserInfo(loginUserInfo);
-
-                        // TODO 跳转到主页
-
+                        startHome();
                     } else if ("0".equals(user.userFlag)) {
                         ToastUtils.showToast(LoginActivity.this,"当前用户正在审核中，请耐心等候！");
                     } else {
@@ -132,7 +140,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 LogUtils.e(TAG, "login 返回异常：" + " errCode = " + errCode + " errMsg=" + errMsg);
                 ToastUtils.showToast(LoginActivity.this,"登录失败，请重试！");
             }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                waitDialog.dismiss();
+            }
         });
+    }
+
+    private void startHome() {
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
