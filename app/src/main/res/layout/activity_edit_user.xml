@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_common">
+
+    <com.yhjx.yhservice.view.TranslucentActionBar
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#fff2f3f7"/>
+
+    <LinearLayout
+        android:id="@+id/ll_user_tel"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="手机号码"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <EditText
+            android:id="@+id/edit_new_user_tel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="请输入新手机号"
+            android:textColorHint="#9fa0a6"
+            android:textSize="14dp"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_user_password"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="密码"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <EditText
+            android:id="@+id/edit_new_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="请输入新密码"
+            android:textColorHint="#9fa0a6"
+            android:textSize="14dp"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_user_station"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="服务站"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <EditText
+            android:id="@+id/edit_new_station"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="请选择新的服务站"
+            android:textColorHint="#9fa0a6"
+            android:textSize="14dp"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_new_stagnation_station"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="驻点"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <EditText
+            android:id="@+id/edit_new_stagnation_station"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="请选择新的驻点"
+            android:textColorHint="#9fa0a6"
+            android:textSize="14dp"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="244dp"
+        android:layout_height="34dp"
+        android:background="@drawable/btn_background"
+        android:textSize="16dp"
+        android:textColor="#ffffff"
+        android:text="保存"
+        android:layout_gravity="center_horizontal"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_marginTop="35dp"/>
+
+</LinearLayout>

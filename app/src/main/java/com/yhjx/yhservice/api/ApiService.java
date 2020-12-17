@@ -6,16 +6,27 @@ import com.yhjx.networker.http.Body;
 import com.yhjx.networker.http.POST;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserRegisterReq;
+import com.yhjx.yhservice.api.domain.request.ServiceUserUpdatePasswordReq;
+import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStagnationReq;
+import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStationReq;
+import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateTelReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
+import com.yhjx.yhservice.api.domain.response.ServiceUserUpdateStagnationRes;
 import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
 import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 
 public interface ApiService {
+
+
+    // 查询服务站列表
+    @POST("app/service/common/stationList")
+    SSCall<BaseResult<ServiceStationListRes>> queryStationList(@Body StationListReq req);
+
 
     // 注册接口
     @POST("app/service/user/register")
@@ -26,9 +37,27 @@ public interface ApiService {
     @POST("app/service/user/login")
     SSCall<BaseResult<ServiceUser>> login(@Body ServiceUserLoginReq req);
 
-    // 查询服务站列表
-    @POST("app/service/common/stationList")
-    SSCall<BaseResult<ServiceStationListRes>> queryStationList(@Body StationListReq req);
+
+    // 修改手机号
+    @POST("/app/service/user/updateTel")
+    SSCall<BaseResult<Void>> updateTel(@Body ServiceUserUpdateTelReq req);
+
+    // 修改手机号
+    @POST("/app/service/user/updateTel")
+    SSCall<BaseResult<Void>> updatePassword(@Body ServiceUserUpdatePasswordReq req);
+
+    // 修改服务站
+    @POST("/app/service/user/updateStation")
+    SSCall<BaseResult<Void>> updateStation(@Body ServiceUserUpdateStationReq req);
+
+    // 修改驻点
+    @POST("/app/service/user/updateStagnation")
+    SSCall<BaseResult<ServiceUserUpdateStagnationRes>> updateStagnation(@Body ServiceUserUpdateStagnationReq req);
+
+
+
+
+
 
 
     // 查询任务单
@@ -38,5 +67,6 @@ public interface ApiService {
     // 查询维修单
     @POST("app/service/task/getHandlerTaskList")
     SSCall<BaseResult<TaskRecordRes>> queryRecordList(@Body TaskRecordReq req);
+
 
 }

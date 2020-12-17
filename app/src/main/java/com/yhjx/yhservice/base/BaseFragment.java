@@ -1,5 +1,6 @@
 package com.yhjx.yhservice.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,5 +45,14 @@ public class BaseFragment extends Fragment {
      */
     public static int getSystemVersion() {
         return Build.VERSION.SDK_INT;
+    }
+
+
+    public void finish() {
+        if (mContext instanceof BaseActivity) {
+            ((BaseActivity)mContext).finish();
+            return;
+        }
+        ((Activity)mContext).finish();
     }
 }

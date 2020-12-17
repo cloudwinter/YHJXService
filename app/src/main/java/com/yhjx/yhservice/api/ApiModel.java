@@ -12,12 +12,17 @@ import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserRegisterReq;
+import com.yhjx.yhservice.api.domain.request.ServiceUserUpdatePasswordReq;
+import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStagnationReq;
+import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStationReq;
+import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateTelReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
+import com.yhjx.yhservice.api.domain.response.ServiceUserUpdateStagnationRes;
 import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
 import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 import com.yhjx.yhservice.util.ToastUtils;
@@ -106,6 +111,69 @@ public class ApiModel {
         SSCall<BaseResult<TaskRecordRes>> call = apiService.queryRecordList(req);
         call.enqueue(handler);
     }
+
+
+
+
+    /**
+     * 修改手机号
+     * @param req
+     * @param handler
+     */
+    public void updateTel(ServiceUserUpdateTelReq req, ResultHandler<Void> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Void>> call = apiService.updateTel(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 修改密码
+     * @param req
+     * @param handler
+     */
+    public void updatePassword(ServiceUserUpdatePasswordReq req, ResultHandler<Void> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Void>> call = apiService.updatePassword(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 修改密码
+     * @param req
+     * @param handler
+     */
+    public void updateStation(ServiceUserUpdateStationReq req, ResultHandler<Void> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Void>> call = apiService.updateStation(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 修改密码
+     * @param req
+     * @param handler
+     */
+    public void updateStagnation(ServiceUserUpdateStagnationReq req, ResultHandler<ServiceUserUpdateStagnationRes> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<ServiceUserUpdateStagnationRes>> call = apiService.updateStagnation(req);
+        call.enqueue(handler);
+    }
+
 
 
 

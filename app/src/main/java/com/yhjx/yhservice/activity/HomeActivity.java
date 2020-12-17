@@ -77,6 +77,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     }
 
 
+
     private void initView() {
         tabTask.setOnClickListener(this);
         tabRecord.setOnClickListener(this);

@@ -82,7 +82,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 intent.setClass(RegisterActivity.this, StationSelectedActivity.class);
                 startActivityForResult(intent,STATION_REQUEST_CODE);
             case R.id.edit_stagnation_service_station:
-                // 选择归属服务站
+                // 选择驻点
                 intent.setClass(RegisterActivity.this, StationSelectedActivity.class);
                 startActivityForResult(intent,STATION_REQUEST_CODE);
                 break;

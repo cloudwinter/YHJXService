@@ -1,12 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_common">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="this is user fragment"
-        />
+    <LinearLayout
+        android:id="@+id/ll_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="李大成"
+            android:textColor="#ff000000"
+            android:textSize="14dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:src="@mipmap/ic_right_row"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_user_tel"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号码"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:id="@+id/tv_user_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15261815429"
+            android:textColor="#ff000000"
+            android:textSize="14dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:src="@mipmap/ic_right_row"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_user_password"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密码"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:src="@mipmap/ic_right_row"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_user_station"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务站"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:id="@+id/tv_user_station"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="江宁服务站"
+            android:textColor="#ff000000"
+            android:textSize="14dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:src="@mipmap/ic_right_row"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_user_stagnation_station"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="驻点"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:id="@+id/tv_user_stagnation_station"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="江宁服务站"
+            android:textColor="#ff000000"
+            android:textSize="14dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:src="@mipmap/ic_right_row"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_app_version"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="版本更新"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:id="@+id/tv_app_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.0.0"
+            android:textColor="#ff000000"
+            android:textSize="14dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:src="@mipmap/ic_right_row"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_debug"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调试开关"
+            android:textColor="#ff6b717c"
+            android:textSize="14dp"
+            />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:id="@+id/tv_debug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff000000"
+            android:textSize="14dp"
+            android:text="开"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:src="@mipmap/ic_right_row"/>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_login_out"
+        android:layout_width="244dp"
+        android:layout_height="34dp"
+        android:background="@drawable/btn_background"
+        android:textSize="16dp"
+        android:textColor="#ffffff"
+        android:text="退出"
+        android:layout_gravity="center_horizontal"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_marginTop="35dp"/>
+
+
 
 </LinearLayout>
