@@ -14,6 +14,7 @@ import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStagnationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateTelReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
+import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
@@ -22,7 +23,15 @@ import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUserUpdateStagnationRes;
 import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
 import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
+import com.yhjx.yhservice.api.domain.response.UploadImgRes;
+import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.ToastUtils;
+
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 
 public class ApiModel {
@@ -79,36 +88,6 @@ public class ApiModel {
 
 
 
-    /**
-     * 查询任务单接口
-     * @param req
-     * @param handler
-     */
-    public void queryTaskOrder(TaskOrderReq req, ResultHandler<TaskOrderRes> handler) {
-        if (!preCheck(handler)) {
-            return;
-        }
-        ApiService apiService = buildApiService();
-        SSCall<BaseResult<TaskOrderRes>> call = apiService.queryTaskList(req);
-        call.enqueue(handler);
-    }
-
-
-    /**
-     * 查询维修记录接口
-     * @param req
-     * @param handler
-     */
-    public void queryRecordOrder(TaskRecordReq req, ResultHandler<TaskRecordRes> handler) {
-        if (!preCheck(handler)) {
-            return;
-        }
-        ApiService apiService = buildApiService();
-        SSCall<BaseResult<TaskRecordRes>> call = apiService.queryRecordList(req);
-        call.enqueue(handler);
-    }
-
-
 
 
     /**
@@ -157,7 +136,7 @@ public class ApiModel {
 
 
     /**
-     * 修改密码
+     * 修改驻点
      * @param req
      * @param handler
      */
@@ -170,6 +149,71 @@ public class ApiModel {
         call.enqueue(handler);
     }
 
+
+
+
+    /**
+     * 查询任务单接口
+     * @param req
+     * @param handler
+     */
+    public void queryTaskOrder(TaskOrderReq req, ResultHandler<TaskOrderRes> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<TaskOrderRes>> call = apiService.queryTaskList(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 查询维修记录接口
+     * @param req
+     * @param handler
+     */
+    public void queryRecordOrder(TaskRecordReq req, ResultHandler<TaskRecordRes> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<TaskRecordRes>> call = apiService.queryRecordList(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 查询维修记录接口
+     * @param req
+     * @param handler
+     */
+    public void queryTaskDetail(TaskOrderDetailReq req, ResultHandler<TaskOrder> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<TaskOrder>> call = apiService.queryTaskDetail(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 上传图片
+     * @param filePath
+     * @param handler
+     */
+    public void uploadImg(String filePath, ResultHandler<UploadImgRes> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        File file = new File(filePath);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", filePath, requestFile);
+
+        SSCall<BaseResult<UploadImgRes>> call = apiService.uploadImg(body);
+        call.enqueue(handler);
+    }
 
 
 

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_common">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.yhjx.yhservice.view.TranslucentActionBar
         android:id="@+id/action_bar"
@@ -18,10 +16,10 @@
         android:background="#fff2f3f7"/>
 
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="none"
         android:layout_weight="1">
 
         <LinearLayout
@@ -117,21 +115,132 @@
             </LinearLayout>
 
 
-            <!-- 上传图片  -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加维修信息"
+                android:textColor="#ff979797"
+                android:textSize="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="20dp"
+                />
 
+
+            <!-- 故障类型 -->
+            <LinearLayout
+                android:id="@+id/ll_fault_type"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="故障类型"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_fault_type"
+                    android:layout_width="98dp"
+                    android:layout_height="20dp"
+                    android:text="请选择故障类型"
+                    android:textColor="#ffbdbdbd"
+                    android:textSize="14dp"
+                    android:layout_weight="1"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:src="@mipmap/ic_right_row"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_fault_reason"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="故障原因"
+                android:textColor="#ff4b4f57"
+                android:textSize="14dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:background="@color/white"
+                android:layout_marginTop="1dp"
+                />
+
+
+            <!-- 故障原因Edit -->
+            <EditText
+                android:layout_marginTop="1dp"
+                android:id="@+id/edit_fault_reason"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_textarea_bg"
+                android:hint="请输入故障原因"
+                android:textColorHint="#9fa0a6"
+                android:textSize="14dp"
+                android:textColor="@color/black"
+                android:gravity="top"
+                android:minLines="4"
+                android:maxLines="10"
+                />
+
+            <!-- 车架号 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="更换配件"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_parts"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="请输入更换配件"
+                    android:textColorHint="#9fa0a6"
+                    android:textSize="14dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+
+            <!-- 上传图片  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
-                android:layout_marginTop="5dp">
-                
-                
+                android:layout_marginTop="10dp">
+
+
                 <com.yhjx.yhservice.view.AddImgView
                     android:id="@+id/addimg_locale"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    app:imgdesc="人车现场图片"/>
+                    app:imgdesc="现场作业图片"/>
 
                 <View
                     android:layout_width="wrap_content"
@@ -139,10 +248,10 @@
                     android:layout_weight="1"/>
 
                 <com.yhjx.yhservice.view.AddImgView
-                    android:id="@+id/addimg_fault"
+                    android:id="@+id/addimg_parts"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
-                    app:imgdesc="故障图片"/>
+                    app:imgdesc="配件图片"/>
 
             </LinearLayout>
 
@@ -174,5 +283,6 @@
 
 
     </LinearLayout>
+
 
 </LinearLayout>

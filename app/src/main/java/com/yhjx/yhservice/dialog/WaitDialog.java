@@ -81,12 +81,18 @@ public class WaitDialog extends Dialog {
         image.startAnimation(animation);
     }
 
+    public void show(String text) {
+        hintTv.setText(text);
+        show();
+    }
+
     @Override
     public void cancel() {
         super.cancel();
     }
 
     public void dismiss() {
+        hintTv.setText("加载中...");
         if (isShowing()) {
             super.dismiss();
             animation.cancel();

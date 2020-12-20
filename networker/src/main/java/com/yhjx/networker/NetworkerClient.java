@@ -148,6 +148,8 @@ public class NetworkerClient {
 	private static Retrofit.Builder sBuilder;
 
 	private static Retrofit.Builder generateBuilder(String baseUrl) {
+
+
 		Retrofit.Builder builder = new Retrofit.Builder();
 		builder.addCallAdapterFactory(new SSCallAdapterFactory())
 				.addConverterFactory(new SSCoverterfactory())
