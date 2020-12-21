@@ -9,9 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
+import com.yhjx.yhservice.api.ApiModel;
+import com.yhjx.yhservice.api.domain.request.ServiceUserRegisterReq;
+import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
 import com.yhjx.yhservice.base.BaseActivity;
+import com.yhjx.yhservice.dialog.WaitDialog;
+import com.yhjx.yhservice.model.StationModel;
 import com.yhjx.yhservice.util.LogUtils;
+import com.yhjx.yhservice.util.ToastUtils;
+import com.yhjx.yhservice.util.YHUtils;
 import com.yhjx.yhservice.view.TranslucentActionBar;
 
 import androidx.annotation.Nullable;
@@ -26,6 +34,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public static final String TAG = "RegisterActivity";
 
     public static final int STATION_REQUEST_CODE = 103;
+    public static final int STAGNATION_REQUEST_CODE = 104;
 
     @BindView(R.id.action_bar)
     protected TranslucentActionBar actionBar;
@@ -45,6 +54,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected Button buttonRegister;
     @BindView(R.id.text_login)
     protected TextView textViewLogin;
+
+    protected StationModel mSelectedStationModel;
+    protected StationModel mSelectedStagnationStationModel;
+
+    protected WaitDialog mWaitDialog;
 
 
     @Override
@@ -71,6 +85,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         editStagnationServiceStation.setOnClickListener(this);
         buttonRegister.setOnClickListener(this);
         textViewLogin.setOnClickListener(this);
+
+        mWaitDialog = new WaitDialog(this);
     }
 
     @Override
@@ -99,17 +115,69 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    private ServiceUserRegisterReq buildReq() {
+        ServiceUserRegisterReq req = new ServiceUserRegisterReq();
+        req.userName = YHUtils.trim(editUserName.getText().toString());
+        req.userPassword = YHUtils.trim(editUserPassword.getText().toString());
+        req.userTel = YHUtils.trim(editUserTel.getText().toString());
+
+        if (YHUtils.validParams(req.userName, req.userPassword, req.userTel)) {
+            ToastUtils.showToast(this,"必填参数缺失！");
+            return null;
+        }
+        req.stationId = mSelectedStationModel.id;
+        req.stagnationStationId = mSelectedStagnationStationModel.id;
+        return req;
+    }
+
 
     private void register() {
-        // TODO
+        ServiceUserRegisterReq req = buildReq();
+        if (req == null) {
+            return;
+        }
+        new ApiModel().register(req, new ResultHandler<ServiceUserRegisterRes>() {
+
+            @Override
+            public void onStart() {
+                mWaitDialog.show();
+            }
+
+            @Override
+            protected void onSuccess(ServiceUserRegisterRes data) {
+                ToastUtils.showToast(RegisterActivity.this,"注册成功，等待审核");
+                finish();
+            }
+
+            @Override
+            protected void onFailed(String errCode, String errMsg) {
+                super.onFailed(errCode, errMsg);
+                ToastUtils.showToast(RegisterActivity.this,"注册失败");
+            }
+
+            @Override
+            public void onFinish() {
+                mWaitDialog.dismiss();
+            }
+        });
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == STATION_REQUEST_CODE) {
-            LogUtils.d(TAG,"onActivityResult:-->");
+        if (resultCode == RESULT_OK) {
+            if (requestCode == STATION_REQUEST_CODE) {
+                mSelectedStationModel = (StationModel) data.getSerializableExtra(StationSelectedActivity.RESULT_DATA_KEY);
+                if (mSelectedStationModel != null) {
+                    editServiceStation.setText(mSelectedStationModel.stationName);
+                }
+            } else if(requestCode == STAGNATION_REQUEST_CODE) {
+                mSelectedStagnationStationModel = (StationModel) data.getSerializableExtra(StationSelectedActivity.RESULT_DATA_KEY);
+                if (mSelectedStagnationStationModel != null) {
+                    editStagnationServiceStation.setText(mSelectedStagnationStationModel.stationName);
+                }
+            }
         }
     }
 }

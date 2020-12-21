@@ -54,13 +54,13 @@ public class YHUtils {
     }
 
 
-    public static String getFormatValue(int resId,String... params) {
-        return String.format(RunningContext.sAppContext.getString(resId),params);
+    public static String getFormatValue(int resId, String... params) {
+        return String.format(RunningContext.sAppContext.getString(resId), params);
     }
 
 
     public static boolean validParams(String... params) {
-        for (String param:params) {
+        for (String param : params) {
             if (param == null || param.isEmpty()) {
                 return false;
             }
@@ -69,7 +69,12 @@ public class YHUtils {
     }
 
 
+    public static String trim(String param) {
+        return param == null ? null : param.trim();
+    }
+
+
     public static void main(String[] args) {
-        System.out.println(validParams("1","2"));
+        System.out.println(validParams("1", "2"));
     }
 }

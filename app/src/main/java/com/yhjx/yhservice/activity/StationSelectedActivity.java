@@ -1,5 +1,6 @@
 package com.yhjx.yhservice.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -36,6 +37,8 @@ public class StationSelectedActivity extends BaseActivity {
 
     public static final String TAG = "StationSelectedActivity";
 
+    public static final String RESULT_DATA_KEY = "RESULT_DATA";
+
     @BindView(R.id.edit_search)
     protected EditText editTextSearch;
     @BindView(R.id.text_cancel)
@@ -44,6 +47,8 @@ public class StationSelectedActivity extends BaseActivity {
     protected ListView listView;
 
     private StationListAdapter mStationListAdapter;
+
+    private List<StationModel> modelList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +82,7 @@ public class StationSelectedActivity extends BaseActivity {
                 model.stationAddress = "江苏省南京市雨花区丰盛商汇5号楼501";
                 list.add(model);
             }
+            modelList = list;
             mStationListAdapter.setData(list);
             return;
         }
@@ -94,6 +100,7 @@ public class StationSelectedActivity extends BaseActivity {
                     mStationListAdapter.setData(null);
                     return;
                 }
+                modelList = data.list;
                 mStationListAdapter.setData(data.list);
             }
         });
@@ -123,6 +130,9 @@ public class StationSelectedActivity extends BaseActivity {
     private AdapterView.OnItemClickListener mOnItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent = new Intent();
+            intent.putExtra(RESULT_DATA_KEY, modelList.get(position));
+            setResult(RESULT_OK,intent);
             finish();
         }
     };
