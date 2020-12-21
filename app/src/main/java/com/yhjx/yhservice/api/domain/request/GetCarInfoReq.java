@@ -4,5 +4,5 @@ import java.io.Serializable;
 
 public class GetCarInfoReq implements Serializable {
 
-    private String vehicleVin;
+    public String vehicleVin;
 }

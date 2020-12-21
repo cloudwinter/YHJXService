@@ -14,10 +14,12 @@ import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStagnationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateTelReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandlerRepairReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.request.UpdateLocationReq;
+import com.yhjx.yhservice.api.domain.response.GetCarInfoRes;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
@@ -39,7 +41,7 @@ public interface ApiService {
 
     // 查询车辆信息
     @POST("app/service/common/stationList")
-    SSCall<BaseResult<Vehicle>> queryVehicleInfo(@Body GetCarInfoReq req);
+    SSCall<BaseResult<GetCarInfoRes>> queryVehicleInfo(@Body GetCarInfoReq req);
 
     // 上报坐标信息
     @POST("app/service/common/stationList")
@@ -90,10 +92,14 @@ public interface ApiService {
     @POST("app/service/task/getTaskDetail")
     SSCall<BaseResult<TaskOrder>> queryTaskDetail(@Body TaskOrderDetailReq req);
 
-
+    // 图片上传接口
     @Multipart
     @POST("/common/upload")
     SSCall<BaseResult<UploadImgRes>> uploadImg(@Part MultipartBody.Part file);
+
+
+    // 新增保修单
+    SSCall<BaseResult<TaskOrder>> repair(@Body TaskHandlerRepairReq repairReq);
 
 
 }

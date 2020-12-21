@@ -15,10 +15,12 @@ import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStagnationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateTelReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandlerRepairReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.request.UpdateLocationReq;
+import com.yhjx.yhservice.api.domain.response.GetCarInfoRes;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
@@ -49,6 +51,75 @@ public class ApiModel {
         mContext = context;
     }
 
+
+    // ##################  通用接口 #############
+
+
+    /**
+     * 上传图片
+     * @param filePath
+     * @param handler
+     */
+    public void uploadImg(String filePath, ResultHandler<UploadImgRes> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        File file = new File(filePath);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", filePath, requestFile);
+
+        SSCall<BaseResult<UploadImgRes>> call = apiService.uploadImg(body);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 查询车辆信息
+     * @param req
+     * @param handler
+     */
+    public void queryVehicleInfo(GetCarInfoReq req, ResultHandler<GetCarInfoRes> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<GetCarInfoRes>> call = apiService.queryVehicleInfo(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 上传服务人员坐标位置
+     * @param req
+     * @param handler
+     */
+    public void updateLocation(UpdateLocationReq req, ResultHandler<Void> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Void>> call = apiService.updateLocation(req);
+        call.enqueue(handler);
+    }
+
+    /**
+     * 查询服务站接口
+     * @param req
+     * @param handler
+     */
+    public void queryStationList(StationListReq req, ResultHandler<ServiceStationListRes> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<ServiceStationListRes>> call = apiService.queryStationList(req);
+        call.enqueue(handler);
+    }
+
+
+    // ########## 用户接口 ####################
+
     /**
      * 登录接口
      * @param req
@@ -77,23 +148,6 @@ public class ApiModel {
         SSCall<BaseResult<ServiceUserRegisterRes>> call = apiService.register(req);
         call.enqueue(handler);
     }
-
-
-    /**
-     * 查询服务站接口
-     * @param req
-     * @param handler
-     */
-    public void queryStationList(StationListReq req, ResultHandler<ServiceStationListRes> handler) {
-        if (!preCheck(handler)) {
-            return;
-        }
-        ApiService apiService = buildApiService();
-        SSCall<BaseResult<ServiceStationListRes>> call = apiService.queryStationList(req);
-        call.enqueue(handler);
-    }
-
-
 
 
 
@@ -128,7 +182,7 @@ public class ApiModel {
 
 
     /**
-     * 修改密码
+     * 修改服务站
      * @param req
      * @param handler
      */
@@ -157,7 +211,7 @@ public class ApiModel {
     }
 
 
-
+    // ######################任务接口
 
     /**
      * 查询任务单接口
@@ -190,7 +244,7 @@ public class ApiModel {
 
 
     /**
-     * 查询维修记录接口
+     * 查询维修记录详情接口
      * @param req
      * @param handler
      */
@@ -204,57 +258,21 @@ public class ApiModel {
     }
 
 
-    /**
-     * 上传图片
-     * @param filePath
-     * @param handler
-     */
-    public void uploadImg(String filePath, ResultHandler<UploadImgRes> handler) {
-        if (!preCheck(handler)) {
-            return;
-        }
-        ApiService apiService = buildApiService();
-        File file = new File(filePath);
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file", filePath, requestFile);
-
-        SSCall<BaseResult<UploadImgRes>> call = apiService.uploadImg(body);
-        call.enqueue(handler);
-    }
-
+    // ################## 操作接口
 
     /**
-     * 查询车辆信息
+     * 新增保修单接口
      * @param req
      * @param handler
      */
-    public void queryVehicleInfo(GetCarInfoReq req, ResultHandler<Vehicle> handler) {
+    public void repair(TaskHandlerRepairReq req, ResultHandler<TaskOrder> handler) {
         if (!preCheck(handler)) {
             return;
         }
         ApiService apiService = buildApiService();
-        SSCall<BaseResult<Vehicle>> call = apiService.queryVehicleInfo(req);
+        SSCall<BaseResult<TaskOrder>> call = apiService.repair(req);
         call.enqueue(handler);
     }
-
-
-    /**
-     * 上传服务人员坐标位置
-     * @param req
-     * @param handler
-     */
-    public void updateLocation(UpdateLocationReq req, ResultHandler<Void> handler) {
-        if (!preCheck(handler)) {
-            return;
-        }
-        ApiService apiService = buildApiService();
-        SSCall<BaseResult<Void>> call = apiService.updateLocation(req);
-        call.enqueue(handler);
-    }
-
-
-
-
 
 
 

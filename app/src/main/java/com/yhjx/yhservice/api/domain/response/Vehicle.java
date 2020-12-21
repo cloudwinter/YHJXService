@@ -72,4 +72,21 @@ public class Vehicle implements Serializable {
      * 经销商地址
      */
     public String dealerAddress;
+
+    public String vehicleAddress;
+
+    public String vehicleLongitude;
+
+    public String vehicleLatitude;
+
+    public Date coordinateUpdateTime;
+
+    /* 保修状态
+     * (1正常状态，2报修状态,3维修状态)
+     */
+    public String vehicleIssueStatus;
+    /**
+     * 车辆状态（0停止 1工作 2故障）
+     */
+    public String vehicleStatus;
 }
