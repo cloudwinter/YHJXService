@@ -15,10 +15,12 @@ import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.request.GetCarInfoReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandlerRepairReq;
 import com.yhjx.yhservice.api.domain.response.GetCarInfoRes;
+import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
 import com.yhjx.yhservice.api.domain.response.Vehicle;
 import com.yhjx.yhservice.api.domain.response.VehicleState;
 import com.yhjx.yhservice.base.BaseActivity;
 import com.yhjx.yhservice.model.LoginUserInfo;
+import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.util.YHUtils;
 import com.yhjx.yhservice.view.TranslucentActionBar;
@@ -117,7 +119,7 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
 
     @Override
     public void onLeftClick() {
-
+        finish();
     }
 
     @Override
@@ -148,7 +150,7 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
 
             req.userNo = mLoginUserInfo.userNo;
             req.userName = mLoginUserInfo.userName;
-
+            submit(req);
         }
     };
 
@@ -167,6 +169,11 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
      * @param req
      */
     private void submit(TaskHandlerRepairReq req) {
+        mApiModel.repair(req, new ResultHandler<TaskOrder>() {
+            @Override
+            protected void onSuccess(TaskOrder data) {
 
+            }
+        });
     }
 }
