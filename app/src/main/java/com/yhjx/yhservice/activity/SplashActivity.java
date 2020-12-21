@@ -1,7 +1,9 @@
 package com.yhjx.yhservice.activity;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -21,11 +23,17 @@ import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.YHUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SplashActivity extends BaseActivity {
+
 
     @BindView(R.id.ll_content)
     LinearLayout mContentLL;
@@ -41,7 +49,6 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         initView();
-        requestPermissions();
     }
 
     /**
@@ -66,7 +73,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                animationEnd();
+                jumpIntent();
             }
 
             @Override
@@ -80,11 +87,11 @@ public class SplashActivity extends BaseActivity {
     /**
      * 动画结束处理
      */
-    private void animationEnd() {
+    private void jumpIntent() {
         Intent intent = new Intent();
         if (mLoginUserInfo == null) {
-            intent.setClass(SplashActivity.this, TaskDetailsActivity.class);
-//            intent.setClass(SplashActivity.this, LoginActivity.class);
+//            intent.setClass(SplashActivity.this, TaskDetailsActivity.class);
+            intent.setClass(SplashActivity.this, LoginActivity.class);
         } else {
             intent.setClass(SplashActivity.this, HomeActivity.class);
         }
@@ -118,13 +125,6 @@ public class SplashActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 动态申请权限
-     */
-    private void requestPermissions() {
-        // TODO
-    }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -141,5 +141,6 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

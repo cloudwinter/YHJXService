@@ -2,8 +2,16 @@ package com.yhjx.yhservice;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Base64;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -18,6 +26,7 @@ import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.yhjx.yhservice.core.AppUncaughtExceptionHandler;
 import com.yhjx.yhservice.file.FileUtils;
+import com.yhjx.yhservice.service.YhjxService;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.PreferenceUtil;
 import com.yhjx.yhservice.util.ScreenUtils;
@@ -33,6 +42,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.TimeUnit;
+
+import static com.yhjx.yhservice.service.YhjxService.KEY_LOCATION_DATA;
 
 /**
  * Created by Administrator on 2016/9/6 0006.
@@ -60,20 +72,61 @@ public class MyApplication extends Application {
         instance = this;
         //初始化PreferenceUtil
         PreferenceUtil.init(this);
+        RunningContext.init(this);
+
         AppUncaughtExceptionHandler.getInstance().init(this);
         initImageLoader();
         initFilePath();
         x.Ext.init(this);
         // 初始化Bugly
         initBugly();
-        RunningContext.init(this);
-
         // 初始化LoggerView
         LoggerView.init(this);
-        //默认英文
-       // LocaleUtils.updateLocale(this, LocaleUtils.LOCALE_ENGLISH);
+        // 初始化定位
+        initLocation();
+        // 初始化启动service
+        initJobService();
     }
 
+
+    private void initJobService() {
+        Intent intent = new Intent(RunningContext.sAppContext, YhjxService.class);
+        startService(intent);
+
+        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+        JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(this,YhjxService.class));
+        builder.setBackoffCriteria(TimeUnit.MILLISECONDS.toMillis(10),JobInfo.BACKOFF_POLICY_LINEAR);
+        // 每30分钟发送一次
+        builder.setPeriodic(15 * 60 * 1000);
+        jobScheduler.schedule(builder.build());
+
+    }
+
+    /**
+     * 初始化定位
+     */
+    private void initLocation() {
+        AMapLocationClientOption option = new AMapLocationClientOption();
+        option.setOnceLocation(true);
+        option.setNeedAddress(true);
+        RunningContext.sAMapLocationClient.setLocationOption(option);
+        RunningContext.sAMapLocationClient.setLocationListener(new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation mapLocation) {
+                LogUtils.i(TAG,"onLocationChanged:mapLocation address="+mapLocation.getAddress()+" Latitude="+mapLocation.getLatitude()+" Longitude="+mapLocation.getLongitude());
+                Intent intent = new Intent(YhjxService.LOCATION_RECEIVER_ACTION);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(KEY_LOCATION_DATA,mapLocation);
+                intent.putExtras(bundle);
+                sendBroadcast(intent);
+            }
+        });
+    }
+
+
+    /**
+     * 初始化imageLoader
+     */
     private void initImageLoader() {
         File cacheDir = StorageUtils.getCacheDirectory(this);
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)

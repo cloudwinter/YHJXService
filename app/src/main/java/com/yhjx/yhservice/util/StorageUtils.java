@@ -3,6 +3,7 @@ package com.yhjx.yhservice.util;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.yhjx.yhservice.model.LocationInfo;
 import com.yhjx.yhservice.model.LoginUserInfo;
 
 public class StorageUtils {
@@ -13,6 +14,7 @@ public class StorageUtils {
     static class KEY {
         public static String LOGIN_USER_KEY = "login_user";
         public static String LOGIN_USER_KEEP_TIME_KEY = "login_user_keep_time";
+        public static String LOCATION_KEY = "location";
     }
 
     /**
@@ -61,6 +63,26 @@ public class StorageUtils {
      */
     public static void setLoginUserExpire() {
         PreferenceUtil.commitLong(KEY.LOGIN_USER_KEEP_TIME_KEY,System.currentTimeMillis());
+    }
+
+
+    public static void setCurrentLocation(LocationInfo location) {
+        String val = null;
+        if (location != null) {
+            val = new Gson().toJson(location);
+        }
+        if (!TextUtils.isEmpty(val)) {
+            PreferenceUtil.commitString(KEY.LOCATION_KEY, val);
+        }
+    }
+
+
+    public static LocationInfo getCurrentLocation() {
+        String val = PreferenceUtil.getString(KEY.LOCATION_KEY, null);
+        if (TextUtils.isEmpty(val)) {
+            return null;
+        }
+        return new Gson().fromJson(val, LocationInfo.class);
     }
 
 

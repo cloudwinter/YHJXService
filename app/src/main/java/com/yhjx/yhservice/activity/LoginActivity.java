@@ -1,6 +1,8 @@
 package com.yhjx.yhservice.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,8 +25,14 @@ import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.PatternUtils;
 import com.yhjx.yhservice.util.ToastUtils;
+import com.yhjx.yhservice.util.YHUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -32,6 +40,8 @@ import butterknife.ButterKnife;
  * 登录页面
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
+
+    public static int PERMISSIONS_REQUEST_CODE = 300;
 
     public static final String TAG = "LoginActivity";
 
@@ -57,6 +67,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         buttonLogin.setOnClickListener(this);
         textViewRegister.setOnClickListener(this);
         waitDialog = new WaitDialog(this);
+        requestPermissions();
     }
 
     @Override
@@ -95,6 +106,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
         userPassword = password;
         return true;
+    }
+
+
+    /**
+     * 动态申请权限
+     */
+    private boolean requestPermissions() {
+        boolean granted = true;
+        String[] permissions = new String[]{
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+        };
+        List<String> newApplyPermissions = new ArrayList<>();
+        for (String permission:permissions) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, permission)){
+                granted = false;
+                newApplyPermissions.add(permission);
+            }
+        }
+        if (!granted) {
+            ActivityCompat.requestPermissions(this, YHUtils.listConvertToArray(newApplyPermissions),PERMISSIONS_REQUEST_CODE);
+        }
+        return granted;
     }
 
 
@@ -176,5 +209,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         loginUserInfo.userFlag = user.userFlag;
         loginUserInfo.userFlag = user.userFlag;
         return loginUserInfo;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (PERMISSIONS_REQUEST_CODE == requestCode) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                // 授权成功
+            }
+        }
     }
 }

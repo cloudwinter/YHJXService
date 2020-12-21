@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 
+import com.amap.api.location.AMapLocationClient;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.StorageUtils;
 
@@ -50,9 +51,17 @@ public class RunningContext {
      */
     public static Context sAppContext = null;
 
+    /**
+     * 全局locationClient
+     */
+    public static AMapLocationClient sAMapLocationClient;
+
+
 
     public static void init(Application app) {
         sAppContext = app.getApplicationContext();
+        // 初始化地图client
+        sAMapLocationClient = new AMapLocationClient(sAppContext);
         // 初始化用户信息
         getsLoginUserInfo();
     }

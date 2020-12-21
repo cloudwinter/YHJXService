@@ -7,6 +7,7 @@ import com.yhjx.networker.calladater.SSCall;
 import com.yhjx.networker.callback.BaseResult;
 import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.RunningContext;
+import com.yhjx.yhservice.api.domain.request.GetCarInfoReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserRegisterReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdatePasswordReq;
@@ -17,6 +18,7 @@ import com.yhjx.yhservice.api.domain.request.StationListReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
+import com.yhjx.yhservice.api.domain.request.UpdateLocationReq;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
@@ -24,6 +26,7 @@ import com.yhjx.yhservice.api.domain.response.ServiceUserUpdateStagnationRes;
 import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
 import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 import com.yhjx.yhservice.api.domain.response.UploadImgRes;
+import com.yhjx.yhservice.api.domain.response.Vehicle;
 import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.ToastUtils;
 
@@ -218,6 +221,41 @@ public class ApiModel {
         SSCall<BaseResult<UploadImgRes>> call = apiService.uploadImg(body);
         call.enqueue(handler);
     }
+
+
+    /**
+     * 查询车辆信息
+     * @param req
+     * @param handler
+     */
+    public void queryVehicleInfo(GetCarInfoReq req, ResultHandler<Vehicle> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Vehicle>> call = apiService.queryVehicleInfo(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 上传服务人员坐标位置
+     * @param req
+     * @param handler
+     */
+    public void updateLocation(UpdateLocationReq req, ResultHandler<Void> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Void>> call = apiService.updateLocation(req);
+        call.enqueue(handler);
+    }
+
+
+
+
+
 
 
 

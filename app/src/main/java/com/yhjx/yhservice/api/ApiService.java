@@ -6,6 +6,7 @@ import com.yhjx.networker.http.Body;
 import com.yhjx.networker.http.Multipart;
 import com.yhjx.networker.http.POST;
 import com.yhjx.networker.http.Part;
+import com.yhjx.yhservice.api.domain.request.GetCarInfoReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserRegisterReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdatePasswordReq;
@@ -16,6 +17,7 @@ import com.yhjx.yhservice.api.domain.request.StationListReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
+import com.yhjx.yhservice.api.domain.request.UpdateLocationReq;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
@@ -23,6 +25,7 @@ import com.yhjx.yhservice.api.domain.response.ServiceUserUpdateStagnationRes;
 import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
 import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 import com.yhjx.yhservice.api.domain.response.UploadImgRes;
+import com.yhjx.yhservice.api.domain.response.Vehicle;
 import com.yhjx.yhservice.model.TaskOrder;
 import okhttp3.MultipartBody;
 
@@ -33,6 +36,14 @@ public interface ApiService {
     // 查询服务站列表
     @POST("app/service/common/stationList")
     SSCall<BaseResult<ServiceStationListRes>> queryStationList(@Body StationListReq req);
+
+    // 查询车辆信息
+    @POST("app/service/common/stationList")
+    SSCall<BaseResult<Vehicle>> queryVehicleInfo(@Body GetCarInfoReq req);
+
+    // 上报坐标信息
+    @POST("app/service/common/stationList")
+    SSCall<BaseResult<Void>> updateLocation(@Body UpdateLocationReq req);
 
 
     // 注册接口

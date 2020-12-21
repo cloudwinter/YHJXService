@@ -1,12 +1,17 @@
 apply plugin: 'com.android.application'
 
+//生成打包时间
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "com.yhjx.yhservice"
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -16,14 +21,61 @@ android {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
+
+        //默认渠道为官网
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "official"]
     }
 
-    buildTypes {
+    flavorDimensions "versionCode"
+    productFlavors {
+        yingyongbao {}
+    }
+
+
+    signingConfigs {
+        debug {
+            storeFile file('./keystore/lykj_release.jks')
+            storePassword '123456'
+            keyAlias 'lykj'
+            keyPassword '123456'
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            storeFile file('./keystore/lykj_release.jks')
+            storePassword '123456'
+            keyAlias 'lykj'
+            keyPassword '123456'
+            v2SigningEnabled false
+
         }
     }
+
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "Debuggable", "true"
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+        release {
+            buildConfigField "boolean", "Debuggable", "false"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为test_v1.0_2016-08-15_wandoujia.apk
+                        def fileName = "YhjxService${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        output.outputFileName = new File("../../../realease/", fileName);
+                    }
+                }
+            }
+        }
+    }
+
+
 
 }
 
@@ -55,6 +107,9 @@ dependencies {
 
     // 网络框架
     implementation project(path: ':networker')
+
+    // 高德地图定位
+    implementation 'com.amap.api:location:latest.integration'
 
 
     // test
