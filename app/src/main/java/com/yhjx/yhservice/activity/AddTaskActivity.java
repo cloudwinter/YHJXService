@@ -1,9 +1,14 @@
 package com.yhjx.yhservice.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +24,7 @@ import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
 import com.yhjx.yhservice.api.domain.response.Vehicle;
 import com.yhjx.yhservice.api.domain.response.VehicleState;
 import com.yhjx.yhservice.base.BaseActivity;
+import com.yhjx.yhservice.dialog.WaitDialog;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.ToastUtils;
@@ -59,6 +65,18 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
 
     LoginUserInfo mLoginUserInfo;
 
+    WaitDialog mWaitDialog;
+
+    @Override
+    public void onLeftClick() {
+        finish();
+    }
+
+    @Override
+    public void onRightClick() {
+
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +88,7 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
         actionBar.setData("添加任务单", R.mipmap.ic_back, null, 0, null, this);
         actionBar.setStatusBarHeight(getStatusBarHeight());
 
+        mWaitDialog = new WaitDialog(this);
         mApiModel = new ApiModel();
         mSubmitButton.setOnClickListener(mSubmitClicker);
         mVinEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -117,17 +136,6 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
 
 
 
-    @Override
-    public void onLeftClick() {
-        finish();
-    }
-
-    @Override
-    public void onRightClick() {
-
-    }
-
-
     View.OnClickListener mSubmitClicker = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -170,10 +178,48 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
      */
     private void submit(TaskHandlerRepairReq req) {
         mApiModel.repair(req, new ResultHandler<TaskOrder>() {
+
+            @Override
+            public void onStart() {
+                mWaitDialog.show();
+            }
+
             @Override
             protected void onSuccess(TaskOrder data) {
+                if (data != null) {
+                    if (mLoginUserInfo.userNo.equals(data.serviceUserNo)) {
+                        ToastUtils.showToast(AddTaskActivity.this,"提交成功！");
+                    } else {
+                        showWarningDialog(data.serviceUserName,data.serviceUserTel);
+                    }
+                }
+            }
 
+            @Override
+            protected void onFailed(String errCode, String errMsg) {
+                super.onFailed(errCode, errMsg);
+                ToastUtils.showToast(AddTaskActivity.this,"提交失败！");
+            }
+
+            @Override
+            public void onFinish() {
+                mWaitDialog.dismiss();
             }
         });
+    }
+
+    private void showWarningDialog(String userName,String tel) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddTaskActivity.this);
+        builder.setTitle("提示");
+        builder.setMessage("当前车辆已保修，并指派 "+userName+"("+tel+"） 安排维修" );
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
