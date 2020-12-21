@@ -19,8 +19,10 @@ import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
+import com.yhjx.yhservice.api.domain.response.FaultCategory;
 import com.yhjx.yhservice.base.BaseActivity;
 import com.yhjx.yhservice.dialog.SelectCameraDialog;
+import com.yhjx.yhservice.dialog.SelectFaultTypeDialog;
 import com.yhjx.yhservice.dialog.WaitDialog;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.model.TaskOrder;
@@ -31,7 +33,9 @@ import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.view.AddImgView;
 import com.yhjx.yhservice.view.TranslucentActionBar;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -86,6 +90,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
 
     WaitDialog mWaitDialog;
     SelectCameraDialog selectCameraDialog;
+    SelectFaultTypeDialog selectFaultTypeDialog;
     ApiModel apiModel;
     /**
      * 图片地址
@@ -104,16 +109,27 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         mActionBar.setData("完工", R.mipmap.ic_back, null, 0, null, this);
         mActionBar.setStatusBarHeight(getStatusBarHeight());
 
+        mFaultTypeLL.setOnClickListener(mSelectedFaultType);
+
         mLocalAddImg.setAddPictureClickListener(mAddPictureClick);
         mPartsAddImg.setAddPictureClickListener(mAddPictureClick);
 
         mSubmitBtn.setOnClickListener(mSubmitClick);
         apiModel = new ApiModel(this);
         mWaitDialog = new WaitDialog(this);
-        selectCameraDialog = new SelectCameraDialog(EndTaskActivity.this);
+        selectCameraDialog = new SelectCameraDialog(this);
+        selectFaultTypeDialog = new SelectFaultTypeDialog(this);
         loadData();
+        asyncLoadFaultTypeData();
     }
 
+    @Override
+    public void onLeftClick() {
+        finish();
+    }
+
+    @Override
+    public void onRightClick() { }
 
     /**
      * 加载任务详情数据
@@ -152,6 +168,28 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         });
     }
 
+    /**
+     * 异步同步故障类型数据
+     */
+    private void asyncLoadFaultTypeData() {
+        if (RunningContext.mock) {
+            List<FaultCategory> faultCategories = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                FaultCategory faultCategory = new FaultCategory();
+                faultCategory.faultCategoryName = "发动机故障";
+                faultCategories.add(faultCategory);
+            }
+            selectFaultTypeDialog.setDataList(faultCategories);
+        } else {
+            RunningContext.threadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    // TODO 请求故障类型数据
+                }
+            });
+        }
+    }
+
     private void setData(TaskOrder order) {
         if (order == null) {
             return;
@@ -163,21 +201,26 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         mFaultDescTV.setText(getFormatValue(R.string.task_item_fault_desc,order.faultDesc));
     }
 
-    @Override
-    public void onLeftClick() {
-        finish();
-    }
 
-    @Override
-    public void onRightClick() { }
-
-
+    /**
+     * 提交
+     */
     View.OnClickListener mSubmitClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             // 开工之前先掉precheck接口查询下距离
             // 开工提交接口
+        }
+    };
 
+
+    /**
+     * 选择故障类型
+     */
+    View.OnClickListener mSelectedFaultType = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            selectFaultTypeDialog.show();
         }
     };
 

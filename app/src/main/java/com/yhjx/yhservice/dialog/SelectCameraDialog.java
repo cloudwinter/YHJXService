@@ -73,11 +73,12 @@ public class SelectCameraDialog extends Dialog implements View.OnClickListener {
         cancel.setOnClickListener(this);
         setContentView(view);
 
+        setCanceledOnTouchOutside(true);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = context.getResources().getDisplayMetrics().widthPixels;
         view.setLayoutParams(layoutParams);
-
         getWindow().setGravity(Gravity.BOTTOM);
+        getWindow().setWindowAnimations(R.style.selectFaultTypeDialogAnimation);
     }
 
     @Override

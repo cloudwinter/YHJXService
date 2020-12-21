@@ -38,6 +38,10 @@ public class ApiModel {
 
     private Context mContext;
 
+    public ApiModel() {
+
+    }
+
     public ApiModel(Context context) {
         mContext = context;
     }

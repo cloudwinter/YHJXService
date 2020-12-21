@@ -83,7 +83,7 @@ public class SplashActivity extends BaseActivity {
     private void animationEnd() {
         Intent intent = new Intent();
         if (mLoginUserInfo == null) {
-            intent.setClass(SplashActivity.this, StartTaskActivity.class);
+            intent.setClass(SplashActivity.this, EndTaskActivity.class);
 //            intent.setClass(SplashActivity.this, LoginActivity.class);
         } else {
             intent.setClass(SplashActivity.this, HomeActivity.class);
