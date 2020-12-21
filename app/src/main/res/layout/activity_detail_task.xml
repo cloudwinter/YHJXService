@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.yhjx.yhservice.view.TranslucentActionBar
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#fff2f3f7"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+
+            <LinearLayout
+                android:id="@+id/ll_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:paddingLeft="14dp"
+                android:paddingTop="11dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="16dp"
+                android:background="@mipmap/ic_start_end_task_top_bg"
+                >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="任务订单信息"
+                    android:textColor="#ffffffff"
+                    android:textSize="16dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_task_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="任务订单号：7587374326361"
+                    android:textColor="#baffffff"
+                    android:textSize="12dp"
+                    android:layout_marginTop="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_vin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="车架号： YH20200801001"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:layout_marginTop="55dp"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp">
+
+                    <TextView
+                        android:id="@+id/tv_customer_name"
+                        android:layout_width="84dp"
+                        android:layout_height="20dp"
+                        android:text="客户：张希新"
+                        android:textColor="#ff4b4f57"
+                        android:textSize="14sp"
+                        android:layout_weight="1"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_customer_tel"
+                        android:layout_width="135dp"
+                        android:layout_height="20dp"
+                        android:text="电话： 18809098787"
+                        android:textColor="#ff4b4f57"
+                        android:textSize="14sp"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text_fault_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="故障描述：发动机故障"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginRight="12dp"
+                    />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="维修信息"
+                android:textColor="#ff979797"
+                android:textSize="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="20dp"
+                />
+
+
+            <!-- 故障类型 -->
+            <LinearLayout
+                android:id="@+id/ll_fault_type"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="故障类型"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_fault_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发动起故障"
+                    android:textColor="#000000"
+                    android:textSize="14dp"
+                    android:layout_weight="1"
+                    />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="故障原因"
+                android:textColor="#ff4b4f57"
+                android:textSize="14dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="12dp"
+                android:background="@color/white"
+                android:layout_marginTop="1dp"
+                />
+
+
+            <!-- 故障原因Edit -->
+            <TextView
+                android:id="@+id/tv_fault_reason"
+                android:layout_width="match_parent"
+                android:layout_height="84dp"
+                android:text="发动起故障发动起故障发动起故障发动起故障发动起故障发动起故障发动起故障发动起故障发动起故障发动起故障发动起故障发动起故障"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:lineSpacingExtra="4dp"
+                />
+
+            <!-- 车架号 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="更换配件"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_part"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="刹车片"
+                    android:textColor="#000000"
+                    android:textSize="14dp"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+
+
+            <!-- 图片  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp">
+
+
+                <ImageView
+                    android:id="@+id/start_task_img1"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@mipmap/img_placeholder"/>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:id="@+id/start_task_img2"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@mipmap/img_placeholder"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp">
+
+
+                <ImageView
+                    android:id="@+id/end_task_img1"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@mipmap/img_placeholder"/>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
+
+                <ImageView
+                    android:id="@+id/end_task_img2"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@mipmap/img_placeholder"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

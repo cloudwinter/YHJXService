@@ -48,7 +48,10 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/main_sidingmenu_close"
         android:layout_alignParentRight="true"
-        android:padding="15dp"
+        android:paddingLeft="15dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="5dp"
+        android:paddingRight="8dp"
         android:visibility="gone"
         />
 

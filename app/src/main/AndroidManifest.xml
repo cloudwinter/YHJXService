@@ -51,6 +51,7 @@
         <activity android:name=".activity.EditUserInfoActivity"></activity>
         <activity android:name=".activity.StartTaskActivity"></activity>
         <activity android:name=".activity.EndTaskActivity"></activity>
+        <activity android:name=".activity.TaskDetailsActivity"></activity>
 
     </application>
 
