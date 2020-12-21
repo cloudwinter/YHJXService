@@ -22,6 +22,7 @@ import com.yhjx.yhservice.api.domain.response.ServiceUserUpdateStagnationRes;
 import com.yhjx.yhservice.base.BaseActivity;
 import com.yhjx.yhservice.dialog.WaitDialog;
 import com.yhjx.yhservice.model.LoginUserInfo;
+import com.yhjx.yhservice.model.StationModel;
 import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.view.TranslucentActionBar;
 
@@ -319,10 +320,19 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == STATION_REQUEST_STATION_CODE) {
-            // TODO
-        } else if (requestCode == STATION_REQUEST_STAGNATION_CODE) {
-            // TODO
+        if (requestCode == STATION_REQUEST_STATION_CODE || requestCode == STATION_REQUEST_STAGNATION_CODE) {
+            if (RESULT_OK == resultCode) {
+                StationModel stationModel = (StationModel) data.getSerializableExtra(StationSelectedActivity.RESULT_DATA_KEY);
+                if (stationModel != null) {
+                    stationId = stationModel.id;
+                    stationName = stationModel.stationName;
+                }
+                if (FROM_VALUE_MODIFY_STATION.equals(mFromValue)) {
+                    mNewUserStation.setText(stationName);
+                } else if (FROM_VALUE_MODIFY_STAGNATION.equals(mFromValue)) {
+                    mNewUserStagnationStation.setText(stationName);
+                }
+            }
         }
     }
 }
