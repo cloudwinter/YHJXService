@@ -14,6 +14,8 @@ import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStagnationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateTelReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleCancelReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleReceiveReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandlerRepairReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
@@ -33,6 +35,11 @@ import okhttp3.MultipartBody;
 
 
 public interface ApiService {
+
+    // 图片上传接口
+    @Multipart
+    @POST("/common/upload")
+    SSCall<BaseResult<UploadImgRes>> uploadImg(@Part MultipartBody.Part file);
 
 
     // 查询服务站列表
@@ -92,14 +99,20 @@ public interface ApiService {
     @POST("app/service/task/getTaskDetail")
     SSCall<BaseResult<TaskOrder>> queryTaskDetail(@Body TaskOrderDetailReq req);
 
-    // 图片上传接口
-    @Multipart
-    @POST("/common/upload")
-    SSCall<BaseResult<UploadImgRes>> uploadImg(@Part MultipartBody.Part file);
+
 
 
     // 新增保修单
+    @POST("/app/service/task/repair")
     SSCall<BaseResult<TaskOrder>> repair(@Body TaskHandlerRepairReq repairReq);
+
+    // 接单
+    @POST("/app/service/task/receive")
+    SSCall<BaseResult<Void>> receive(@Body TaskHandleReceiveReq repairReq);
+
+    // 取消
+    @POST("/app/service/task/stop")
+    SSCall<BaseResult<Void>> cancel(@Body TaskHandleCancelReq repairReq);
 
 
 }

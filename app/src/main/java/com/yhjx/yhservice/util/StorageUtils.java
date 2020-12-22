@@ -3,6 +3,7 @@ package com.yhjx.yhservice.util;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.model.LocationInfo;
 import com.yhjx.yhservice.model.LoginUserInfo;
 
@@ -80,6 +81,8 @@ public class StorageUtils {
     public static LocationInfo getCurrentLocation() {
         String val = PreferenceUtil.getString(KEY.LOCATION_KEY, null);
         if (TextUtils.isEmpty(val)) {
+            // 如果位置未空开启一次定位
+            RunningContext.sAMapLocationClient.startLocation();
             return null;
         }
         return new Gson().fromJson(val, LocationInfo.class);

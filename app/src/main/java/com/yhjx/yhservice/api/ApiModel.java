@@ -15,6 +15,8 @@ import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStagnationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateTelReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleCancelReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleReceiveReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandlerRepairReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
@@ -271,6 +273,36 @@ public class ApiModel {
         }
         ApiService apiService = buildApiService();
         SSCall<BaseResult<TaskOrder>> call = apiService.repair(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 接单接口
+     * @param req
+     * @param handler
+     */
+    public void receive(TaskHandleReceiveReq req, ResultHandler<Void> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Void>> call = apiService.receive(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 取消接口
+     * @param req
+     * @param handler
+     */
+    public void cancel(TaskHandleCancelReq req, ResultHandler<Void> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Void>> call = apiService.cancel(req);
         call.enqueue(handler);
     }
 

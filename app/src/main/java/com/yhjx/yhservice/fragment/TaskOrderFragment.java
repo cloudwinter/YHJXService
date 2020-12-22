@@ -1,10 +1,13 @@
 package com.yhjx.yhservice.fragment;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -12,16 +15,25 @@ import android.widget.TextView;
 import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
+import com.yhjx.yhservice.activity.EndTaskActivity;
+import com.yhjx.yhservice.activity.LoginActivity;
+import com.yhjx.yhservice.activity.StartTaskActivity;
 import com.yhjx.yhservice.adapter.TaskListAdapter;
 import com.yhjx.yhservice.api.ApiModel;
+import com.yhjx.yhservice.api.domain.request.TaskHandleCancelReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleReceiveReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
 import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.dialog.WaitDialog;
+import com.yhjx.yhservice.model.LocationInfo;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.model.TaskOrder;
+import com.yhjx.yhservice.util.LogUtils;
+import com.yhjx.yhservice.util.StorageUtils;
+import com.yhjx.yhservice.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +63,18 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
 
     LoginUserInfo mLoginUserInfo;
 
+    ApiModel mApiModel;
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.i(TAG,"onResume");
+        // 开启一次定位
+        RunningContext.sAMapLocationClient.startLocation();
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,11 +100,11 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
                 }
             }
         });
+        mApiModel = new ApiModel();
         mWaitDialog = new WaitDialog(mContext);
         initData();
         return view;
     }
-
 
     private View addHeader() {
         View headerView = getLayoutInflater().inflate(R.layout.view_task_list_header, null);
@@ -102,6 +126,9 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
 
 
     private void loadData() {
+        // 加载数据前开启一次定位
+        RunningContext.sAMapLocationClient.startLocation();
+
         if (RunningContext.mock) {
             mWaitDialog.show();
             try {
@@ -140,7 +167,7 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
         req.userNo = mLoginUserInfo.userNo;
         req.pageNo = 1;
         req.pageSize = 20;
-        new ApiModel(mContext).queryTaskOrder(req, new ResultHandler<TaskOrderRes>() {
+        mApiModel.queryTaskOrder(req, new ResultHandler<TaskOrderRes>() {
 
             @Override
             public void onStart() {
@@ -173,27 +200,110 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        // 下拉刷新 TODO
+        // 下拉刷新
         loadData();
     }
 
     @Override
     public void receiveClick(TaskOrder order) {
-        // TODO 接单
+        // 接单
+        // 1、获取当前的经纬度坐标
+        LocationInfo locationInfo =  StorageUtils.getCurrentLocation();
+        // 2、请求接单接口
+        TaskHandleReceiveReq req = new TaskHandleReceiveReq();
+        req.taskNo = order.taskNo;
+        req.userNo = mLoginUserInfo.userNo;
+        req.latitude = locationInfo.latitude;
+        req.longitude = locationInfo.longitude;
+        req.userAddress = locationInfo.address;
+        mApiModel.receive(req, new ResultHandler<Void>() {
+
+
+            @Override
+            protected void onSuccess(Void data) {
+                ToastUtils.showToast(mContext, "接单成功");
+                loadData();
+            }
+
+            @Override
+            protected void onFailed(String errCode, String errMsg) {
+                super.onFailed(errCode, errMsg);
+                ToastUtils.showToast(mContext, "接单失败");
+            }
+
+        });
+
     }
 
     @Override
     public void startClick(TaskOrder order) {
-        // TODO 开工
+        Intent intent = new Intent();
+        intent.putExtra(StartTaskActivity.TASK_NO_EXTRA_KEY, order.taskNo);
+        intent.setClass(mContext, StartTaskActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void endClick(TaskOrder order) {
-        // TODO 完工
+        Intent intent = new Intent();
+        intent.putExtra(StartTaskActivity.TASK_NO_EXTRA_KEY, order.taskNo);
+        intent.setClass(mContext, EndTaskActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void cancelClick(TaskOrder order) {
-        // TODO 取消
+        // 取消
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("退出");
+        builder.setMessage("您确定要取消当前任务");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                cancelTask();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        // 去除title
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
+    }
+
+    /**
+     * 取消任务
+     */
+    private void cancelTask() {
+        // 1、获取当前的经纬度坐标
+        LocationInfo locationInfo =  StorageUtils.getCurrentLocation();
+
+        TaskHandleCancelReq req = new TaskHandleCancelReq();
+        req.userNo = mLoginUserInfo.userNo;
+        req.userName = mLoginUserInfo.userName;
+
+        req.latitude = locationInfo.latitude;
+        req.longitude = locationInfo.longitude;
+        req.userAddress = locationInfo.address;
+        req.stopReason = "个人原因";
+
+        mApiModel.cancel(req, new ResultHandler<Void>() {
+            @Override
+            protected void onSuccess(Void data) {
+                ToastUtils.showToast(mContext,"取消成功");
+                loadData();
+            }
+
+            @Override
+            protected void onFailed(String errCode, String errMsg) {
+                super.onFailed(errCode, errMsg);
+                ToastUtils.showToast(mContext,"取消失败！");
+            }
+        });
     }
 }
