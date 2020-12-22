@@ -40,6 +40,7 @@ import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.view.AddImgView;
 import com.yhjx.yhservice.view.TranslucentActionBar;
+import com.yhjx.yhservice.view.YHButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -77,7 +78,7 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
     AddImgView mFaultAddImgView;
 
     @BindView(R.id.btn_submit)
-    Button mSubmitBtn;
+    YHButton mSubmitBtn;
     /**
      * 任务单号
      */

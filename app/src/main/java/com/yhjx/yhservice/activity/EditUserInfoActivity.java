@@ -25,6 +25,7 @@ import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.model.StationModel;
 import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.view.TranslucentActionBar;
+import com.yhjx.yhservice.view.YHButton;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -70,7 +71,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
     EditText mNewUserStagnationStation;
 
     @BindView(R.id.btn_save)
-    Button mSaveButton;
+    YHButton mSaveButton;
 
     LoginUserInfo mLoginUserInfo;
 
@@ -112,6 +113,12 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         }
         actionBar.setData(title, R.mipmap.ic_back, null, 0, null, null);
         actionBar.setStatusBarHeight(getStatusBarHeight());
+
+        mNewUserStation.setOnClickListener(this);
+        mNewUserStagnationStation.setOnClickListener(this);
+        mSaveButton.setOnClickListener(this);
+
+
         mLoginUserInfo = RunningContext.getsLoginUserInfo();
         mApiModel = new ApiModel(this);
         mWaitDialog = new WaitDialog(this);

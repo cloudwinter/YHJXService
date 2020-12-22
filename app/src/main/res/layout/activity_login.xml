@@ -79,7 +79,7 @@
         android:layout_marginTop="7dp"
         android:paddingLeft="17dp"/>
 
-    <Button
+    <com.yhjx.yhservice.view.YHButton
         android:id="@+id/btn_login"
         android:layout_width="244dp"
         android:layout_height="34dp"

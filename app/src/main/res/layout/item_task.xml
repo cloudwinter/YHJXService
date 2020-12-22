@@ -165,7 +165,7 @@
         android:gravity="center_vertical"
         >
 
-        <Button
+        <com.yhjx.yhservice.view.YHButton
             android:id="@+id/but_task_receive"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
@@ -178,7 +178,7 @@
             style="?android:attr/borderlessButtonStyle"
             />
 
-        <Button
+        <com.yhjx.yhservice.view.YHButton
             android:id="@+id/but_task_start"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
@@ -192,7 +192,7 @@
             android:enabled="false"
             />
 
-        <Button
+        <com.yhjx.yhservice.view.YHButton
             android:id="@+id/but_task_end"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
@@ -206,7 +206,7 @@
             android:enabled="false"
             />
 
-        <Button
+        <com.yhjx.yhservice.view.YHButton
             android:id="@+id/but_task_cancel"
             android:layout_width="wrap_content"
             android:layout_height="28dp"

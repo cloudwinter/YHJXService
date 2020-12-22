@@ -21,6 +21,7 @@ import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.view.LoggerView;
+import com.yhjx.yhservice.view.YHButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -66,7 +67,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     LinearLayout mDebugLL;
 
     @BindView(R.id.btn_login_out)
-    Button mLoginOutBT;
+    YHButton mLoginOutBT;
 
     @Nullable
     @Override

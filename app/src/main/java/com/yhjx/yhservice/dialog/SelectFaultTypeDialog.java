@@ -32,6 +32,8 @@ public class SelectFaultTypeDialog extends Dialog {
 
     private FaultCategory mSelectedItem = null;
 
+    private OnDialogItemClickListener onDialogItemClickListener;
+
     public SelectFaultTypeDialog(@NonNull Context context) {
         super(context, R.style.selectFaultTypeDialog);
         mContext = context;
@@ -42,6 +44,10 @@ public class SelectFaultTypeDialog extends Dialog {
         super(context, themeResId);
         mContext = context;
         initView();
+    }
+
+    public void setOnDialogItemClick(OnDialogItemClickListener onDialogItemClickListener) {
+        this.onDialogItemClickListener  = onDialogItemClickListener;
     }
 
     /**
@@ -79,6 +85,9 @@ public class SelectFaultTypeDialog extends Dialog {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             mSelectedItem = mDataList.get(position);
+            if (onDialogItemClickListener != null) {
+                onDialogItemClickListener.onDialogItemClick(mSelectedItem);
+            }
             dismiss();
         }
     };
@@ -91,6 +100,6 @@ public class SelectFaultTypeDialog extends Dialog {
     }
 
     public interface OnDialogItemClickListener {
-
+        public void onDialogItemClick(FaultCategory faultCategory);
     }
 }

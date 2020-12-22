@@ -16,6 +16,7 @@ import com.yhjx.yhservice.base.BaseListAdapter;
 import com.yhjx.yhservice.model.StationModel;
 import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.ToastUtils;
+import com.yhjx.yhservice.view.YHButton;
 
 
 /**
@@ -100,28 +101,28 @@ public class TaskListAdapter extends BaseListAdapter<TaskOrder> {
 
 
         // 操作按钮
-        Button receiveBtn = getChildView(convertView,R.id.but_task_receive);
+        YHButton receiveBtn = getChildView(convertView,R.id.but_task_receive);
         receiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mButtonClickListener.receiveClick(order);
             }
         });
-        Button startBtn = getChildView(convertView,R.id.but_task_start);
+        YHButton startBtn = getChildView(convertView,R.id.but_task_start);
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mButtonClickListener.startClick(order);
             }
         });
-        Button endBtn = getChildView(convertView,R.id.but_task_end);
+        YHButton endBtn = getChildView(convertView,R.id.but_task_end);
         endBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mButtonClickListener.endClick(order);
             }
         });
-        Button cancelBtn = getChildView(convertView,R.id.but_task_cancel);
+        YHButton cancelBtn = getChildView(convertView,R.id.but_task_cancel);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

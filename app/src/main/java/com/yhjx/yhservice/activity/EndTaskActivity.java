@@ -1,5 +1,7 @@
 package com.yhjx.yhservice.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -21,7 +23,6 @@ import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.request.TaskHandleCheckReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandleFinishReq;
-import com.yhjx.yhservice.api.domain.request.TaskHandleStartReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.response.FaultCategory;
 import com.yhjx.yhservice.api.domain.response.GetFaultCategoryListRes;
@@ -35,10 +36,13 @@ import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.DateUtil;
 import com.yhjx.yhservice.util.ImageUtil;
 import com.yhjx.yhservice.util.LogUtils;
+import com.yhjx.yhservice.util.StepTask;
 import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.ToastUtils;
+import com.yhjx.yhservice.util.YHUtils;
 import com.yhjx.yhservice.view.AddImgView;
 import com.yhjx.yhservice.view.TranslucentActionBar;
+import com.yhjx.yhservice.view.YHButton;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,7 +91,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
 
 
     @BindView(R.id.btn_submit)
-    Button mSubmitBtn;
+    YHButton mSubmitBtn;
 
     /**
      * 任务单号
@@ -106,6 +110,8 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
     String addViewType; // LOCALE/PART
     // 完工图片地址 多张用逗号分隔
     String endImgUrl;
+    // 选中的故障类型
+    FaultCategory mSelectedFaultCategory;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,6 +134,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         mWaitDialog = new WaitDialog(this);
         selectCameraDialog = new SelectCameraDialog(this);
         selectFaultTypeDialog = new SelectFaultTypeDialog(this);
+        selectFaultTypeDialog.setOnDialogItemClick(mOnDialogItemClickListener);
         // 启动定位
         RunningContext.sAMapLocationClient.startLocation();
         loadData();
@@ -204,8 +211,16 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
                             } else {
                                 List<FaultCategory> categoryList =  StorageUtils.getFaultCategoryList();
                                 if (categoryList != null) {
-                                    selectFaultTypeDialog.setDataList(data.list);
+                                    selectFaultTypeDialog.setDataList(categoryList);
                                 }
+                            }
+                        }
+
+                        @Override
+                        protected void onFailed(String errCode, String errMsg) {
+                            List<FaultCategory> categoryList =  StorageUtils.getFaultCategoryList();
+                            if (categoryList != null) {
+                                selectFaultTypeDialog.setDataList(categoryList);
                             }
                         }
                     });
@@ -237,6 +252,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
             }
             // 开工之前先掉precheck接口查询下距离
             // 开工提交接口
+            submitEnd();
         }
     };
 
@@ -250,7 +266,76 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         if (TextUtils.isEmpty(mPartsAddImg.getImageUrl())) {
             endImgUrl = endImgUrl+","+mPartsAddImg.getImageUrl();
         }
+
+        if (TextUtils.isEmpty(YHUtils.trim(mFaultReasonEV.getText().toString()))) {
+            ToastUtils.showToast(EndTaskActivity.this,"故障原因未填写");
+            return false;
+        }
         return true;
+    }
+
+    /**
+     * 提交
+     */
+    private void submitEnd() {
+        new StepTask(){
+            @Override
+            public void onStep1() {
+                apiModel.check(buildCheckReq(), new ResultHandler<Boolean>() {
+                    @Override
+                    protected void onSuccess(Boolean data) {
+                        if (data) {
+                            executeNextStep();
+                        } else {
+                            onFinish();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(EndTaskActivity.this);
+                            builder.setTitle("提示");
+                            builder.setMessage("当前距离车辆较远确认完工？");
+                            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    executeEnd();
+                                }
+                            });
+                            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onStep2() {
+                executeEnd();
+                onFinish();
+            }
+        }.execute(2);
+    }
+
+
+    /**
+     * 执行开工接口
+     */
+    private void executeEnd() {
+        apiModel.end(buildEndReq(), new ResultHandler<Void>() {
+            @Override
+            protected void onSuccess(Void data) {
+                ToastUtils.showToast(EndTaskActivity.this,"完工成功");
+                finish();
+                // TODO 返回需要刷新界面
+            }
+
+            @Override
+            protected void onFailed(String errCode, String errMsg) {
+                ToastUtils.showToast(EndTaskActivity.this,"完工失败！");
+            }
+        });
     }
 
 
@@ -283,6 +368,11 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         endReq.taskNo = taskNo;
         endReq.endImgPath = endImgUrl;
 
+        endReq.faultCategoryId = mSelectedFaultCategory.id;
+        endReq.faultCategoryName = mSelectedFaultCategory.faultCategoryName;
+        endReq.faultCause = YHUtils.trim(mFaultReasonEV.getText().toString());
+        endReq.faultAccessories = YHUtils.trim(mPartsEV.getText().toString());
+
         return endReq;
     }
 
@@ -295,6 +385,14 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         @Override
         public void onClick(View v) {
             selectFaultTypeDialog.show();
+        }
+    };
+
+    SelectFaultTypeDialog.OnDialogItemClickListener mOnDialogItemClickListener = new SelectFaultTypeDialog.OnDialogItemClickListener() {
+        @Override
+        public void onDialogItemClick(FaultCategory faultCategory) {
+            mSelectedFaultCategory = faultCategory;
+            mFaultTypeTV.setText(mSelectedFaultCategory.faultCategoryName);
         }
     };
 

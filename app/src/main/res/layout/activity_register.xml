@@ -162,7 +162,7 @@
                 android:paddingLeft="17dp"
                 android:editable="false"/>
 
-            <Button
+            <com.yhjx.yhservice.view.YHButton
                 android:id="@+id/btn_register"
                 android:layout_width="244dp"
                 android:layout_height="34dp"

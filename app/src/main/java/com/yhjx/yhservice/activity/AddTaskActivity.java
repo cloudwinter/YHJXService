@@ -30,6 +30,7 @@ import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.util.YHUtils;
 import com.yhjx.yhservice.view.TranslucentActionBar;
+import com.yhjx.yhservice.view.YHButton;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -55,7 +56,7 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
     @BindView(R.id.edit_vehicle_address)
     EditText mVehicleAddressEditText;
     @BindView(R.id.btn_submit)
-    Button mSubmitButton;
+    YHButton mSubmitButton;
 
     ApiModel mApiModel;
     // 车辆信息

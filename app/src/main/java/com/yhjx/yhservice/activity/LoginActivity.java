@@ -26,6 +26,7 @@ import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.PatternUtils;
 import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.util.YHUtils;
+import com.yhjx.yhservice.view.YHButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @BindView(R.id.edit_password)
     protected EditText editTextPassword;
     @BindView(R.id.btn_login)
-    protected Button buttonLogin;
+    protected YHButton buttonLogin;
     @BindView(R.id.text_register)
     protected TextView textViewRegister;
 

@@ -286,7 +286,7 @@
     </LinearLayout>
 
 
-    <Button
+    <com.yhjx.yhservice.view.YHButton
         android:id="@+id/btn_login_out"
         android:layout_width="244dp"
         android:layout_height="34dp"

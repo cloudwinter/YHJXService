@@ -21,6 +21,7 @@ import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.util.YHUtils;
 import com.yhjx.yhservice.view.TranslucentActionBar;
+import com.yhjx.yhservice.view.YHButton;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -51,7 +52,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected EditText editStagnationServiceStation;
 
     @BindView(R.id.btn_register)
-    protected Button buttonRegister;
+    protected YHButton buttonRegister;
     @BindView(R.id.text_login)
     protected TextView textViewLogin;
 
