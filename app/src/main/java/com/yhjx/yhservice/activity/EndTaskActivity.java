@@ -20,6 +20,7 @@ import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.response.FaultCategory;
+import com.yhjx.yhservice.api.domain.response.GetFaultCategoryListRes;
 import com.yhjx.yhservice.base.BaseActivity;
 import com.yhjx.yhservice.dialog.SelectCameraDialog;
 import com.yhjx.yhservice.dialog.SelectFaultTypeDialog;
@@ -29,6 +30,7 @@ import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.DateUtil;
 import com.yhjx.yhservice.util.ImageUtil;
 import com.yhjx.yhservice.util.LogUtils;
+import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.view.AddImgView;
 import com.yhjx.yhservice.view.TranslucentActionBar;
@@ -97,6 +99,8 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
      */
     String cameraUrl;
     String addViewType; // LOCALE/PART
+    // 完工图片地址 多张用逗号分隔
+    String endImgUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -184,7 +188,20 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
             RunningContext.threadPool().execute(new Runnable() {
                 @Override
                 public void run() {
-                    // TODO 请求故障类型数据
+                    apiModel.queryFaultCategoryList(mLoginUserInfo.userNo, new ResultHandler<GetFaultCategoryListRes>() {
+                        @Override
+                        protected void onSuccess(GetFaultCategoryListRes data) {
+                            if (data != null && data.list != null) {
+                                selectFaultTypeDialog.setDataList(data.list);
+                                StorageUtils.setFaultCategoryList(data.list);
+                            } else {
+                                List<FaultCategory> categoryList =  StorageUtils.getFaultCategoryList();
+                                if (categoryList != null) {
+                                    selectFaultTypeDialog.setDataList(data.list);
+                                }
+                            }
+                        }
+                    });
                 }
             });
         }

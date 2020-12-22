@@ -1,5 +1,7 @@
 package com.yhjx.yhservice.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,7 +12,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,15 +23,20 @@ import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.ApiModel;
+import com.yhjx.yhservice.api.domain.request.TaskHandleCheckReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleStartReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.base.BaseActivity;
 import com.yhjx.yhservice.dialog.SelectCameraDialog;
 import com.yhjx.yhservice.dialog.WaitDialog;
+import com.yhjx.yhservice.model.LocationInfo;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.DateUtil;
 import com.yhjx.yhservice.util.ImageUtil;
 import com.yhjx.yhservice.util.LogUtils;
+import com.yhjx.yhservice.util.StepTask;
+import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.view.AddImgView;
 import com.yhjx.yhservice.view.TranslucentActionBar;
@@ -82,6 +91,8 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
 
     String cameraUrl;
     String addViewType; // LOCALE/FAULT
+    // 开工图片 用,分割
+    private String startImgUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,6 +113,8 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
         apiModel = new ApiModel(this);
         mWaitDialog = new WaitDialog(this);
         selectCameraDialog = new SelectCameraDialog(StartTaskActivity.this);
+        // 启动定位
+        RunningContext.sAMapLocationClient.startLocation();
         loadData();
     }
 
@@ -177,11 +190,124 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
     View.OnClickListener mSubmitClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            // 开工之前先掉precheck接口查询下距离
-            // 开工提交接口
-
+            // 1、检查参数
+            if (!checkParam()) {
+                return;
+            }
+            // 2、提交请求
+            submitStart();
         }
     };
+
+
+    private boolean checkParam() {
+        if (TextUtils.isEmpty(mLocaleAddImgView.getImageUrl())) {
+            ToastUtils.showToast(StartTaskActivity.this,"人车现场图片未上传");
+            return false;
+        }
+        if (TextUtils.isEmpty(mFaultAddImgView.getImageUrl())) {
+            ToastUtils.showToast(StartTaskActivity.this,"故障图片未上传");
+            return false;
+        }
+        startImgUrl = mLocaleAddImgView.getImageUrl()+","+mFaultAddImgView.getImageUrl();
+        return true;
+    }
+
+
+
+    /**
+     * 1、开工之前先掉precheck接口查询下距离
+     * 2、开工提交接口
+     */
+    private void submitStart() {
+        new StepTask(){
+            @Override
+            public void onStep1() {
+                apiModel.check(buildCheckReq(), new ResultHandler<Boolean>() {
+                    @Override
+                    protected void onSuccess(Boolean data) {
+                        if (data) {
+                            executeNextStep();
+                        } else {
+                            onFinish();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(StartTaskActivity.this);
+                            builder.setTitle("提示");
+                            builder.setMessage("当前距离车辆较远确认开工？");
+                            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    executeStart();
+                                }
+                            });
+                            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onStep2() {
+                executeStart();
+                onFinish();
+            }
+        }.execute(2);
+    }
+
+    /**
+     * 执行开工接口
+     */
+    private void executeStart() {
+        apiModel.start(buildStartReq(), new ResultHandler<Void>() {
+            @Override
+            protected void onSuccess(Void data) {
+                ToastUtils.showToast(StartTaskActivity.this,"开工成功");
+                finish();
+                // TODO 返回需要刷新界面
+            }
+
+            @Override
+            protected void onFailed(String errCode, String errMsg) {
+                ToastUtils.showToast(StartTaskActivity.this,"开工失败！");
+            }
+        });
+    }
+
+    /**
+     *
+     * @return
+     */
+    private TaskHandleCheckReq buildCheckReq() {
+        TaskHandleCheckReq checkReq = new TaskHandleCheckReq();
+        checkReq.taskNo = taskNo;
+        checkReq.userNo = mLoginUserInfo.userNo;
+        LocationInfo locationInfo = StorageUtils.getCurrentLocation();
+        checkReq.longitude = locationInfo.longitude;
+        checkReq.latitude = locationInfo.latitude;
+        checkReq.userAddress = locationInfo.address;
+        return checkReq;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private TaskHandleStartReq buildStartReq() {
+        TaskHandleStartReq startReq = new TaskHandleStartReq();
+        LocationInfo locationInfo = StorageUtils.getCurrentLocation();
+        startReq.longitude = locationInfo.longitude;
+        startReq.latitude = locationInfo.latitude;
+        startReq.userNo = mLoginUserInfo.userNo;
+        startReq.taskNo = taskNo;
+        startReq.startImgPath = startImgUrl;
+        return startReq;
+    }
 
 
 
@@ -192,7 +318,6 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
 
     @Override
     public void onRightClick() { }
-
 
 
     private String getFormatValue(int resId,String... params) {

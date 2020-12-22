@@ -3,9 +3,13 @@ package com.yhjx.yhservice.util;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yhjx.yhservice.RunningContext;
+import com.yhjx.yhservice.api.domain.response.FaultCategory;
 import com.yhjx.yhservice.model.LocationInfo;
 import com.yhjx.yhservice.model.LoginUserInfo;
+
+import java.util.List;
 
 public class StorageUtils {
 
@@ -16,6 +20,8 @@ public class StorageUtils {
         public static String LOGIN_USER_KEY = "login_user";
         public static String LOGIN_USER_KEEP_TIME_KEY = "login_user_keep_time";
         public static String LOCATION_KEY = "location";
+        public static String FAULT_CATEGORY_KEY = "fault_category";
+
     }
 
     /**
@@ -88,6 +94,22 @@ public class StorageUtils {
         return new Gson().fromJson(val, LocationInfo.class);
     }
 
+
+    public static void setFaultCategoryList(List<FaultCategory> categoryList) {
+        if (categoryList != null && categoryList.size() <= 0) {
+            return;
+        }
+        String val = new Gson().toJson(categoryList);
+        PreferenceUtil.commitString(KEY.FAULT_CATEGORY_KEY, val);
+    }
+
+    public static List<FaultCategory> getFaultCategoryList() {
+        String val = PreferenceUtil.getString(KEY.FAULT_CATEGORY_KEY, null);
+        if (TextUtils.isEmpty(val)) {
+            return null;
+        }
+        return new Gson().fromJson(val, new TypeToken<List<FaultCategory>>(){}.getType());
+    }
 
     public static void clearLogin() {
         PreferenceUtil.commitString(KEY.LOGIN_USER_KEY,null);

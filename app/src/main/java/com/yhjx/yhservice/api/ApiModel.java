@@ -8,6 +8,7 @@ import com.yhjx.networker.callback.BaseResult;
 import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.domain.request.GetCarInfoReq;
+import com.yhjx.yhservice.api.domain.request.GetFaultCategoryListReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserRegisterReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdatePasswordReq;
@@ -16,13 +17,17 @@ import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateTelReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandleCancelReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleCheckReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleFinishReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandleReceiveReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleStartReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandlerRepairReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.request.UpdateLocationReq;
 import com.yhjx.yhservice.api.domain.response.GetCarInfoRes;
+import com.yhjx.yhservice.api.domain.response.GetFaultCategoryListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
@@ -72,6 +77,23 @@ public class ApiModel {
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", filePath, requestFile);
 
         SSCall<BaseResult<UploadImgRes>> call = apiService.uploadImg(body);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 查询故障类别信息
+     * @param req
+     * @param handler
+     */
+    public void queryFaultCategoryList(String userNo, ResultHandler<GetFaultCategoryListRes> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        GetFaultCategoryListReq req = new GetFaultCategoryListReq();
+        req.userNo = userNo;
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<GetFaultCategoryListRes>> call = apiService.queryFaultCategoryList(req);
         call.enqueue(handler);
     }
 
@@ -303,6 +325,52 @@ public class ApiModel {
         }
         ApiService apiService = buildApiService();
         SSCall<BaseResult<Void>> call = apiService.cancel(req);
+        call.enqueue(handler);
+    }
+
+
+
+    /**
+     * 取消接口
+     * @param req
+     * @param handler
+     */
+    public void check(TaskHandleCheckReq req, ResultHandler<Boolean> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Boolean>> call = apiService.check(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 取消接口
+     * @param req
+     * @param handler
+     */
+    public void start(TaskHandleStartReq req, ResultHandler<Void> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Void>> call = apiService.start(req);
+        call.enqueue(handler);
+    }
+
+
+    /**
+     * 取消接口
+     * @param req
+     * @param handler
+     */
+    public void end(TaskHandleFinishReq req, ResultHandler<Void> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<Void>> call = apiService.finish(req);
         call.enqueue(handler);
     }
 

@@ -7,6 +7,7 @@ import com.yhjx.networker.http.Multipart;
 import com.yhjx.networker.http.POST;
 import com.yhjx.networker.http.Part;
 import com.yhjx.yhservice.api.domain.request.GetCarInfoReq;
+import com.yhjx.yhservice.api.domain.request.GetFaultCategoryListReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserLoginReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserRegisterReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdatePasswordReq;
@@ -15,13 +16,17 @@ import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateStationReq;
 import com.yhjx.yhservice.api.domain.request.ServiceUserUpdateTelReq;
 import com.yhjx.yhservice.api.domain.request.StationListReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandleCancelReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleCheckReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleFinishReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandleReceiveReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleStartReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandlerRepairReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.request.UpdateLocationReq;
 import com.yhjx.yhservice.api.domain.response.GetCarInfoRes;
+import com.yhjx.yhservice.api.domain.response.GetFaultCategoryListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUser;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
@@ -40,6 +45,10 @@ public interface ApiService {
     @Multipart
     @POST("/common/upload")
     SSCall<BaseResult<UploadImgRes>> uploadImg(@Part MultipartBody.Part file);
+
+    // 查询故障类型列表
+    @POST("app/service/common/getFaultCategoryList")
+    SSCall<BaseResult<GetFaultCategoryListRes>> queryFaultCategoryList(@Body GetFaultCategoryListReq req);
 
 
     // 查询服务站列表
@@ -113,6 +122,19 @@ public interface ApiService {
     // 取消
     @POST("/app/service/task/stop")
     SSCall<BaseResult<Void>> cancel(@Body TaskHandleCancelReq repairReq);
+
+    // 开工和完工的precheck接口
+    @POST("/app/service/task/check")
+    SSCall<BaseResult<Boolean>> check(@Body TaskHandleCheckReq checkReq);
+
+
+    // 开工接口
+    @POST("/app/service/task/start")
+    SSCall<BaseResult<Void>> start(@Body TaskHandleStartReq startReq);
+
+    // 完工接口
+    @POST("/app/service/task/finish")
+    SSCall<BaseResult<Void>> finish(@Body TaskHandleFinishReq finishReq);
 
 
 }
