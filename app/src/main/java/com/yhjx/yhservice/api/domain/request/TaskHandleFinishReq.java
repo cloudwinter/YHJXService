@@ -13,45 +13,45 @@ public class TaskHandleFinishReq implements Serializable {
     /**
      * 任务单号
      */
-    private String taskNo;
+    public String taskNo;
 
     /**
      * 维修人员用户编号
      */
-    private String userNo;
+    public String userNo;
 
     /**
      * 完工图片，多张图片逗号分割
      */
-    private String endImgPath;
+    public String endImgPath;
     /**
      * 完工经纬度
      */
-    private String longitude;
+    public String longitude;
 
     /**
      * 完工经纬度
      */
-    private String latitude;
+    public String latitude;
     /**
      * 地址
      */
-    private String userAddress;
+    public String userAddress;
     /**
      * 故障类别id
      */
-    private Integer faultCategoryId;
+    public Integer faultCategoryId;
     /**
      * 故障类别名称
      */
-    private String faultCategoryName;
+    public String faultCategoryName;
     /**
      * 故障原因
      */
-    private String faultCause;
+    public String faultCause;
     /**
      * 故障配件
      */
-    private String faultAccessories;
+    public String faultAccessories;
 
 }

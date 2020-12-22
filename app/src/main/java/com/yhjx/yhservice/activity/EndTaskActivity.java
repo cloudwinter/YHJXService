@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,6 +19,9 @@ import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.ApiModel;
+import com.yhjx.yhservice.api.domain.request.TaskHandleCheckReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleFinishReq;
+import com.yhjx.yhservice.api.domain.request.TaskHandleStartReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.response.FaultCategory;
 import com.yhjx.yhservice.api.domain.response.GetFaultCategoryListRes;
@@ -25,6 +29,7 @@ import com.yhjx.yhservice.base.BaseActivity;
 import com.yhjx.yhservice.dialog.SelectCameraDialog;
 import com.yhjx.yhservice.dialog.SelectFaultTypeDialog;
 import com.yhjx.yhservice.dialog.WaitDialog;
+import com.yhjx.yhservice.model.LocationInfo;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.DateUtil;
@@ -123,6 +128,8 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         mWaitDialog = new WaitDialog(this);
         selectCameraDialog = new SelectCameraDialog(this);
         selectFaultTypeDialog = new SelectFaultTypeDialog(this);
+        // 启动定位
+        RunningContext.sAMapLocationClient.startLocation();
         loadData();
         asyncLoadFaultTypeData();
     }
@@ -225,10 +232,60 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
     View.OnClickListener mSubmitClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (!checkParam()) {
+                return;
+            }
             // 开工之前先掉precheck接口查询下距离
             // 开工提交接口
         }
     };
+
+    private boolean checkParam() {
+        endImgUrl = "";
+        if (TextUtils.isEmpty(mLocalAddImg.getImageUrl())) {
+            ToastUtils.showToast(EndTaskActivity.this,"现场作业图片未上传");
+            return false;
+        }
+        endImgUrl = mLocalAddImg.getImageUrl();
+        if (TextUtils.isEmpty(mPartsAddImg.getImageUrl())) {
+            endImgUrl = endImgUrl+","+mPartsAddImg.getImageUrl();
+        }
+        return true;
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    private TaskHandleCheckReq buildCheckReq() {
+        TaskHandleCheckReq checkReq = new TaskHandleCheckReq();
+        checkReq.taskNo = taskNo;
+        checkReq.userNo = mLoginUserInfo.userNo;
+        LocationInfo locationInfo = StorageUtils.getCurrentLocation();
+        checkReq.longitude = locationInfo.longitude;
+        checkReq.latitude = locationInfo.latitude;
+        checkReq.userAddress = locationInfo.address;
+        return checkReq;
+    }
+
+    /**
+     *
+     * @return
+     */
+    private TaskHandleFinishReq buildEndReq() {
+        TaskHandleFinishReq endReq = new TaskHandleFinishReq();
+        LocationInfo locationInfo = StorageUtils.getCurrentLocation();
+        endReq.longitude = locationInfo.longitude;
+        endReq.latitude = locationInfo.latitude;
+        endReq.userAddress = locationInfo.address;
+        endReq.userNo = mLoginUserInfo.userNo;
+        endReq.taskNo = taskNo;
+        endReq.endImgPath = endImgUrl;
+
+        return endReq;
+    }
+
 
 
     /**

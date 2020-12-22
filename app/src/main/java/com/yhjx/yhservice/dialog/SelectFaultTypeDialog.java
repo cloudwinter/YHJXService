@@ -89,4 +89,8 @@ public class SelectFaultTypeDialog extends Dialog {
         // 清空选中
         mSelectedItem = null;
     }
+
+    public interface OnDialogItemClickListener {
+
+    }
 }
