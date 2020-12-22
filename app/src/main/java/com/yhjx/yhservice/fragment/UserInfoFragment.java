@@ -144,7 +144,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
      * 更新版本
      */
     private void updateVersion() {
-        // TODO
+        // TODO 版本更新
     }
 
 

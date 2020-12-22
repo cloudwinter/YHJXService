@@ -96,7 +96,6 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                   // TODO 焦点移开事件
                     String vin = mVinEditText.getText().toString();
                     if (!TextUtils.isEmpty(vin)) {
                         mVin = vin;

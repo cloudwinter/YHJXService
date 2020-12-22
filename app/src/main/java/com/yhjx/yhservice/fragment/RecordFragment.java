@@ -163,7 +163,7 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
 
     @Override
     public void onRefresh() {
-        // TODO 上拉刷新
+        // 上拉刷新
         loadData();
     }
 

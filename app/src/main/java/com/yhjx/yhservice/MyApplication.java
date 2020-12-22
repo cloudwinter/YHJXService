@@ -247,9 +247,9 @@ public class MyApplication extends Application {
             自定义日志将会在Logcat中输出。
             建议在测试阶段建议设置成true，发布时设置为false。*/
 
-        CrashReport.initCrashReport(getApplicationContext(), "53df956f2f", true ,strategy);
+        CrashReport.initCrashReport(getApplicationContext(), "2629703778", true ,strategy);
 
-        Bugly.init(getApplicationContext(), "53df956f2f", false);
+        Bugly.init(getApplicationContext(), "2629703778", false);
     }
 
 }
