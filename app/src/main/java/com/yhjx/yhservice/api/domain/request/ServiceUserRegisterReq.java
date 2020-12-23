@@ -30,8 +30,18 @@ public class ServiceUserRegisterReq implements Serializable {
     public Integer stationId;
 
     /**
+     * 归属服务站
+     */
+    public String stationName;
+
+    /**
      * 驻点服务站id
      */
     public Integer stagnationStationId;
+
+    /**
+     * 驻点名称
+     */
+    public String stagnationStationName;
 
 }

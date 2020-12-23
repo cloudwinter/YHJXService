@@ -123,12 +123,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         req.userPassword = YHUtils.trim(editUserPassword.getText().toString());
         req.userTel = YHUtils.trim(editUserTel.getText().toString());
 
-        if (YHUtils.validParams(req.userName, req.userPassword, req.userTel)) {
+        if (!YHUtils.validParams(req.userName, req.userPassword, req.userTel)) {
             ToastUtils.showToast(this,"必填参数缺失！");
             return null;
         }
         req.stationId = mSelectedStationModel.id;
+        req.stationName = mSelectedStationModel.stationName;
         req.stagnationStationId = mSelectedStagnationStationModel.id;
+        req.stagnationStationName = mSelectedStagnationStationModel.stationName;
         return req;
     }
 

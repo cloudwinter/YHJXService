@@ -154,7 +154,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (user == null) {
                     ToastUtils.showToast(LoginActivity.this,"登录失败，请重试！");
                 } else {
-                    if ("2".equals(user.userFlag)) {
+                    if ("1".equals(user.userFlag)) {
                         ToastUtils.showToast(LoginActivity.this,"登录成功");
                         // 保存用户信息
                         LoginUserInfo loginUserInfo = copyByServiceUser(user);

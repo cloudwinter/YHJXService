@@ -3,10 +3,10 @@
 buildscript {
     
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }  // <= here
-        maven { url 'https://maven.aliyun.com/repository/google' }  // <= here
-//        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-//        maven { url 'http://nexus.cbpmgt.com/nexus/content/groups/public' }
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }  // <= here
+//        maven { url 'https://maven.aliyun.com/repository/google' }  // <= here
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://nexus.cbpmgt.com/nexus/content/groups/public' }
         mavenCentral()
         google()
         jcenter()
@@ -22,10 +22,10 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }  // <= here
-        maven { url 'https://maven.aliyun.com/repository/google' }  // <= here
-//        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-//        maven { url 'http://nexus.cbpmgt.com/nexus/content/groups/public' }
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }  // <= here
+//        maven { url 'https://maven.aliyun.com/repository/google' }  // <= here
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'http://nexus.cbpmgt.com/nexus/content/groups/public' }
         mavenCentral()
         google()
         jcenter()
