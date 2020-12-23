@@ -35,6 +35,11 @@ public class ServiceUser implements Serializable {
     public Integer stationId;
 
     /**
+     * 归属服务站名称
+     */
+    public String stationName;
+
+    /**
      * 维修人员驻点服务站唯一id
      */
     public Integer stagnationStationId;

@@ -109,7 +109,7 @@ public class YhjxService extends JobService {
             }
             AMapLocation mapLocation = bundle.getParcelable(KEY_LOCATION_DATA);
             LogUtils.i(TAG,"mLocationReceiver.mapLocation:"+mapLocation);
-            if (mapLocation != null && TextUtils.isEmpty(mapLocation.getAddress())) {
+            if (mapLocation != null && !TextUtils.isEmpty(mapLocation.getAddress())) {
                 LocationInfo locationInfo = new LocationInfo();
                 locationInfo.address = mapLocation.getAddress();
                 locationInfo.city = mapLocation.getCity();

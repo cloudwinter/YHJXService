@@ -16,6 +16,8 @@ import com.yhjx.yhservice.util.StorageUtils;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import androidx.annotation.RequiresApi;
+
 public class RunningContext {
 
     public static boolean mock = false;
@@ -192,11 +194,17 @@ public class RunningContext {
     /**
      * 获取版本号Code
      */
+    @RequiresApi(api = Build.VERSION_CODES.P)
     public static long getVersionCode() {
         try {
             PackageManager manager = sAppContext.getPackageManager();
             PackageInfo info = manager.getPackageInfo(sAppContext.getPackageName(), 0);
-            long version = info.getLongVersionCode();
+            long version = 0;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                version = info.getLongVersionCode();
+            } else {
+                version = info.versionCode;
+            }
             return version;
         } catch (Exception e) {
             e.printStackTrace();

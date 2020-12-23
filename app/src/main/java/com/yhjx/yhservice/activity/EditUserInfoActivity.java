@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 /**
  * 用户信息编写
  */
-public class EditUserInfoActivity extends BaseActivity implements View.OnClickListener {
+public class EditUserInfoActivity extends BaseActivity implements View.OnClickListener, TranslucentActionBar.ActionBarClickListener {
 
     public static final int STATION_REQUEST_STATION_CODE = 103;
     public static final int STATION_REQUEST_STAGNATION_CODE = 104;
@@ -96,7 +96,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_edit_user);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        mFromValue = intent.getStringExtra("EXTRA_FROM_KEY");
+        mFromValue = intent.getStringExtra(EXTRA_FROM_KEY);
         String title = "";
         if (FROM_VALUE_MODIFY_PHONE.equals(mFromValue)) {
             newUserTelLL.setVisibility(View.VISIBLE);
@@ -111,7 +111,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
             newUserStagnationStationLL.setVisibility(View.VISIBLE);
             title = "修改驻点";
         }
-        actionBar.setData(title, R.mipmap.ic_back, null, 0, null, null);
+        actionBar.setData(title, R.mipmap.ic_back, null, 0, null, this);
         actionBar.setStatusBarHeight(getStatusBarHeight());
 
         mNewUserStation.setOnClickListener(this);
@@ -342,4 +342,12 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
             }
         }
     }
+
+    @Override
+    public void onLeftClick() {
+        finish();
+    }
+
+    @Override
+    public void onRightClick() { }
 }
