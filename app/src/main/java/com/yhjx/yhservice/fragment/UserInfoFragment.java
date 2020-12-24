@@ -76,7 +76,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         ButterKnife.bind(this, view);
         mUserTelLL.setOnClickListener(this);
         mUserPasswordLL.setOnClickListener(this);
-        mUserStagnationStationLL.setOnClickListener(this);
+        mUserStationLL.setOnClickListener(this);
         mUserStagnationStationTV.setOnClickListener(this);
         mAppVersionLL.setOnClickListener(this);
         mDebugLL.setOnClickListener(this);
@@ -101,7 +101,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         mUserTelTV.setText(loginUserInfo.userTel);
         mUserStationTV.setText(loginUserInfo.stationName);
         mUserStagnationStationTV.setText(loginUserInfo.stagnationStationName);
-        mAppVersionTV.setText(RunningContext.getVersionCode() + "");
+        mAppVersionTV.setText(RunningContext.getVersionName());
     }
 
     @Override

@@ -56,11 +56,11 @@ public interface ApiService {
     SSCall<BaseResult<ServiceStationListRes>> queryStationList(@Body StationListReq req);
 
     // 查询车辆信息
-    @POST("app/service/common/stationList")
+    @POST("app/service/common/getVehicleInfo")
     SSCall<BaseResult<GetCarInfoRes>> queryVehicleInfo(@Body GetCarInfoReq req);
 
     // 上报坐标信息
-    @POST("app/service/common/stationList")
+    @POST("app/service/common/updateLocation")
     SSCall<BaseResult<Void>> updateLocation(@Body UpdateLocationReq req);
 
 

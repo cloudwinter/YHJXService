@@ -15,12 +15,12 @@ public class UpdateLocationReq implements Serializable {
     /**
      * 经纬度
      */
-    public String longitude;
+    public String userLongitude;
 
     /**
      * 经纬度
      */
-    public String latitude;
+    public String userLatitude;
 
     /**
      * 经纬度
