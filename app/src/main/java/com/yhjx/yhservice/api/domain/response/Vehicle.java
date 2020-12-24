@@ -46,7 +46,7 @@ public class Vehicle implements Serializable {
     /**
      * 销售时间
      */
-    public Date saleTime;
+    public String saleTime;
 
     /**
      * 车辆保修状态（0正常在保 1过保）
@@ -73,20 +73,4 @@ public class Vehicle implements Serializable {
      */
     public String dealerAddress;
 
-    public String vehicleAddress;
-
-    public String vehicleLongitude;
-
-    public String vehicleLatitude;
-
-    public Date coordinateUpdateTime;
-
-    /* 保修状态
-     * (1正常状态，2报修状态,3维修状态)
-     */
-    public String vehicleIssueStatus;
-    /**
-     * 车辆状态（0停止 1工作 2故障）
-     */
-    public String vehicleStatus;
 }

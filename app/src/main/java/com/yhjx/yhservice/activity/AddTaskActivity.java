@@ -2,8 +2,10 @@ package com.yhjx.yhservice.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
@@ -55,6 +58,8 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
     EditText mVehicleNameEditText;
     @BindView(R.id.edit_vehicle_address)
     EditText mVehicleAddressEditText;
+    @BindView(R.id.img_vehicle_address)
+    ImageView mVehicleAddressImageView;
     @BindView(R.id.btn_submit)
     YHButton mSubmitButton;
 
@@ -92,6 +97,7 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
         mWaitDialog = new WaitDialog(this);
         mApiModel = new ApiModel();
         mSubmitButton.setOnClickListener(mSubmitClicker);
+        mVehicleAddressImageView.setOnClickListener(mAddressImgClick);
         mVinEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -159,6 +165,24 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
             req.userNo = mLoginUserInfo.userNo;
             req.userName = mLoginUserInfo.userName;
             submit(req);
+        }
+    };
+
+    private View.OnClickListener mAddressImgClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (mCardInfo.vehicleState != null) {
+                // 跳转到地图界面
+                String coordinate = YHUtils.getFormatValue(R.string.intent_map_coordinate_str,mCardInfo.vehicleState.vehicleLatitude,mCardInfo.vehicleState.vehicleLongitude);
+                Uri uri=Uri.parse(coordinate);  //打开地图定位
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
+                ComponentName cn = mapIntent.resolveActivity(getPackageManager());
+                if(cn == null){
+                    ToastUtils.showToast(AddTaskActivity.this,"请先安装第三方导航软件");
+                }else{
+                    startActivity(mapIntent);
+                }
+            }
         }
     };
 

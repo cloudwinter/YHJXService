@@ -15,7 +15,7 @@ public class VehicleState implements Serializable {
 
     public String vehicleLatitude;
 
-    public Date coordinateUpdateTime;
+    public String coordinateUpdateTime;
 
     public String vehicleName;
     /**
@@ -34,11 +34,11 @@ public class VehicleState implements Serializable {
 
     public String createBy;
 
-    public Date createTime;
+    public String createTime;
 
     public String updateBy;
 
-    public Date updateTime;
+    public String updateTime;
 
     public String remark;
 
