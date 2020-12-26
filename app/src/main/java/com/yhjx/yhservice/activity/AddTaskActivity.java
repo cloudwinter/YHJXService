@@ -153,13 +153,13 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
 
             Vehicle vehicle = mCardInfo.vehicle;
             VehicleState vehicleState = mCardInfo.vehicleState;
-            if (checkParam(req)) {
+            if (!checkParam(req)) {
                 return;
             }
             req.vehicleAddress = vehicleState.vehicleAddress;
             req.vehicleLatitude = vehicleState.vehicleLatitude;
             req.vehicleLongitude = vehicleState.vehicleLongitude;
-            req.vehicleName = vehicleState.vehicleName;
+            req.vehicleName = vehicle.vehicleName;
             req.vehicleType = vehicle.vehicleType;
 
             req.userNo = mLoginUserInfo.userNo;

@@ -9,7 +9,7 @@
         android:id="@+id/text_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="孙苗苗，欢迎您！"
+        android:text="欢迎您！"
         android:textColor="#ff242831"
         android:textSize="14sp"
         />
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:textColor="#E94A5D"
             android:textSize="14sp"
-            android:text="2个"/>
+            android:text=""/>
 
     </LinearLayout>
 

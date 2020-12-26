@@ -128,41 +128,6 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
     private void loadData() {
         // 加载数据前开启一次定位
         RunningContext.sAMapLocationClient.startLocation();
-
-        if (RunningContext.mock) {
-            mWaitDialog.show();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            final TaskOrderRes data = new TaskOrderRes();
-            data.count = 2;
-            List<TaskOrder> list = new ArrayList<>();
-            data.list = list;
-            for (int i = 0; i < 2; i++) {
-                TaskOrder order = new TaskOrder();
-                order.taskNo = "T20201201";
-                order.customerTel = "15261815429";
-                order.customerName = "张三";
-                order.taskStatus = "1";
-                order.vehicleAddress = "江苏省南京市雨花区丰盛商汇501";
-                order.vehicleVin = "YH202012031111";
-                order.vehicleLatitude = "39.948131";
-                order.vehicleLongitude = "116.435889";
-                order.faultDesc = "发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障";
-                list.add(order);
-            }
-            mTaskLV.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mWaitDialog.dismiss();
-                    swipeRefreshLayout.setRefreshing(false);
-                    setData(data);
-                }
-            },1000);
-            return;
-        }
         TaskOrderReq req = new TaskOrderReq();
         req.userNo = mLoginUserInfo.userNo;
         req.pageNo = 1;
