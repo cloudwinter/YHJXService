@@ -16,6 +16,7 @@ import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.activity.EndTaskActivity;
+import com.yhjx.yhservice.activity.HomeActivity;
 import com.yhjx.yhservice.activity.LoginActivity;
 import com.yhjx.yhservice.activity.StartTaskActivity;
 import com.yhjx.yhservice.adapter.TaskListAdapter;
@@ -277,7 +278,7 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (REQUEST_CODE == 104) {
+        if (REQUEST_CODE == 104 || REQUEST_CODE == HomeActivity.ADD_REQUEST_CODE ) {
             // 刷新界面
             loadData();
         }

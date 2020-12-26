@@ -111,6 +111,9 @@ dependencies {
     // 高德地图定位
     implementation 'com.amap.api:location:latest.integration'
 
+    // app更新
+    implementation 'com.qianwen:update-app:3.5.2'
+
 
     // test
     testImplementation 'junit:junit:4.12'

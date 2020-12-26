@@ -33,6 +33,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     public static final String TAG = "HomeActivity";
 
+    public static int ADD_REQUEST_CODE = 3;
+
     @BindView(R.id.action_bar)
     TranslucentActionBar actionBar;
 
@@ -165,6 +167,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onRightClick() {
         Intent intent = new Intent(HomeActivity.this, AddTaskActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,ADD_REQUEST_CODE);
     }
 }

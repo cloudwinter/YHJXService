@@ -13,10 +13,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.vector.update_app.UpdateAppManager;
 import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.activity.EditUserInfoActivity;
 import com.yhjx.yhservice.activity.LoginActivity;
+import com.yhjx.yhservice.api.UpdateHttpManager;
 import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.LogUtils;
@@ -146,6 +148,16 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
      */
     private void updateVersion() {
         // TODO 版本更新
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity((Activity) mContext)
+                //更新地址
+                .setUpdateUrl("url")
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateHttpManager())
+                .build()
+                .update();
     }
 
 
