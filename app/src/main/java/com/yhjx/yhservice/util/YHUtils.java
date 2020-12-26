@@ -54,7 +54,7 @@ public class YHUtils {
     }
 
 
-    public static String getFormatValue(int resId, String... params) {
+    public static String getFormatValue(int resId, Object... params) {
         return String.format(RunningContext.sAppContext.getString(resId), params);
     }
 

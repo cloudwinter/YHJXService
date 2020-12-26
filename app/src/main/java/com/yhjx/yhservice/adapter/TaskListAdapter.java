@@ -168,7 +168,7 @@ public class TaskListAdapter extends BaseListAdapter<TaskOrder> {
     }
 
 
-    private String getFormatValue(int resId,String... params) {
+    private String getFormatValue(int resId,Object... params) {
         return String.format(getString(resId),params);
     }
 

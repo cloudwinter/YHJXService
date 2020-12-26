@@ -1,5 +1,6 @@
 package com.yhjx.yhservice.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
+import com.yhjx.yhservice.activity.TaskDetailsActivity;
 import com.yhjx.yhservice.adapter.RecordListAdapter;
 import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
@@ -45,6 +47,8 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
     WaitDialog mWaitDialog;
 
     LoginUserInfo mLoginUserInfo;
+
+    List<TaskOrder> mTaskOrderList;
 
 
     private View addHeader() {
@@ -97,40 +101,6 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
 
 
     private void loadData() {
-        if (RunningContext.mock) {
-            mWaitDialog.show();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            final TaskRecordRes data = new TaskRecordRes();
-            data.count = 2;
-            List<TaskOrder> list = new ArrayList<>();
-            data.list = list;
-            for (int i = 0; i < 2; i++) {
-                TaskOrder order = new TaskOrder();
-                order.taskNo = "T20201201";
-                order.customerTel = "15261815429";
-                order.customerName = "张三";
-                order.taskStatus = "1";
-                order.vehicleAddress = "江苏省南京市雨花区丰盛商汇501";
-                order.vehicleVin = "YH202012031111";
-                order.vehicleLatitude = "39.948131";
-                order.vehicleLongitude = "116.435889";
-                order.faultDesc = "发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障发动机故障";
-                list.add(order);
-            }
-            mRecordLV.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mWaitDialog.dismiss();
-                    swipeRefreshLayout.setRefreshing(false);
-                    setData(data);
-                }
-            },1000);
-            return;
-        }
         TaskRecordReq req = new TaskRecordReq();
         req.userNo = mLoginUserInfo.userNo;
         req.pageNo = 1;
@@ -157,6 +127,7 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
 
 
     private void setData(TaskRecordRes data) {
+        mTaskOrderList = data.list;
         mRecordListAdapter.setData(data.list);
     }
 
@@ -170,7 +141,10 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
     AdapterView.OnItemClickListener mOnItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            Intent intent = new Intent();
+            intent.setClass(mContext, TaskDetailsActivity.class);
+            intent.putExtra(TaskDetailsActivity.TASK_ORDER_EXTRA_KEY, mTaskOrderList.get(position-1));
+            startActivity(intent);
         }
     };
 }

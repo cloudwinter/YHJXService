@@ -89,12 +89,12 @@ public class TaskOrder implements Serializable {
     /**
      * 指派时间
      */
-    public Date designateTime;
+    public String designateTime;
 
     /**
      * 接单时间
      */
-    public Date receivedTime;
+    public String receivedTime;
 
     /**
      * 接单坐标（经,纬）(longitude,latitude)
@@ -109,7 +109,7 @@ public class TaskOrder implements Serializable {
     /**
      * 开工时间
      */
-    public Date startTime;
+    public String startTime;
 
     /**
      * 开工坐标（经,纬）(longitude,latitude)
@@ -124,7 +124,7 @@ public class TaskOrder implements Serializable {
     /**
      * 完工时间
      */
-    public Date endTime;
+    public String endTime;
 
     /**
      * 完工坐标（经,纬）(longitude,latitude)
@@ -163,7 +163,7 @@ public class TaskOrder implements Serializable {
     /**
      * 结束时间（结束或者终止）
      */
-    public Date finishTime;
+    public String finishTime;
 
     /**
      * 结束坐标（经,纬）(longitude,latitude)

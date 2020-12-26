@@ -213,6 +213,7 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
                 if (data != null) {
                     if (mLoginUserInfo.userNo.equals(data.serviceUserNo)) {
                         ToastUtils.showToast(AddTaskActivity.this,"提交成功！");
+                        finish();
                     } else {
                         showWarningDialog(data.serviceUserName,data.serviceUserTel);
                     }

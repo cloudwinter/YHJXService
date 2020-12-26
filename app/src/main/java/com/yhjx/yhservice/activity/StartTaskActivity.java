@@ -321,7 +321,7 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
     public void onRightClick() { }
 
 
-    private String getFormatValue(int resId,String... params) {
+    private String getFormatValue(int resId,Object... params) {
         return String.format(getString(resId),params);
     }
 

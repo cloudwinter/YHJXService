@@ -78,8 +78,8 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
 
     @BindView(R.id.ll_fault_type)
     LinearLayout mFaultTypeLL;
-    @BindView(R.id.tv_fault_type)
-    TextView mFaultTypeTV;
+    @BindView(R.id.et_fault_type)
+    EditText mFaultTypeTV;
     @BindView(R.id.edit_fault_reason)
     EditText mFaultReasonEV;
     @BindView(R.id.edit_parts)
@@ -124,7 +124,11 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         mActionBar.setData("完工", R.mipmap.ic_back, null, 0, null, this);
         mActionBar.setStatusBarHeight(getStatusBarHeight());
 
+        // 任务单号
+        taskNo = getIntent().getStringExtra(TASK_NO_EXTRA_KEY);
+
         mFaultTypeLL.setOnClickListener(mSelectedFaultType);
+        mFaultTypeTV.setClickable(false);
 
         mLocalAddImg.setAddPictureClickListener(mAddPictureClick);
         mPartsAddImg.setAddPictureClickListener(mAddPictureClick);
@@ -263,7 +267,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
             return false;
         }
         endImgUrl = mLocalAddImg.getImageUrl();
-        if (TextUtils.isEmpty(mPartsAddImg.getImageUrl())) {
+        if (!TextUtils.isEmpty(mPartsAddImg.getImageUrl())) {
             endImgUrl = endImgUrl+","+mPartsAddImg.getImageUrl();
         }
 
@@ -409,7 +413,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
                 case R.id.addimg_locale:
                     addViewType = ADDVIEW_TYPE_LOCALE;
                     break;
-                case R.id.addimg_fault:
+                case R.id.addimg_parts:
                     addViewType = ADDVIEW_TYPE_PARTS;
                     break;
             }
@@ -417,7 +421,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
     };
 
 
-    private String getFormatValue(int resId,String... params) {
+    private String getFormatValue(int resId,Object... params) {
         return String.format(getString(resId),params);
     }
 

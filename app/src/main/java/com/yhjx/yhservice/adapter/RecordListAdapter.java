@@ -69,11 +69,11 @@ public class RecordListAdapter extends BaseListAdapter<TaskOrder> {
 
         // 开工时间
         TextView startTime = getChildView(convertView,R.id.text_start_time);
-        startTime.setText(getFormatValue(R.string.task_item_start_time,DateUtil.formatDate(order.startTime)));
+        startTime.setText(getFormatValue(R.string.task_item_start_time,order.startTime));
 
         // 完工时间
         TextView endTime = getChildView(convertView,R.id.text_end_time);
-        endTime.setText(getFormatValue(R.string.task_item_start_time,DateUtil.formatDate(order.endTime)));
+        endTime.setText(getFormatValue(R.string.task_item_start_time,order.endTime));
 
         // 订单状态
         TextView textViewOrderStatus = getChildView(convertView,R.id.text_task_status);
@@ -88,7 +88,7 @@ public class RecordListAdapter extends BaseListAdapter<TaskOrder> {
     }
 
 
-    private String getFormatValue(int resId,String... params) {
+    private String getFormatValue(int resId,Object... params) {
         return String.format(getString(resId),params);
     }
 

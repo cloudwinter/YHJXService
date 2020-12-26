@@ -193,7 +193,7 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
             @Override
             protected void onFailed(String errCode, String errMsg) {
                 super.onFailed(errCode, errMsg);
-                ToastUtils.showToast(mContext, "接单失败");
+                ToastUtils.showToast(mContext, "接单失败:"+errMsg);
             }
 
         });
