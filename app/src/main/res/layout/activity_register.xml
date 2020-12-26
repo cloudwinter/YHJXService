@@ -131,6 +131,7 @@
                 android:textSize="14dp"
                 android:layout_marginTop="7dp"
                 android:paddingLeft="17dp"
+                android:focusableInTouchMode="false"
                 android:editable="false"/>
 
 
@@ -160,6 +161,7 @@
                 android:textSize="14dp"
                 android:layout_marginTop="7dp"
                 android:paddingLeft="17dp"
+                android:focusableInTouchMode="false"
                 android:editable="false"/>
 
             <com.yhjx.yhservice.view.YHButton

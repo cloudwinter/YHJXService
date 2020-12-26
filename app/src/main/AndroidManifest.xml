@@ -29,7 +29,7 @@
             android:name=".activity.LoginActivity"
             android:launchMode="singleInstance"></activity>
 
-        <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name=".activity.RegisterActivity" android:windowSoftInputMode="adjustResize"></activity>
 
         <activity android:name=".activity.StationSelectedActivity"></activity>
         <activity

@@ -20,6 +20,7 @@ import com.yhjx.yhservice.activity.LoginActivity;
 import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.LogUtils;
+import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.view.LoggerView;
 import com.yhjx.yhservice.view.YHButton;
 
@@ -158,6 +159,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                StorageUtils.clearLogin();
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 mContext.startActivity(intent);
