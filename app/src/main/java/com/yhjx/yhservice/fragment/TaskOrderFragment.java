@@ -50,6 +50,7 @@ import butterknife.ButterKnife;
 public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, TaskListAdapter.ButtonClickListener {
 
     public static final String TAG = "TaskOrderFragment";
+    public static final int REQUEST_CODE = 104;
 
     @BindView(R.id.swipe_layout)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -205,7 +206,7 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
         Intent intent = new Intent();
         intent.putExtra(StartTaskActivity.TASK_NO_EXTRA_KEY, order.taskNo);
         intent.setClass(mContext, StartTaskActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,REQUEST_CODE);
     }
 
     @Override
@@ -213,7 +214,7 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
         Intent intent = new Intent();
         intent.putExtra(StartTaskActivity.TASK_NO_EXTRA_KEY, order.taskNo);
         intent.setClass(mContext, EndTaskActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,REQUEST_CODE);
     }
 
     @Override
@@ -270,5 +271,15 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
                 ToastUtils.showToast(mContext,"取消失败！");
             }
         });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (REQUEST_CODE == 104) {
+            // 刷新界面
+            loadData();
+        }
     }
 }

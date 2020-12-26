@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
@@ -123,7 +124,7 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
         mApiModel.queryVehicleInfo(req, new ResultHandler<GetCarInfoRes>() {
             @Override
             protected void onSuccess(GetCarInfoRes data) {
-                if (data == null && data.vehicle != null && data.vehicleState != null) {
+                if (data == null || data.vehicle == null && data.vehicleState == null) {
                     ToastUtils.showToast(AddTaskActivity.this,"未查询到车辆，请检查车架号是否正确");
                     return;
                 }
@@ -145,6 +146,10 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
     View.OnClickListener mSubmitClicker = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (mCardInfo == null) {
+                ToastUtils.showToast(AddTaskActivity.this,"请确认车架号是否正确！");
+                return;
+            }
             TaskHandlerRepairReq req = new TaskHandlerRepairReq();
             req.customerName = mCustomerNameEditText.getText().toString();
             req.customerTel = mCustomerTelEditText.getText().toString();
