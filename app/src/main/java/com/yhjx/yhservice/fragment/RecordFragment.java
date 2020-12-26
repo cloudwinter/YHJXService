@@ -22,6 +22,7 @@ import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.dialog.WaitDialog;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.model.TaskOrder;
+import com.yhjx.yhservice.view.SwipeRefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ import butterknife.ButterKnife;
 public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.swipe_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshView swipeRefreshLayout;
     @BindView(R.id.lv_record)
     ListView mRecordLV;
     TextView mUserNameTV;
@@ -49,6 +50,8 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
     LoginUserInfo mLoginUserInfo;
 
     List<TaskOrder> mTaskOrderList;
+
+    private int currentPageNo = 1;
 
 
     private View addHeader() {
@@ -64,6 +67,10 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
         ButterKnife.bind(this, view);
         mRecordLV.addHeaderView(addHeader());
         swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnLoadMoreListener(mOnLoadMoreListener);
+        swipeRefreshLayout.setItemCount(20);
+        // 手动调用,通知系统去测量
+        swipeRefreshLayout.measure(0, 0);
         mRecordListAdapter = new RecordListAdapter(mContext);
         mRecordLV.setAdapter(mRecordListAdapter);
         mRecordLV.setOnItemClickListener(mOnItemClick);
@@ -83,9 +90,7 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
             }
         });
         mWaitDialog = new WaitDialog(mContext);
-
         initData();
-
         return view;
     }
 
@@ -96,14 +101,14 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
         }
         String userName = String.format(getString(R.string.task_fragment_show_user_name), mLoginUserInfo.userName);
         mUserNameTV.setText(userName);
-        loadData();
+        loadData(1,false);
     }
 
 
-    private void loadData() {
+    private void loadData(int pageNo,boolean loadMore) {
         TaskRecordReq req = new TaskRecordReq();
         req.userNo = mLoginUserInfo.userNo;
-        req.pageNo = 1;
+        req.pageNo = pageNo;
         req.pageSize = 20;
         new ApiModel(mContext).queryRecordOrder(req, new ResultHandler<TaskRecordRes>() {
 
@@ -114,29 +119,48 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
 
             @Override
             protected void onSuccess(TaskRecordRes data) {
-                setData(data);
+                if (data == null && data.count == 0) {
+                    return;
+                }
+                currentPageNo = pageNo;
+                if (loadMore) {
+                    mTaskOrderList.addAll(data.list);
+                    mRecordListAdapter.setData(mTaskOrderList);
+                } else {
+                    mTaskOrderList = data.list;
+                    mRecordListAdapter.setData(mTaskOrderList);
+                }
+
             }
 
             @Override
             public void onFinish() {
                 mWaitDialog.dismiss();
-                swipeRefreshLayout.setRefreshing(false);
+                if (loadMore) {
+                    swipeRefreshLayout.setLoading(false);
+                } else {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
             }
         });
     }
 
 
-    private void setData(TaskRecordRes data) {
-        mTaskOrderList = data.list;
-        mRecordListAdapter.setData(data.list);
-    }
 
 
     @Override
     public void onRefresh() {
         // 上拉刷新
-        loadData();
+        loadData(1,false);
     }
+
+    SwipeRefreshView.OnLoadMoreListener mOnLoadMoreListener = new SwipeRefreshView.OnLoadMoreListener() {
+        @Override
+        public void onLoadMore() {
+            loadData(currentPageNo++,true);
+        }
+    };
 
     AdapterView.OnItemClickListener mOnItemClick = new AdapterView.OnItemClickListener() {
         @Override

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.yhjx.yhservice.view.SwipeRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -18,4 +18,4 @@
         android:scrollbars="none"
         android:listSelector="@android:color/transparent"/>
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</com.yhjx.yhservice.view.SwipeRefreshView>
