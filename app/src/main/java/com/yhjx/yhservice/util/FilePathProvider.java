@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
  * 
  *
  */
-class FilePathProvider {
+public class FilePathProvider {
 
 	/**
 	 * 图片文件夹

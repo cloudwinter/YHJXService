@@ -6,6 +6,10 @@ import com.yhjx.networker.NetworkerClient;
 import com.yhjx.networker.calladater.SSCall;
 import com.yhjx.networker.callback.BaseResult;
 import com.yhjx.networker.callback.ResultHandler;
+import com.yhjx.networker.callback.ResultNotifier;
+import com.yhjx.networker.retrofit.Call;
+import com.yhjx.networker.retrofit.Callback;
+import com.yhjx.networker.retrofit.Retrofit;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.domain.request.GetCarInfoReq;
 import com.yhjx.yhservice.api.domain.request.GetFaultCategoryListReq;
@@ -26,6 +30,7 @@ import com.yhjx.yhservice.api.domain.request.TaskOrderDetailReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.request.UpdateLocationReq;
+import com.yhjx.yhservice.api.domain.request.VersionUpdateReq;
 import com.yhjx.yhservice.api.domain.response.GetCarInfoRes;
 import com.yhjx.yhservice.api.domain.response.GetFaultCategoryListRes;
 import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
@@ -36,14 +41,20 @@ import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
 import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 import com.yhjx.yhservice.api.domain.response.UploadImgRes;
 import com.yhjx.yhservice.api.domain.response.Vehicle;
+import com.yhjx.yhservice.api.domain.response.VersionUpdateRes;
 import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.ToastUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 
 public class ApiModel {
@@ -60,6 +71,24 @@ public class ApiModel {
 
 
     // ##################  通用接口 #############
+
+
+    /**
+     * 版本更新
+     * @param handler
+     */
+    public void updateVersion(ResultHandler<VersionUpdateRes> handler) {
+        if (!preCheck(handler)) {
+            return;
+        }
+        VersionUpdateReq req = new VersionUpdateReq();
+        req.productCode = "SHWX_ANDROID_APP";
+        req.currentVersionCode = Integer.valueOf(RunningContext.getVersionCode()+"");
+        ApiService apiService = buildApiService();
+        SSCall<BaseResult<VersionUpdateRes>> call = apiService.versionUpdate(req);
+        call.enqueue(handler);
+    }
+
 
 
     /**

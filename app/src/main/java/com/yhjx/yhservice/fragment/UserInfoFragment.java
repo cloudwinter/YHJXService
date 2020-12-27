@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
+import com.vector.update_app.UpdateCallback;
 import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.activity.EditUserInfoActivity;
@@ -23,8 +25,12 @@ import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.StorageUtils;
+import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.view.LoggerView;
 import com.yhjx.yhservice.view.YHButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -153,11 +159,56 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 //当前Activity
                 .setActivity((Activity) mContext)
                 //更新地址
-                .setUpdateUrl("url")
+                .setUpdateUrl("app/service/common/updateVersion")
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateHttpManager())
+                .setPost(true)
                 .build()
-                .update();
+                .checkNewApp(new UpdateCallback(){
+                    @Override
+                    protected UpdateAppBean parseJson(String json) {
+                        UpdateAppBean updateAppBean = new UpdateAppBean();
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            int latestVersionCode = (int) jsonObject.get("latestVersionCode");
+                            String update = latestVersionCode > RunningContext.getVersionCode()?"Yes":"No";
+
+
+                            updateAppBean
+                                    //（必须）是否更新Yes,No 1
+                                    .setUpdate(update)
+                                    //（必须）新版本号，
+                                    .setNewVersion(jsonObject.optString("latestVersion"))
+                                    //（必须）下载地址
+                                    .setApkFileUrl(jsonObject.optString("latestVersionUrl"))
+                                    //（必须）更新内容
+                                    .setUpdateLog(jsonObject.optString("versionDesc"))
+//                                    //大小，不设置不显示大小，可以不设置
+//                                    .setTargetSize(jsonObject.optString("target_size"))
+                                    //是否强制更新，可以不设置
+                                    .setConstraint(false);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        return updateAppBean;
+                    }
+
+                    @Override
+                    protected void onBefore() {
+                        super.onBefore();
+                    }
+
+                    @Override
+                    protected void onAfter() {
+                        super.onAfter();
+                    }
+
+                    @Override
+                    protected void noNewApp(String error) {
+                        ToastUtils.showToast(mContext,"没有新版本");
+                    }
+                });
+        ;
     }
 
 

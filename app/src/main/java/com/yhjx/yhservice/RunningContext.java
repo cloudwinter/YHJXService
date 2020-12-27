@@ -194,7 +194,6 @@ public class RunningContext {
     /**
      * 获取版本号Code
      */
-    @RequiresApi(api = Build.VERSION_CODES.P)
     public static long getVersionCode() {
         try {
             PackageManager manager = sAppContext.getPackageManager();
