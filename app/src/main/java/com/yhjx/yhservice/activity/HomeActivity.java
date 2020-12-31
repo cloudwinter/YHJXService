@@ -169,4 +169,14 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         Intent intent = new Intent(HomeActivity.this, AddTaskActivity.class);
         startActivityForResult(intent,ADD_REQUEST_CODE);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (fragments != null) {
+            for (BaseFragment fragment : fragments) {
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
 }

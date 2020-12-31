@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
+import com.yhjx.yhservice.activity.HomeActivity;
 import com.yhjx.yhservice.activity.TaskDetailsActivity;
 import com.yhjx.yhservice.adapter.RecordListAdapter;
 import com.yhjx.yhservice.api.ApiModel;
@@ -32,6 +33,8 @@ import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.yhjx.yhservice.fragment.TaskOrderFragment.REQUEST_CODE;
 
 /**
  * 维修记录
@@ -171,4 +174,14 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
             startActivity(intent);
         }
     };
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (REQUEST_CODE == 104) {
+            // 刷新界面
+            loadData(1,false);
+        }
+    }
 }

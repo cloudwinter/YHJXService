@@ -59,7 +59,7 @@ public interface ApiService {
 
     // 图片上传接口
     @Multipart
-    @POST("/common/upload")
+    @POST("common/upload")
     SSCall<BaseResult<UploadImgRes>> uploadImg(@Part MultipartBody.Part file);
 
     // 查询故障类型列表
@@ -91,19 +91,19 @@ public interface ApiService {
 
 
     // 修改手机号
-    @POST("/app/service/user/updateTel")
+    @POST("app/service/user/updateTel")
     SSCall<BaseResult<Void>> updateTel(@Body ServiceUserUpdateTelReq req);
 
     // 修改手机号
-    @POST("/app/service/user/updateTel")
+    @POST("app/service/user/updatePassword")
     SSCall<BaseResult<Void>> updatePassword(@Body ServiceUserUpdatePasswordReq req);
 
     // 修改服务站
-    @POST("/app/service/user/updateStation")
+    @POST("app/service/user/updateStation")
     SSCall<BaseResult<Void>> updateStation(@Body ServiceUserUpdateStationReq req);
 
     // 修改驻点
-    @POST("/app/service/user/updateStagnation")
+    @POST("app/service/user/updateStagnation")
     SSCall<BaseResult<ServiceUserUpdateStagnationRes>> updateStagnation(@Body ServiceUserUpdateStagnationReq req);
 
 
@@ -128,28 +128,28 @@ public interface ApiService {
 
 
     // 新增保修单
-    @POST("/app/service/task/repair")
+    @POST("app/service/task/repair")
     SSCall<BaseResult<TaskOrder>> repair(@Body TaskHandlerRepairReq repairReq);
 
     // 接单
-    @POST("/app/service/task/receive")
+    @POST("app/service/task/receive")
     SSCall<BaseResult<Void>> receive(@Body TaskHandleReceiveReq repairReq);
 
     // 取消
-    @POST("/app/service/task/stop")
+    @POST("app/service/task/stop")
     SSCall<BaseResult<Void>> cancel(@Body TaskHandleCancelReq repairReq);
 
     // 开工和完工的precheck接口
-    @POST("/app/service/task/check")
+    @POST("app/service/task/check")
     SSCall<BaseResult<Boolean>> check(@Body TaskHandleCheckReq checkReq);
 
 
     // 开工接口
-    @POST("/app/service/task/start")
+    @POST("app/service/task/start")
     SSCall<BaseResult<Void>> start(@Body TaskHandleStartReq startReq);
 
     // 完工接口
-    @POST("/app/service/task/finish")
+    @POST("app/service/task/finish")
     SSCall<BaseResult<Void>> finish(@Body TaskHandleFinishReq finishReq);
 
 
