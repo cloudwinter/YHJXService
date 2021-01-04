@@ -19,4 +19,9 @@ public class ServiceUserUpdatePasswordReq implements Serializable {
      */
     public String userPassword;
 
+    /**
+     * 维修人员新密码
+     */
+    public String userNewPassword;
+
 }

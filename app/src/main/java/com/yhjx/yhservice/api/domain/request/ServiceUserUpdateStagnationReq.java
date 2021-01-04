@@ -24,4 +24,9 @@ public class ServiceUserUpdateStagnationReq implements Serializable {
      */
     public String stagnationStationName;
 
+    /**
+     * 维修人员密码
+     */
+    public String userPassword;
+
 }

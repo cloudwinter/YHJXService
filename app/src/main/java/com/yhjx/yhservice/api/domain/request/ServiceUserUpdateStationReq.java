@@ -24,4 +24,9 @@ public class ServiceUserUpdateStationReq implements Serializable {
      */
     public String stationName;
 
+    /**
+     * 维修人员密码
+     */
+    public String userPassword;
+
 }

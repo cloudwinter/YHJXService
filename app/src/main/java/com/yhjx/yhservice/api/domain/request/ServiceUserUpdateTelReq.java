@@ -19,4 +19,9 @@ public class ServiceUserUpdateTelReq implements Serializable {
      */
     public String userTel;
 
+    /**
+     * 维修人员密码
+     */
+    public String userPassword;
+
 }

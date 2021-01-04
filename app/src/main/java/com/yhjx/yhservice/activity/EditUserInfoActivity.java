@@ -184,6 +184,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         req.id = mLoginUserInfo.id;
         req.userNo = mLoginUserInfo.userNo;
         req.userTel = newTel;
+        req.userPassword = mLoginUserInfo.userPassword;
         mApiModel.updateTel(req, new ResultHandler<Void>() {
 
             @Override
@@ -217,7 +218,8 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         ServiceUserUpdatePasswordReq req = new ServiceUserUpdatePasswordReq();
         req.id = mLoginUserInfo.id;
         req.userNo = mLoginUserInfo.userNo;
-        req.userPassword = userPassword;
+        req.userPassword = mLoginUserInfo.userPassword;
+        req.userNewPassword = userPassword;
         mApiModel.updatePassword(req, new ResultHandler<Void>() {
 
             @Override
@@ -254,6 +256,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         req.userNo = mLoginUserInfo.userNo;
         req.stationId = stationId;
         req.stationName = stationName;
+        req.userPassword = mLoginUserInfo.userPassword;
         mApiModel.updateStation(req, new ResultHandler<Void>() {
 
             @Override
@@ -290,6 +293,7 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         req.userNo = mLoginUserInfo.userNo;
         req.stagnationStationId = stationId;
         req.stagnationStationName = stationName;
+        req.userPassword = mLoginUserInfo.userPassword;
         mApiModel.updateStagnation(req, new ResultHandler<ServiceUserUpdateStagnationRes>() {
 
             @Override
