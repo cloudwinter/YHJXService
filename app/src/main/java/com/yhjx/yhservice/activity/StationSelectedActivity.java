@@ -1,12 +1,16 @@
 package com.yhjx.yhservice.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -22,6 +26,7 @@ import com.yhjx.yhservice.api.domain.response.ServiceStationListRes;
 import com.yhjx.yhservice.base.BaseActivity;
 import com.yhjx.yhservice.model.StationModel;
 import com.yhjx.yhservice.util.LogUtils;
+import com.yhjx.yhservice.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +63,28 @@ public class StationSelectedActivity extends BaseActivity {
 
         textViewCancel.setOnClickListener(mOnClick);
         editTextSearch.addTextChangedListener(mTextWatcher);
+        editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    // 先隐藏键盘
+                    ((InputMethodManager) RunningContext.sAppContext
+                            .getSystemService(Context.INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(StationSelectedActivity.this
+                                            .getCurrentFocus().getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
+                    if (editTextSearch.getText().toString().isEmpty()) {
+                        ToastUtils.showToast(RunningContext.sAppContext,"搜索栏不能为空！");
+                    } else {
+                        //搜索
+                        searchStation();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
 
         mStationListAdapter = new StationListAdapter(this);
         listView.setAdapter(mStationListAdapter);
@@ -67,27 +94,12 @@ public class StationSelectedActivity extends BaseActivity {
 
     /**
      * 搜索服务站
-     *
-     * @param searchVal
      */
-    private void searchStation(String searchVal) {
+    private void searchStation() {
+        String searchVal = editTextSearch.getText().toString();
         if (TextUtils.isEmpty(searchVal)) {
             return;
         }
-        if (RunningContext.mock) {
-            List<StationModel> list = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
-                StationModel model = new StationModel();
-                model.stationName = "江宁服务站";
-                model.stationAddress = "江苏省南京市雨花区丰盛商汇5号楼501";
-                list.add(model);
-            }
-            modelList = list;
-            mStationListAdapter.setData(list);
-            return;
-        }
-
-
         StationListReq req = new StationListReq();
         req.pageNo = 1;
         req.pageSize = 10;
@@ -107,6 +119,9 @@ public class StationSelectedActivity extends BaseActivity {
     }
 
 
+
+
+
     private TextWatcher mTextWatcher = new TextWatcher() {
 
         @Override
@@ -122,7 +137,7 @@ public class StationSelectedActivity extends BaseActivity {
         @Override
         public void afterTextChanged(Editable s) {
             Log.i(TAG, "afterTextChanged: " + s.toString());
-            searchStation(s.toString());
+            searchStation();
         }
     };
 
@@ -141,6 +156,10 @@ public class StationSelectedActivity extends BaseActivity {
     private View.OnClickListener mOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.text_cancel:
+                    break;
+            }
             finish();
         }
     };
