@@ -27,9 +27,9 @@ public class RunningContext {
     /**
      * FIXME 更新接口地址
      */
-//    public static String BASEURL = "http://47.116.73.239:3000/mock/27/";
-//    public static String BASEURL = "http://192.168.31.212:8080/";
     public static String BASEURL = "http://47.116.73.239:8080/web/";
+//    public static String BASEURL = "http://192.168.31.212:8080/";
+//    public static String BASEURL = "http://10.9.6.145:8080/";
 
 
     public static final int PERMISSION_REQUEST_CODE = 99;

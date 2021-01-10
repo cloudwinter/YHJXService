@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.yhjx.networker.callback.ResultHandler;
 import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
-import com.yhjx.yhservice.activity.HomeActivity;
 import com.yhjx.yhservice.activity.TaskDetailsActivity;
 import com.yhjx.yhservice.adapter.RecordListAdapter;
 import com.yhjx.yhservice.api.ApiModel;
@@ -25,7 +24,6 @@ import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.view.SwipeRefreshView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -111,7 +109,7 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
     private void loadData(int pageNo,boolean loadMore) {
         TaskRecordReq req = new TaskRecordReq();
         req.userNo = mLoginUserInfo.userNo;
-        req.pageNo = pageNo;
+        req.pageNum = pageNo;
         req.pageSize = 20;
         new ApiModel(mContext).queryRecordOrder(req, new ResultHandler<TaskRecordRes>() {
 

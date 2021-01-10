@@ -9,5 +9,5 @@ public class TaskOrderReq implements Serializable {
      */
     public String userNo;
     public int pageSize;
-    public int pageNo;
+    public int pageNum;
 }

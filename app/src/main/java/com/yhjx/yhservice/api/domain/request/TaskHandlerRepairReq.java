@@ -67,4 +67,19 @@ public class TaskHandlerRepairReq implements Serializable {
      */
     public String remark;
 
+    /**
+    * 接单经纬度
+     */
+    public String longitude;
+
+    /**
+     * 接单经纬度
+     */
+    public String latitude;
+
+    /**
+     * 接单经纬度
+     */
+    public String userAddress;
+
 }

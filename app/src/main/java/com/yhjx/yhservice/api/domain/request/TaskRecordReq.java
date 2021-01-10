@@ -9,5 +9,5 @@ public class TaskRecordReq implements Serializable {
      */
     public String userNo;
     public int pageSize;
-    public int pageNo;
+    public int pageNum;
 }

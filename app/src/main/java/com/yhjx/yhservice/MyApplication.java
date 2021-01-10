@@ -96,7 +96,7 @@ public class MyApplication extends Application {
         JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
         JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(this,YhjxService.class));
         builder.setBackoffCriteria(TimeUnit.MILLISECONDS.toMillis(10),JobInfo.BACKOFF_POLICY_LINEAR);
-        // 每30分钟发送一次
+        // 每15分钟发送一次
         builder.setPeriodic(15 * 60 * 1000);
         jobScheduler.schedule(builder.build());
 

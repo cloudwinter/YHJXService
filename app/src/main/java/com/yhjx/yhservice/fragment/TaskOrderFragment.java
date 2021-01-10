@@ -17,16 +17,13 @@ import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.activity.EndTaskActivity;
 import com.yhjx.yhservice.activity.HomeActivity;
-import com.yhjx.yhservice.activity.LoginActivity;
 import com.yhjx.yhservice.activity.StartTaskActivity;
 import com.yhjx.yhservice.adapter.TaskListAdapter;
 import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.request.TaskHandleCancelReq;
 import com.yhjx.yhservice.api.domain.request.TaskHandleReceiveReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
-import com.yhjx.yhservice.api.domain.request.TaskRecordReq;
 import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
-import com.yhjx.yhservice.api.domain.response.TaskRecordRes;
 import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.dialog.WaitDialog;
 import com.yhjx.yhservice.model.LocationInfo;
@@ -35,9 +32,6 @@ import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.ToastUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -132,7 +126,7 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
         RunningContext.sAMapLocationClient.startLocation();
         TaskOrderReq req = new TaskOrderReq();
         req.userNo = mLoginUserInfo.userNo;
-        req.pageNo = 1;
+        req.pageNum = 1;
         req.pageSize = 20;
         mApiModel.queryTaskOrder(req, new ResultHandler<TaskOrderRes>() {
 

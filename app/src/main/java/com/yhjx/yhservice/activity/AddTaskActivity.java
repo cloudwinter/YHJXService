@@ -29,8 +29,10 @@ import com.yhjx.yhservice.api.domain.response.Vehicle;
 import com.yhjx.yhservice.api.domain.response.VehicleState;
 import com.yhjx.yhservice.base.BaseActivity;
 import com.yhjx.yhservice.dialog.WaitDialog;
+import com.yhjx.yhservice.model.LocationInfo;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.model.TaskOrder;
+import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.ToastUtils;
 import com.yhjx.yhservice.util.YHUtils;
 import com.yhjx.yhservice.view.TranslucentActionBar;
@@ -169,6 +171,12 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
 
             req.userNo = mLoginUserInfo.userNo;
             req.userName = mLoginUserInfo.userName;
+
+            LocationInfo locationInfo = StorageUtils.getCurrentLocation();
+            req.longitude = locationInfo.longitude;
+            req.latitude = locationInfo.latitude;
+            req.userAddress = locationInfo.address;
+
             submit(req);
         }
     };
