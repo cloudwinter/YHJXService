@@ -73,7 +73,7 @@ public class RecordListAdapter extends BaseListAdapter<TaskOrder> {
 
         // 完工时间
         TextView endTime = getChildView(convertView,R.id.text_end_time);
-        endTime.setText(getFormatValue(R.string.task_item_start_time,order.endTime));
+        endTime.setText(getFormatValue(R.string.task_item_end_time,order.endTime));
 
         // 订单状态
         TextView textViewOrderStatus = getChildView(convertView,R.id.text_task_status);
