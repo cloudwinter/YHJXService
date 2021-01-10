@@ -8,5 +8,5 @@ public class StationListReq implements Serializable {
      */
     public String stationName;
     public int pageSize;
-    public int pageNo;
+    public int pageNum;
 }

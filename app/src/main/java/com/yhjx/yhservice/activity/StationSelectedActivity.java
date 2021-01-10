@@ -101,7 +101,7 @@ public class StationSelectedActivity extends BaseActivity {
             return;
         }
         StationListReq req = new StationListReq();
-        req.pageNo = 1;
+        req.pageNum = 1;
         req.pageSize = 10;
         req.stationName = searchVal.trim();
         new ApiModel(this).queryStationList(req, new ResultHandler<ServiceStationListRes>() {
