@@ -34,12 +34,13 @@ public class StorageUtils {
         }
         if (!TextUtils.isEmpty(val)) {
             setLoginUserExpire();
-            PreferenceUtil.commitString(KEY.LOGIN_USER_KEY,val);
+            PreferenceUtil.commitString(KEY.LOGIN_USER_KEY, val);
         }
     }
 
     /**
      * 获取登录信息
+     *
      * @return
      */
     public static LoginUserInfo getLoginInfo() {
@@ -53,6 +54,7 @@ public class StorageUtils {
 
     /**
      * 判断登录缓存有效期是否超期
+     *
      * @return
      */
     public static boolean isLoginUserExpire() {
@@ -66,10 +68,11 @@ public class StorageUtils {
 
     /**
      * 设置新的缓存有效期
+     *
      * @return
      */
     public static void setLoginUserExpire() {
-        PreferenceUtil.commitLong(KEY.LOGIN_USER_KEEP_TIME_KEY,System.currentTimeMillis());
+        PreferenceUtil.commitLong(KEY.LOGIN_USER_KEEP_TIME_KEY, System.currentTimeMillis());
     }
 
 
@@ -88,15 +91,13 @@ public class StorageUtils {
         String val = PreferenceUtil.getString(KEY.LOCATION_KEY, null);
         if (TextUtils.isEmpty(val)) {
             // 如果位置未空开启一次定位
-//            RunningContext.sAMapLocationClient.startLocation();
-//            return null;
-            // FIXME 测试
+            // FIXME 默认位置是英虎机械的厂址
+            RunningContext.sAMapLocationClient.startLocation();
             LocationInfo locationInfo = new LocationInfo();
-            locationInfo.longitude = "118.769651";
-            locationInfo.latitude = "31.985192";
-            locationInfo.address = "南京市雨花台区软件大道119号丰盛商汇8栋旁";
+            locationInfo.longitude = "115.153443";
+            locationInfo.latitude = "38.835898";
+            locationInfo.address = "河北英虎农业机械制造有限公司";
             return locationInfo;
-
         }
         return new Gson().fromJson(val, LocationInfo.class);
     }
@@ -115,10 +116,11 @@ public class StorageUtils {
         if (TextUtils.isEmpty(val)) {
             return null;
         }
-        return new Gson().fromJson(val, new TypeToken<List<FaultCategory>>(){}.getType());
+        return new Gson().fromJson(val, new TypeToken<List<FaultCategory>>() {
+        }.getType());
     }
 
     public static void clearLogin() {
-        PreferenceUtil.commitString(KEY.LOGIN_USER_KEY,null);
+        PreferenceUtil.commitString(KEY.LOGIN_USER_KEY, null);
     }
 }
