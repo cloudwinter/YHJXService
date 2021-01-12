@@ -27,6 +27,7 @@ import com.yhjx.yhservice.api.domain.response.GetCarInfoRes;
 import com.yhjx.yhservice.api.domain.response.ServiceUserRegisterRes;
 import com.yhjx.yhservice.api.domain.response.Vehicle;
 import com.yhjx.yhservice.api.domain.response.VehicleState;
+import com.yhjx.yhservice.base.BaseActionBarActivity;
 import com.yhjx.yhservice.base.BaseActivity;
 import com.yhjx.yhservice.dialog.WaitDialog;
 import com.yhjx.yhservice.model.LocationInfo;
@@ -45,7 +46,7 @@ import butterknife.ButterKnife;
 /**
  * 添加保修任务
  */
-public class AddTaskActivity extends BaseActivity implements TranslucentActionBar.ActionBarClickListener {
+public class AddTaskActivity extends BaseActionBarActivity  {
 
     @BindView(R.id.action_bar)
     TranslucentActionBar actionBar;
@@ -76,27 +77,19 @@ public class AddTaskActivity extends BaseActivity implements TranslucentActionBa
 
     WaitDialog mWaitDialog;
 
+
     @Override
-    public void onLeftClick() {
-        finish();
+    public int layoutResID() {
+        return R.layout.activity_add_task;
     }
 
     @Override
-    public void onRightClick() {
-
+    public String setTitle() {
+        return "添加任务单";
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-        setContentView(R.layout.activity_add_task);
-        ButterKnife.bind(this);
-        actionBar.setData("添加任务单", R.mipmap.ic_back, null, 0, null, this);
-        actionBar.setStatusBarHeight(getStatusBarHeight());
-
+    public void createView(Bundle savedInstanceState) {
         mWaitDialog = new WaitDialog(this);
         mApiModel = new ApiModel();
         mSubmitButton.setOnClickListener(mSubmitClicker);

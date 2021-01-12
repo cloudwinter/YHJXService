@@ -16,6 +16,7 @@ import com.yhjx.yhservice.base.BaseListAdapter;
 import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.DateUtil;
 import com.yhjx.yhservice.util.ToastUtils;
+import com.yhjx.yhservice.util.YHUtils;
 
 
 /**
@@ -89,7 +90,7 @@ public class RecordListAdapter extends BaseListAdapter<TaskOrder> {
 
 
     private String getFormatValue(int resId,Object... params) {
-        return String.format(getString(resId),params);
+        return YHUtils.getFormatValue(resId, params);
     }
 
 

@@ -36,6 +36,7 @@ public class BaseActivity extends AppCompatActivity {
         LogUtils.d("BaseActivity","当前系统的版本为："+Build.VERSION.SDK_INT);
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -130,13 +131,4 @@ public class BaseActivity extends AppCompatActivity {
         resources.updateConfiguration(config, dm);
 
     }
-
-//    @Override
-//    public Resources getResources() {
-//        Resources res = super.getResources();
-//        Configuration config=new Configuration();
-//        config.setToDefaults();
-//        res.updateConfiguration(config,res.getDisplayMetrics() );
-//        return res;
-//    }
 }

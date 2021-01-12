@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yhjx.yhservice.R;
+import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.adapter.TabPagerAdapter;
 import com.yhjx.yhservice.base.BaseActivity;
 import com.yhjx.yhservice.base.BaseFragment;
@@ -74,8 +75,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         ButterKnife.bind(this);
         actionBar.setData("任务单", 0, null, R.mipmap.ic_add_task, null, this);
         actionBar.setStatusBarHeight(getStatusBarHeight());
-
-
         initView();
     }
 
@@ -108,6 +107,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         viewPager.setCurrentItem(tab-1);
         switch (tab) {
             case 1:
+                RunningContext.sAMapLocationClient.startLocation();
                 tabTaskImg.setSelected(true);
                 tabTaskText.setSelected(true);
                 tabRecordImg.setSelected(false);
@@ -119,6 +119,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 actionBar.setTitle("任务单");
                 break;
             case 2:
+                RunningContext.sAMapLocationClient.startLocation();
                 tabTaskImg.setSelected(false);
                 tabTaskText.setSelected(false);
                 tabRecordImg.setSelected(true);
@@ -130,6 +131,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 actionBar.setTitle("维修记录");
                 break;
             case 3:
+                RunningContext.sAMapLocationClient.startLocation();
                 tabTaskImg.setSelected(false);
                 tabTaskText.setSelected(false);
                 tabRecordImg.setSelected(false);

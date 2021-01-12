@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -114,6 +115,14 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
     FaultCategory mSelectedFaultCategory;
 
     @Override
+    public void onLeftClick() {
+        finish();
+    }
+
+    @Override
+    public void onRightClick() { }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -144,14 +153,6 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         loadData();
         asyncLoadFaultTypeData();
     }
-
-    @Override
-    public void onLeftClick() {
-        finish();
-    }
-
-    @Override
-    public void onRightClick() { }
 
     /**
      * 加载任务详情数据
@@ -332,7 +333,6 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
             protected void onSuccess(Void data) {
                 ToastUtils.showToast(EndTaskActivity.this,"完工成功");
                 finish();
-                // TODO 返回需要刷新界面
             }
 
             @Override
@@ -406,9 +406,6 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
     AddImgView.AddPictureClickListener mAddPictureClick = new AddImgView.AddPictureClickListener() {
         @Override
         public void addPictureClick(View view) {
-            String strDte = DateUtil.formatDate(new Date(),"yyyyMMddHHmmss");
-            cameraUrl = Environment.getExternalStorageDirectory() + "/" + strDte + ".jpg";
-            selectCameraDialog.show(cameraUrl);
             switch (view.getId()) {
                 case R.id.addimg_locale:
                     addViewType = ADDVIEW_TYPE_LOCALE;
@@ -417,12 +414,22 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
                     addViewType = ADDVIEW_TYPE_PARTS;
                     break;
             }
+            if (!RunningContext.checkCameraPermission(EndTaskActivity.this, true)) {
+                return;
+            }
+            addPicture();
         }
     };
 
+    private void addPicture() {
+        String strDte = DateUtil.formatDate(new Date(),"yyyyMMddHHmmss");
+        cameraUrl = Environment.getExternalStorageDirectory() + "/" + strDte + ".jpg";
+        selectCameraDialog.show(cameraUrl);
+    }
+
 
     private String getFormatValue(int resId,Object... params) {
-        return String.format(getString(resId),params);
+        return YHUtils.getFormatValue(resId, params);
     }
 
 
@@ -459,6 +466,15 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
                 }
             }
         }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RunningContext.PERMISSIONS_REQUEST_CODE) {
+            if (RunningContext.checkCameraPermission(EndTaskActivity.this, false)) {
+                addPicture();
+            }
+        }
     }
 }

@@ -159,7 +159,9 @@ public class AddImgView extends RelativeLayout implements View.OnClickListener {
                 }
                 break;
             case R.id.img_close:
+                imageUrl = null;
                 mPictureImg.setImageDrawable(null);
+                mCloseImg.setVisibility(View.GONE);
                 // 显示新增
                 mAddLL.setVisibility(View.VISIBLE);
                 break;

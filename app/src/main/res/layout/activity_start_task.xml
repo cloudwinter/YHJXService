@@ -129,8 +129,8 @@
                 
                 <com.yhjx.yhservice.view.AddImgView
                     android:id="@+id/addimg_locale"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     app:imgdesc="人车现场图片"/>
 
                 <View
@@ -140,8 +140,8 @@
 
                 <com.yhjx.yhservice.view.AddImgView
                     android:id="@+id/addimg_fault"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     app:imgdesc="故障图片"/>
 
             </LinearLayout>

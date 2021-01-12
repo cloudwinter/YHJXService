@@ -1,6 +1,7 @@
 package com.yhjx.yhservice;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -12,11 +13,16 @@ import android.os.Build;
 import com.amap.api.location.AMapLocationClient;
 import com.yhjx.yhservice.model.LoginUserInfo;
 import com.yhjx.yhservice.util.StorageUtils;
+import com.yhjx.yhservice.util.YHUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class RunningContext {
 
@@ -29,10 +35,12 @@ public class RunningContext {
      */
     public static String BASEURL = "http://47.116.73.239:8080/web/";
 //    public static String BASEURL = "http://192.168.31.212:8080/";
-//    public static String BASEURL = "http://10.9.6.145:8080/";
+//    public static String BASEURL = "http://10.9.6.135:8080/";
 
-
-    public static final int PERMISSION_REQUEST_CODE = 99;
+    /**
+     * 动态申请权限request_code
+     */
+    public static final int PERMISSIONS_REQUEST_CODE = 300;
 
     /**
      * 登录用户信息
@@ -60,7 +68,6 @@ public class RunningContext {
     public static AMapLocationClient sAMapLocationClient;
 
 
-
     public static void init(Application app) {
         sAppContext = app.getApplicationContext();
         // 初始化地图client
@@ -72,11 +79,12 @@ public class RunningContext {
 
     /**
      * 判断是否登录
+     *
      * @return
      */
     public static boolean isLogin() {
         synchronized (sLoginInfoLock) {
-            if (sLoginUserInfo != null && "1".equals(sLoginUserInfo.userFlag)){
+            if (sLoginUserInfo != null && "1".equals(sLoginUserInfo.userFlag)) {
                 return true;
             } else {
                 return false;
@@ -87,6 +95,7 @@ public class RunningContext {
 
     /**
      * 获取用户信息
+     *
      * @return
      */
     public static LoginUserInfo getsLoginUserInfo() {
@@ -100,6 +109,7 @@ public class RunningContext {
 
     /**
      * 登录成功后设置用户信息
+     *
      * @param loginUserInfo
      */
     public static void setLoginUserInfo(LoginUserInfo loginUserInfo) {
@@ -119,9 +129,9 @@ public class RunningContext {
     }
 
 
-
     /**
      * 校验网络连接
+     *
      * @return
      */
     public static boolean checkNetWork() {
@@ -131,6 +141,7 @@ public class RunningContext {
 
     /**
      * 检查网络权限
+     *
      * @param context
      * @return
      */
@@ -155,25 +166,31 @@ public class RunningContext {
 
 
     /**
-     * 检查网络权限
+     * 检查相机权限
+     *
+     * @param activity
      * @return
      */
-    public static boolean checkNetworkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return sAppContext.checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED;
+    public static boolean checkCameraPermission(Activity activity,boolean request) {
+        boolean granted = true;
+        String[] permissions = new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.INTERNET};
+        List<String> newApplyPermissions = new ArrayList<>();
+        for (String permission : permissions) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(sAppContext, permission)) {
+                granted = false;
+                newApplyPermissions.add(permission);
+            }
         }
-        return true;
-    }
-
-    /**
-     * 检查定位权限
-     * @return
-     */
-    public static boolean checkLocationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return sAppContext.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        if (!granted) {
+            if (request) {
+                ActivityCompat.requestPermissions(activity, YHUtils.listConvertToArray(newApplyPermissions), PERMISSIONS_REQUEST_CODE);
+            }
         }
-        return true;
+        return granted;
     }
 
 
