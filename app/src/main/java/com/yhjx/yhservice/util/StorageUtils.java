@@ -88,14 +88,14 @@ public class StorageUtils {
         String val = PreferenceUtil.getString(KEY.LOCATION_KEY, null);
         if (TextUtils.isEmpty(val)) {
             // 如果位置未空开启一次定位
-            RunningContext.sAMapLocationClient.startLocation();
-            return null;
+//            RunningContext.sAMapLocationClient.startLocation();
+//            return null;
             // FIXME 测试
-//            LocationInfo locationInfo = new LocationInfo();
-//            locationInfo.longitude = "118.769651";
-//            locationInfo.latitude = "31.985192";
-//            locationInfo.address = "南京市雨花台区软件大道119号丰盛商汇8栋旁";
-//            return locationInfo;
+            LocationInfo locationInfo = new LocationInfo();
+            locationInfo.longitude = "118.769651";
+            locationInfo.latitude = "31.985192";
+            locationInfo.address = "南京市雨花台区软件大道119号丰盛商汇8栋旁";
+            return locationInfo;
 
         }
         return new Gson().fromJson(val, LocationInfo.class);

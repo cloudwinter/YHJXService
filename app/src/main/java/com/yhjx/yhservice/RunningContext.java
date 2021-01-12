@@ -33,9 +33,9 @@ public class RunningContext {
     /**
      * FIXME 更新接口地址
      */
-    public static String BASEURL = "http://47.116.73.239:8080/web/";
+//    public static String BASEURL = "http://47.116.73.239:8080/web/";
 //    public static String BASEURL = "http://192.168.31.212:8080/";
-//    public static String BASEURL = "http://10.9.6.135:8080/";
+    public static String BASEURL = "http://10.9.6.135:8080/";
 
     /**
      * 动态申请权限request_code

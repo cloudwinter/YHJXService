@@ -46,6 +46,7 @@ public abstract class BaseActionBarActivity extends BaseActivity implements Tran
         ButterKnife.bind(this);
         actionBar.setData(setTitle(), R.mipmap.ic_back, null, 0, null, this);
         actionBar.setStatusBarHeight(getStatusBarHeight());
+        createView(savedInstanceState);
     }
 
 

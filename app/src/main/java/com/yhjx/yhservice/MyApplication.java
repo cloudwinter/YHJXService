@@ -6,6 +6,7 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 
@@ -26,7 +27,7 @@ import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.yhjx.yhservice.core.AppUncaughtExceptionHandler;
 import com.yhjx.yhservice.file.FileUtils;
-import com.yhjx.yhservice.service.YhjxService;
+import com.yhjx.yhservice.service.YHJobService;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.PreferenceUtil;
 import com.yhjx.yhservice.util.ScreenUtils;
@@ -44,7 +45,7 @@ import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
-import static com.yhjx.yhservice.service.YhjxService.KEY_LOCATION_DATA;
+import static com.yhjx.yhservice.service.YHJobService.KEY_LOCATION_DATA;
 
 /**
  * Created by Administrator on 2016/9/6 0006.
@@ -90,11 +91,16 @@ public class MyApplication extends Application {
 
 
     private void initJobService() {
-        Intent intent = new Intent(RunningContext.sAppContext, YhjxService.class);
-        startService(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Intent intent = new Intent(RunningContext.sAppContext, YHJobService.class);
+            startForegroundService(intent);
+        } else {
+            Intent intent = new Intent(RunningContext.sAppContext, YHJobService.class);
+            startService(intent);
+        }
 
         JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
-        JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(this,YhjxService.class));
+        JobInfo.Builder builder = new JobInfo.Builder(1, new ComponentName(this, YHJobService.class));
         builder.setBackoffCriteria(TimeUnit.MILLISECONDS.toMillis(10),JobInfo.BACKOFF_POLICY_LINEAR);
         // 每15分钟发送一次
         builder.setPeriodic(15 * 60 * 1000);
@@ -114,7 +120,7 @@ public class MyApplication extends Application {
             @Override
             public void onLocationChanged(AMapLocation mapLocation) {
                 LogUtils.i(TAG,"onLocationChanged:mapLocation address="+mapLocation.getAddress()+" Latitude="+mapLocation.getLatitude()+" Longitude="+mapLocation.getLongitude());
-                Intent intent = new Intent(YhjxService.LOCATION_RECEIVER_ACTION);
+                Intent intent = new Intent(YHJobService.LOCATION_RECEIVER_ACTION);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(KEY_LOCATION_DATA,mapLocation);
                 intent.putExtras(bundle);

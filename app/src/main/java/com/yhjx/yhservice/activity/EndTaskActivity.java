@@ -57,7 +57,7 @@ import butterknife.ButterKnife;
  * 完工
  */
 public class EndTaskActivity extends BaseActivity implements TranslucentActionBar.ActionBarClickListener {
-    
+
     public static final String TAG = "EndTaskActivity";
 
     public static String TASK_NO_EXTRA_KEY = "task_no";
@@ -120,7 +120,8 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
     }
 
     @Override
-    public void onRightClick() { }
+    public void onRightClick() {
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -180,7 +181,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
 
             @Override
             protected void onFailed(String errCode, String errMsg) {
-                ToastUtils.showToast(EndTaskActivity.this,"加载失败，重新进入试试");
+                ToastUtils.showToast(EndTaskActivity.this, "加载失败，重新进入试试");
                 finish();
             }
 
@@ -214,7 +215,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
                                 selectFaultTypeDialog.setDataList(data.list);
                                 StorageUtils.setFaultCategoryList(data.list);
                             } else {
-                                List<FaultCategory> categoryList =  StorageUtils.getFaultCategoryList();
+                                List<FaultCategory> categoryList = StorageUtils.getFaultCategoryList();
                                 if (categoryList != null) {
                                     selectFaultTypeDialog.setDataList(categoryList);
                                 }
@@ -223,7 +224,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
 
                         @Override
                         protected void onFailed(String errCode, String errMsg) {
-                            List<FaultCategory> categoryList =  StorageUtils.getFaultCategoryList();
+                            List<FaultCategory> categoryList = StorageUtils.getFaultCategoryList();
                             if (categoryList != null) {
                                 selectFaultTypeDialog.setDataList(categoryList);
                             }
@@ -238,11 +239,11 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         if (order == null) {
             return;
         }
-        mTaskNoTV.setText(getFormatValue(R.string.task_item_order_no,order.taskNo));
-        mVinTV.setText(getFormatValue(R.string.task_item_vin,order.vehicleVin));
-        mCustomerNameTV.setText(getFormatValue(R.string.task_item_customer_name,order.customerName));
-        mCustomerTelTV.setText(getFormatValue(R.string.task_item_customer_tel,order.customerTel));
-        mFaultDescTV.setText(getFormatValue(R.string.task_item_fault_desc,order.faultDesc));
+        mTaskNoTV.setText(getFormatValue(R.string.task_item_order_no, order.taskNo));
+        mVinTV.setText(getFormatValue(R.string.task_item_vin, order.vehicleVin));
+        mCustomerNameTV.setText(getFormatValue(R.string.task_item_customer_name, order.customerName));
+        mCustomerTelTV.setText(getFormatValue(R.string.task_item_customer_tel, order.customerTel));
+        mFaultDescTV.setText(getFormatValue(R.string.task_item_fault_desc, order.faultDesc));
     }
 
 
@@ -264,16 +265,16 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
     private boolean checkParam() {
         endImgUrl = "";
         if (TextUtils.isEmpty(mLocalAddImg.getImageUrl())) {
-            ToastUtils.showToast(EndTaskActivity.this,"现场作业图片未上传");
+            ToastUtils.showToast(EndTaskActivity.this, "现场作业图片未上传");
             return false;
         }
         endImgUrl = mLocalAddImg.getImageUrl();
         if (!TextUtils.isEmpty(mPartsAddImg.getImageUrl())) {
-            endImgUrl = endImgUrl+","+mPartsAddImg.getImageUrl();
+            endImgUrl = endImgUrl + "," + mPartsAddImg.getImageUrl();
         }
 
         if (TextUtils.isEmpty(YHUtils.trim(mFaultReasonEV.getText().toString()))) {
-            ToastUtils.showToast(EndTaskActivity.this,"故障原因未填写");
+            ToastUtils.showToast(EndTaskActivity.this, "故障原因未填写");
             return false;
         }
         return true;
@@ -283,7 +284,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
      * 提交
      */
     private void submitEnd() {
-        new StepTask(){
+        new StepTask() {
             @Override
             public void onStep1() {
                 apiModel.check(buildCheckReq(), new ResultHandler<Boolean>() {
@@ -331,20 +332,19 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         apiModel.end(buildEndReq(), new ResultHandler<Void>() {
             @Override
             protected void onSuccess(Void data) {
-                ToastUtils.showToast(EndTaskActivity.this,"完工成功");
+                ToastUtils.showToast(EndTaskActivity.this, "完工成功");
                 finish();
             }
 
             @Override
             protected void onFailed(String errCode, String errMsg) {
-                ToastUtils.showToast(EndTaskActivity.this,"完工失败！");
+                ToastUtils.showToast(EndTaskActivity.this, "完工失败！" + errMsg);
             }
         });
     }
 
 
     /**
-     *
      * @return
      */
     private TaskHandleCheckReq buildCheckReq() {
@@ -359,7 +359,6 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
     }
 
     /**
-     *
      * @return
      */
     private TaskHandleFinishReq buildEndReq() {
@@ -379,7 +378,6 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
 
         return endReq;
     }
-
 
 
     /**
@@ -422,13 +420,13 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
     };
 
     private void addPicture() {
-        String strDte = DateUtil.formatDate(new Date(),"yyyyMMddHHmmss");
+        String strDte = DateUtil.formatDate(new Date(), "yyyyMMddHHmmss");
         cameraUrl = Environment.getExternalStorageDirectory() + "/" + strDte + ".jpg";
         selectCameraDialog.show(cameraUrl);
     }
 
 
-    private String getFormatValue(int resId,Object... params) {
+    private String getFormatValue(int resId, Object... params) {
         return YHUtils.getFormatValue(resId, params);
     }
 
@@ -440,28 +438,28 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
             if (resultCode == RESULT_OK) {
                 if (addViewType == ADDVIEW_TYPE_LOCALE) {
                     mLocalAddImg.setPicture(cameraUrl);
-                } else if (addViewType == ADDVIEW_TYPE_PARTS){
+                } else if (addViewType == ADDVIEW_TYPE_PARTS) {
                     mPartsAddImg.setPicture(cameraUrl);
                 }
             }
         } else if (requestCode == SelectCameraDialog.SELECT_PHONE_REQUEST_CODE) {
             try {
                 Uri selectedImage = data.getData(); //获取系统返回的照片的Uri
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                Cursor cursor =getContentResolver().query(selectedImage,
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);//从系统表中查询指定Uri对应的照片
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 cameraUrl = cursor.getString(columnIndex);  //获取照片路径
                 cursor.close();
             } catch (Exception e) {
-                LogUtils.d(TAG,"获取系统照片异常");
+                LogUtils.d(TAG, "获取系统照片异常");
                 e.printStackTrace();
             }
             if (resultCode == RESULT_OK) {
                 if (addViewType == ADDVIEW_TYPE_LOCALE) {
                     mLocalAddImg.setPicture(ImageUtil.getTempPathFromPathAndCompress(cameraUrl));
-                } else if (addViewType == ADDVIEW_TYPE_PARTS){
+                } else if (addViewType == ADDVIEW_TYPE_PARTS) {
                     mPartsAddImg.setPicture(ImageUtil.getTempPathFromPathAndCompress(cameraUrl));
                 }
             }

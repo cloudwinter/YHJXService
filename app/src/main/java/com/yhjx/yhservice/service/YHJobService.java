@@ -1,5 +1,8 @@
 package com.yhjx.yhservice.service;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.BroadcastReceiver;
@@ -11,6 +14,7 @@ import android.text.TextUtils;
 
 import com.amap.api.location.AMapLocation;
 import com.yhjx.networker.callback.ResultHandler;
+import com.yhjx.yhservice.R;
 import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.request.UpdateLocationReq;
@@ -20,20 +24,33 @@ import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.StorageUtils;
 
 
-public class YhjxService extends JobService {
+public class YHJobService extends JobService {
     
-    public static final String TAG = "YhjxService";
+    public static final String TAG = "YHJobService";
 
     public static final String LOCATION_RECEIVER_ACTION = "com.yhjx.yhservice.LOCATION_RECEIVER";
     public static final String KEY_LOCATION_DATA = "LOCATION_DATA";
+    public static final String CHANNEL_ID_STRING = "service_01";
 
     @Override
     public void onCreate() {
         LogUtils.i(TAG,"onCreate");
         super.onCreate();
+        buildNotification();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LOCATION_RECEIVER_ACTION);
         registerReceiver(mLocationReceiver,intentFilter);
+    }
+
+    private void buildNotification() {
+        NotificationManager notificationManager = (NotificationManager) RunningContext.sAppContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID_STRING, getString(R.string.app_name),
+                    NotificationManager.IMPORTANCE_LOW);
+            notificationManager.createNotificationChannel(mChannel);
+            Notification notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID_STRING).build();
+            startForeground(1, notification);
+        }
     }
 
     @Override

@@ -239,6 +239,7 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
         new StepTask() {
             @Override
             public void onStep1() {
+                mWaitDialog.show();
                 apiModel.check(buildCheckReq(), new ResultHandler<Boolean>() {
                     @Override
                     protected void onSuccess(Boolean data) {
@@ -259,6 +260,7 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
+                                    mWaitDialog.show();
                                 }
                             });
                             AlertDialog dialog = builder.create();
@@ -273,6 +275,10 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
                 executeStart();
                 onFinish();
             }
+
+            @Override
+            public void finishStep() {
+            }
         }.execute(2);
     }
 
@@ -285,12 +291,17 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
             protected void onSuccess(Void data) {
                 ToastUtils.showToast(StartTaskActivity.this, "开工成功");
                 finish();
-                // TODO 返回需要刷新界面
             }
 
             @Override
             protected void onFailed(String errCode, String errMsg) {
-                ToastUtils.showToast(StartTaskActivity.this, "开工失败！");
+                ToastUtils.showToast(StartTaskActivity.this, "开工失败！"+errMsg);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                mWaitDialog.dismiss();
             }
         });
     }

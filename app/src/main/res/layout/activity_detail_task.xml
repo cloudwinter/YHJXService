@@ -232,8 +232,8 @@
 
                 <ImageView
                     android:id="@+id/start_task_img1"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:src="@mipmap/img_placeholder"/>
 
                 <View
@@ -243,8 +243,8 @@
 
                 <ImageView
                     android:id="@+id/start_task_img2"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:src="@mipmap/img_placeholder"/>
 
             </LinearLayout>
@@ -261,8 +261,8 @@
 
                 <ImageView
                     android:id="@+id/end_task_img1"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:src="@mipmap/img_placeholder"/>
 
                 <View
@@ -272,8 +272,8 @@
 
                 <ImageView
                     android:id="@+id/end_task_img2"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:src="@mipmap/img_placeholder"/>
 
             </LinearLayout>

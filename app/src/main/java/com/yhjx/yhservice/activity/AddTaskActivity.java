@@ -229,7 +229,7 @@ public class AddTaskActivity extends BaseActionBarActivity  {
             @Override
             protected void onFailed(String errCode, String errMsg) {
                 super.onFailed(errCode, errMsg);
-                ToastUtils.showToast(AddTaskActivity.this,"提交失败！");
+                ToastUtils.showToast(AddTaskActivity.this,"提交失败！"+errMsg);
             }
 
             @Override
@@ -242,7 +242,7 @@ public class AddTaskActivity extends BaseActionBarActivity  {
     private void showWarningDialog(String userName,String tel) {
         AlertDialog.Builder builder = new AlertDialog.Builder(AddTaskActivity.this);
         builder.setTitle("提示");
-        builder.setMessage("当前车辆已保修，并指派 "+userName+"("+tel+"） 安排维修" );
+        builder.setMessage("当前车辆已报修，并指派 "+userName+"("+tel+"） 安排维修" );
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
