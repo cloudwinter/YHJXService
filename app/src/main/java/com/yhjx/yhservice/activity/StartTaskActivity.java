@@ -124,7 +124,7 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
         mWaitDialog = new WaitDialog(this);
         selectCameraDialog = new SelectCameraDialog(StartTaskActivity.this);
         // 启动定位
-        RunningContext.sAMapLocationClient.startLocation();
+        RunningContext.startLocation(this,true);
         loadData();
     }
 

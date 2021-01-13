@@ -67,7 +67,7 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
         super.onResume();
         LogUtils.i(TAG,"onResume");
         // 开启一次定位
-        RunningContext.sAMapLocationClient.startLocation();
+        RunningContext.startLocation(getActivity(),true);
     }
 
 
@@ -122,8 +122,9 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
 
 
     private void loadData() {
-        // 加载数据前开启一次定位
-        RunningContext.sAMapLocationClient.startLocation();
+        if (mLoginUserInfo == null) {
+            return;
+        }
         TaskOrderReq req = new TaskOrderReq();
         req.userNo = mLoginUserInfo.userNo;
         req.pageNum = 1;

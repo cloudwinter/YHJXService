@@ -32,6 +32,7 @@ public class YHJobService extends JobService {
     public static final String KEY_LOCATION_DATA = "LOCATION_DATA";
     public static final String CHANNEL_ID_STRING = "service_01";
 
+
     @Override
     public void onCreate() {
         LogUtils.i(TAG,"onCreate");
@@ -57,6 +58,7 @@ public class YHJobService extends JobService {
     public void onDestroy() {
         LogUtils.i(TAG,"onDestroy");
         unregisterReceiver(mLocationReceiver);
+        RunningContext.stopLocation();
         super.onDestroy();
     }
 
@@ -69,22 +71,29 @@ public class YHJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
         LogUtils.i(TAG,"onStartJob 开始执行定时任务：params="+params);
-        startLocation();
+        RunningContext.threadPool().execute(new Runnable() {
+            @Override
+            public void run() {
+                startLocation();
+            }
+        });
         return true;
     }
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        LogUtils.i(TAG,"onStartJob 暂停定时任务：params="+params);
+        LogUtils.i(TAG,"onStopJob 暂停定时任务：params="+params);
         return false;
     }
+
 
     /**
      * 开启定位
      */
     private void startLocation() {
         // 开启定位
-        RunningContext.sAMapLocationClient.startLocation();
+        LogUtils.i(TAG,"startLocation 开始定位");
+        RunningContext.startLocation(null,false);
     }
 
     /**
@@ -128,12 +137,21 @@ public class YHJobService extends JobService {
                 LocationInfo locationInfo = new LocationInfo();
                 locationInfo.address = mapLocation.getAddress();
                 locationInfo.city = mapLocation.getCity();
-                locationInfo.latitude = mapLocation.getLatitude()+"";
-                locationInfo.longitude = mapLocation.getLongitude() + "";
+                locationInfo.latitude = coordinateToString(mapLocation.getLatitude());
+                locationInfo.longitude = coordinateToString(mapLocation.getLongitude());
                 StorageUtils.setCurrentLocation(locationInfo);
                 uploadLocation(locationInfo);
             }
 
         }
     };
+
+    /**
+     * 坐标转换并保留6位小数
+     * @param coordinate
+     * @return
+     */
+    private String coordinateToString(double coordinate) {
+        return String .format("%.6f",coordinate);
+    }
 }

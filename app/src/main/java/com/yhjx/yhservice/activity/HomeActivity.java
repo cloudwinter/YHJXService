@@ -107,7 +107,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         viewPager.setCurrentItem(tab-1);
         switch (tab) {
             case 1:
-                RunningContext.sAMapLocationClient.startLocation();
+                RunningContext.startLocation(HomeActivity.this,true);
                 tabTaskImg.setSelected(true);
                 tabTaskText.setSelected(true);
                 tabRecordImg.setSelected(false);
@@ -119,7 +119,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 actionBar.setTitle("任务单");
                 break;
             case 2:
-                RunningContext.sAMapLocationClient.startLocation();
+                RunningContext.startLocation(HomeActivity.this,true);
                 tabTaskImg.setSelected(false);
                 tabTaskText.setSelected(false);
                 tabRecordImg.setSelected(true);
@@ -131,7 +131,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 actionBar.setTitle("维修记录");
                 break;
             case 3:
-                RunningContext.sAMapLocationClient.startLocation();
+                RunningContext.startLocation(HomeActivity.this,true);
                 tabTaskImg.setSelected(false);
                 tabTaskText.setSelected(false);
                 tabRecordImg.setSelected(false);

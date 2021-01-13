@@ -2,6 +2,8 @@ package com.yhjx.yhservice.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.job.JobService;
+import android.app.job.JobServiceEngine;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import com.yhjx.yhservice.activity.LoginActivity;
 import com.yhjx.yhservice.api.UpdateHttpManager;
 import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.model.LoginUserInfo;
+import com.yhjx.yhservice.service.YHJobService;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.ToastUtils;

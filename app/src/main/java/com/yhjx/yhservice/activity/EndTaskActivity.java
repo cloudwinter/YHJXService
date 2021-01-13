@@ -150,7 +150,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         selectFaultTypeDialog = new SelectFaultTypeDialog(this);
         selectFaultTypeDialog.setOnDialogItemClick(mOnDialogItemClickListener);
         // 启动定位
-        RunningContext.sAMapLocationClient.startLocation();
+        RunningContext.startLocation(this,true);
         loadData();
         asyncLoadFaultTypeData();
     }

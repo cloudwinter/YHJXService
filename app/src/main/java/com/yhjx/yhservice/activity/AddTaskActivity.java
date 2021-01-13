@@ -162,10 +162,18 @@ public class AddTaskActivity extends BaseActionBarActivity  {
             req.vehicleName = vehicle.vehicleName;
             req.vehicleType = vehicle.vehicleType;
 
+            if (mLoginUserInfo == null) {
+                ToastUtils.showToast(AddTaskActivity.this,"未获取到用户信息，请退出后重新进入");
+                return;
+            }
             req.userNo = mLoginUserInfo.userNo;
             req.userName = mLoginUserInfo.userName;
 
             LocationInfo locationInfo = StorageUtils.getCurrentLocation();
+            if (locationInfo == null) {
+                ToastUtils.showToast(AddTaskActivity.this,"请确认开启定位权限，开启后重新进入app");
+                return;
+            }
             req.longitude = locationInfo.longitude;
             req.latitude = locationInfo.latitude;
             req.userAddress = locationInfo.address;

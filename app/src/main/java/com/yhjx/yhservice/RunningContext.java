@@ -3,6 +3,7 @@ package com.yhjx.yhservice;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
+import android.app.job.JobScheduler;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.os.Build;
 
 import com.amap.api.location.AMapLocationClient;
 import com.yhjx.yhservice.model.LoginUserInfo;
+import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.YHUtils;
 
@@ -23,6 +25,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import static android.content.Context.JOB_SCHEDULER_SERVICE;
 
 public class RunningContext {
 
@@ -67,13 +71,45 @@ public class RunningContext {
      */
     public static AMapLocationClient sAMapLocationClient;
 
+    public static JobScheduler jobScheduler;
+
 
     public static void init(Application app) {
         sAppContext = app.getApplicationContext();
         // 初始化地图client
         sAMapLocationClient = new AMapLocationClient(sAppContext);
+
+        jobScheduler = (JobScheduler) sAppContext.getSystemService(JOB_SCHEDULER_SERVICE);
         // 初始化用户信息
         getsLoginUserInfo();
+    }
+
+
+    /**
+     * 定位权限
+     *
+     * @param activity
+     * @param request
+     */
+    public static void startLocation(Activity activity, boolean request) {
+        if (sAMapLocationClient == null) {
+            LogUtils.e("RunningContext.startLocation sAMapLocationClient 为null 无法定位");
+            return;
+        }
+        if (checkLocationPermission(activity, request)) {
+            sAMapLocationClient.startLocation();
+        }
+    }
+
+    /**
+     * 停止定位
+     */
+    public static void stopLocation() {
+        if (sAMapLocationClient == null) {
+            return;
+        }
+        sAMapLocationClient.disableBackgroundLocation(true);
+        sAMapLocationClient.stopLocation();
     }
 
 
@@ -171,7 +207,44 @@ public class RunningContext {
      * @param activity
      * @return
      */
-    public static boolean checkCameraPermission(Activity activity,boolean request) {
+    public static boolean checkLocationPermission(Activity activity, boolean request) {
+        if (activity != null) {
+            LogUtils.i("checkLocationPermission 检查定位权限", activity.getClass().getName());
+        } else {
+            LogUtils.i("checkLocationPermission 检查定位权限 定时任务");
+        }
+
+        boolean granted = true;
+        String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+        List<String> newApplyPermissions = new ArrayList<>();
+        for (String permission : permissions) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(sAppContext, permission)) {
+                granted = false;
+                newApplyPermissions.add(permission);
+            }
+        }
+        if (!granted) {
+            if (request) {
+                ActivityCompat.requestPermissions(activity, YHUtils.listConvertToArray(newApplyPermissions), PERMISSIONS_REQUEST_CODE);
+            }
+        }
+        if (activity != null) {
+            LogUtils.i("checkLocationPermission 检查定位权限 结果：" + granted, activity.getClass().getName());
+        } else {
+            LogUtils.i("checkLocationPermission 检查定位权限 定时任务结果：" + granted);
+        }
+
+        return granted;
+    }
+
+
+    /**
+     * 检查相机权限
+     *
+     * @param activity
+     * @return
+     */
+    public static boolean checkCameraPermission(Activity activity, boolean request) {
         boolean granted = true;
         String[] permissions = new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
