@@ -148,7 +148,7 @@ public class TaskListAdapter extends BaseListAdapter<TaskOrder> {
             receiveBtn.setEnabled(false);
             startBtn.setEnabled(true);
             endBtn.setEnabled(false);
-            cancelBtn.setEnabled(false);
+            cancelBtn.setEnabled(true);
         } else if (orderStatus.equals("3") || orderStatus.equals("4")) {
             // 已开工（正常开工或者异常开工）,待完工
             textOrderStatus.setText("待完工");

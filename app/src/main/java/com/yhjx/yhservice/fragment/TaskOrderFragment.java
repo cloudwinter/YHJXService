@@ -25,6 +25,7 @@ import com.yhjx.yhservice.api.domain.request.TaskHandleReceiveReq;
 import com.yhjx.yhservice.api.domain.request.TaskOrderReq;
 import com.yhjx.yhservice.api.domain.response.TaskOrderRes;
 import com.yhjx.yhservice.base.BaseFragment;
+import com.yhjx.yhservice.dialog.CancelDialog;
 import com.yhjx.yhservice.dialog.WaitDialog;
 import com.yhjx.yhservice.model.LocationInfo;
 import com.yhjx.yhservice.model.LoginUserInfo;
@@ -215,33 +216,21 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     public void cancelClick(TaskOrder order) {
-        // 取消
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("退出");
-        builder.setMessage("您确定要取消当前任务");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        CancelDialog cancelDialog = new CancelDialog(mContext);
+        cancelDialog.setYesOnclickListener("确定", new CancelDialog.onYesOnclickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                cancelTask();
+            public void onYesClick(String editText) {
+                cancelDialog.dismiss();
+                cancelTask(editText);
             }
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        // 去除title
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.show();
+        cancelDialog.show();
     }
 
     /**
      * 取消任务
      */
-    private void cancelTask() {
+    private void cancelTask(String editText) {
         // 1、获取当前的经纬度坐标
         LocationInfo locationInfo =  StorageUtils.getCurrentLocation();
 
@@ -252,7 +241,7 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
         req.latitude = locationInfo.latitude;
         req.longitude = locationInfo.longitude;
         req.userAddress = locationInfo.address;
-        req.stopReason = "个人原因";
+        req.stopReason = editText;
 
         mApiModel.cancel(req, new ResultHandler<Void>() {
             @Override

@@ -159,9 +159,8 @@
                     android:textColor="@color/black"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:enabled="false"
-                    android:clickable="false"
                     android:focusableInTouchMode="false"
+                    android:duplicateParentState="true"
                     />
 
                 <ImageView

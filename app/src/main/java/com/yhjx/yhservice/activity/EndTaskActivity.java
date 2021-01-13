@@ -138,7 +138,7 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         taskNo = getIntent().getStringExtra(TASK_NO_EXTRA_KEY);
 
         mFaultTypeLL.setOnClickListener(mSelectedFaultType);
-        mFaultTypeTV.setClickable(false);
+        mFaultTypeTV.setOnClickListener(mSelectedFaultType);
 
         mLocalAddImg.setAddPictureClickListener(mAddPictureClick);
         mPartsAddImg.setAddPictureClickListener(mAddPictureClick);

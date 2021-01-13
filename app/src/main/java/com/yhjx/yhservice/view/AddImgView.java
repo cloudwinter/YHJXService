@@ -21,6 +21,7 @@ import com.yhjx.yhservice.api.ApiModel;
 import com.yhjx.yhservice.api.domain.response.UploadImgRes;
 import com.yhjx.yhservice.dialog.WaitDialog;
 import com.yhjx.yhservice.util.LogUtils;
+import com.yhjx.yhservice.util.ToastUtils;
 
 /**
  * 上传图片
@@ -97,7 +98,6 @@ public class AddImgView extends RelativeLayout implements View.OnClickListener {
             @Override
             public void onStart() {
                 LogUtils.i(TAG, "图片开始上传 path:" + url);
-                super.onStart();
                 mWaitDialog.show("上传中...");
             }
 
@@ -108,6 +108,7 @@ public class AddImgView extends RelativeLayout implements View.OnClickListener {
                     // 网络图片
                     imageUrl = data.url;
                     ImageLoader.getInstance().displayImage(data.url, mPictureImg, mImageLoadingListener);
+                    ToastUtils.showToast(getContext(),"图片上传成功！");
                 }
             }
 
