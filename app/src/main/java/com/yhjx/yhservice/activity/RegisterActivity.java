@@ -3,6 +3,7 @@ package com.yhjx.yhservice.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -127,10 +128,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             ToastUtils.showToast(this,"必填参数缺失！");
             return null;
         }
+        if (req.stationId == null || TextUtils.isEmpty(req.stationName)) {
+            ToastUtils.showToast(this,"请选择服务站");
+            return null;
+        }
         req.stationId = mSelectedStationModel.id;
         req.stationName = mSelectedStationModel.stationName;
-        req.stagnationStationId = mSelectedStagnationStationModel.id;
-        req.stagnationStationName = mSelectedStagnationStationModel.stationName;
+        // 默认服务站就是驻点
+        req.stagnationStationId = req.stationId;
+        req.stagnationStationName = req.stationName;
         return req;
     }
 

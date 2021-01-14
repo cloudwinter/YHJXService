@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white">
 
@@ -135,6 +135,15 @@
                 android:editable="false"/>
 
 
+<!--            <com.yhjx.yhservice.view.CheckBoxView-->
+<!--                android:id="@+id/checkbox"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                app:falseColor="@color/colorGray"-->
+<!--                app:slideColor="@color/colorGreen"-->
+<!--                app:trueColor="@color/btn_text"-->
+<!--                />-->
 
 
             <TextView
@@ -147,6 +156,7 @@
                 android:layout_marginLeft="45dp"
                 android:inputType="number"
                 android:maxLength="32"
+                android:visibility="gone"
                 />
 
             <EditText
@@ -162,7 +172,8 @@
                 android:layout_marginTop="7dp"
                 android:paddingLeft="17dp"
                 android:focusableInTouchMode="false"
-                android:editable="false"/>
+                android:editable="false"
+                android:visibility="gone"/>
 
             <com.yhjx.yhservice.view.YHButton
                 android:id="@+id/btn_register"

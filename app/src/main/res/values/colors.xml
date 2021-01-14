@@ -19,4 +19,8 @@
     <color name="F75A2D">#F75A2D</color>
     <color name="tab_normal">#4B4F57</color>
     <color name="FA3008">#FA3008</color>
+
+    <color name="colorGray">#D3D3D3</color>
+    <color name="colorGreen">#32CD32</color>
+    <color name="colorBlue">#3F51B5</color>
 </resources>

@@ -6,4 +6,11 @@
         <attr name="imgdesc" format="string"></attr>
     </declare-styleable>
 
+    <declare-styleable name="CheckBoxView">
+        <attr name="trueColor" format="color" />
+        <attr name="falseColor" format="color" />
+        <attr name="slideColor" format="color" />
+        <attr name="checked" format="boolean" />
+    </declare-styleable>
+
 </resources>
