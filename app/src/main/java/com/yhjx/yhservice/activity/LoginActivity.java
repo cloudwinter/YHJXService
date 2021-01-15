@@ -202,13 +202,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         loginUserInfo.userTel = user.userTel;
         loginUserInfo.userPassword = user.userPassword;
         loginUserInfo.stationId = user.stationId;
-        loginUserInfo.stagnationStationId = user.stagnationStationId;
+        loginUserInfo.stationName = user.stationName;
         loginUserInfo.stagnationStationId = user.stagnationStationId;
         loginUserInfo.stagnationStationName = user.stagnationStationName;
         loginUserInfo.stagnationStationAddress = user.stagnationStationAddress;
         loginUserInfo.stagnationStationLongitude = user.stagnationStationLongitude;
         loginUserInfo.stagnationStationLatitude = user.stagnationStationLatitude;
-        loginUserInfo.userFlag = user.userFlag;
         loginUserInfo.userFlag = user.userFlag;
         return loginUserInfo;
     }

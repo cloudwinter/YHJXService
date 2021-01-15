@@ -153,7 +153,8 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
 
     private void setData(TaskOrderRes data) {
         if (data == null || data.count == 0) {
-            mTvTaskNumTV.setText(data.count + "个");
+            mTvTaskNumTV.setText(0 + "个");
+            mTaskListAdapter.setClear();
             return;
         }
         mTvTaskNumTV.setText(data.count + "个");

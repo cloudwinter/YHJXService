@@ -115,6 +115,7 @@
                     android:textSize="14dp"
                     android:inputType="phone"
                     android:layout_weight="1"
+                    android:maxLength="11"
                     android:textColor="@color/black"/>
             </LinearLayout>
 

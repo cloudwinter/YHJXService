@@ -128,7 +128,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             ToastUtils.showToast(this,"必填参数缺失！");
             return null;
         }
-        if (req.stationId == null || TextUtils.isEmpty(req.stationName)) {
+        if (mSelectedStationModel.id == null || TextUtils.isEmpty(mSelectedStationModel.stationName)) {
             ToastUtils.showToast(this,"请选择服务站");
             return null;
         }

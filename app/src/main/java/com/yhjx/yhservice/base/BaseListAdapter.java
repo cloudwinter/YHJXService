@@ -69,6 +69,11 @@ public class BaseListAdapter<T> extends BaseAdapter {
 		this.notifyDataSetChanged();
 	}
 
+	public void setClear() {
+		mListData.clear();
+		this.notifyDataSetChanged();
+	}
+
 	/**
 	 * add 数据
 	 * 

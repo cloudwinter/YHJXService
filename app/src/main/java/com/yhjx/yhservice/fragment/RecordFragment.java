@@ -120,7 +120,12 @@ public class RecordFragment extends BaseFragment implements SwipeRefreshLayout.O
 
             @Override
             protected void onSuccess(TaskRecordRes data) {
-                if (data == null && data.count == 0) {
+                if (data == null) {
+                    return;
+                }
+                if (data.count == 0) {
+                    mTaskOrderList = null;
+                    mRecordListAdapter.setClear();
                     return;
                 }
                 currentPageNo = pageNo;
