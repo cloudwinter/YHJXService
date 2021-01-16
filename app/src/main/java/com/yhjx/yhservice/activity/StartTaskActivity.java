@@ -347,9 +347,9 @@ public class StartTaskActivity extends BaseActivity implements TranslucentAction
         if (requestCode == SelectCameraDialog.OPEN_CAMERA_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 if (addViewType == ADDVIEW_TYPE_LOCALE) {
-                    mLocaleAddImgView.setPicture(cameraUrl);
+                    mLocaleAddImgView.setPicture(ImageUtil.getTempPathFromPathAndCompress(cameraUrl));
                 } else if (addViewType == ADDVIEW_TYPE_FAULT) {
-                    mFaultAddImgView.setPicture(cameraUrl);
+                    mFaultAddImgView.setPicture(ImageUtil.getTempPathFromPathAndCompress(cameraUrl));
                 }
             }
         } else if (requestCode == SelectCameraDialog.SELECT_PHONE_REQUEST_CODE) {

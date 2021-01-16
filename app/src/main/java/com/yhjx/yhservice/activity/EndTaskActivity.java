@@ -437,9 +437,9 @@ public class EndTaskActivity extends BaseActivity implements TranslucentActionBa
         if (requestCode == SelectCameraDialog.OPEN_CAMERA_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 if (addViewType == ADDVIEW_TYPE_LOCALE) {
-                    mLocalAddImg.setPicture(cameraUrl);
+                    mLocalAddImg.setPicture(ImageUtil.getTempPathFromPathAndCompress(cameraUrl));
                 } else if (addViewType == ADDVIEW_TYPE_PARTS) {
-                    mPartsAddImg.setPicture(cameraUrl);
+                    mPartsAddImg.setPicture(ImageUtil.getTempPathFromPathAndCompress(cameraUrl));
                 }
             }
         } else if (requestCode == SelectCameraDialog.SELECT_PHONE_REQUEST_CODE) {
