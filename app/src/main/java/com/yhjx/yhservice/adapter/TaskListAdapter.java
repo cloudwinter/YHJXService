@@ -155,7 +155,7 @@ public class TaskListAdapter extends BaseListAdapter<TaskOrder> {
             receiveBtn.setEnabled(false);
             startBtn.setEnabled(false);
             endBtn.setEnabled(true);
-            cancelBtn.setEnabled(false);
+            cancelBtn.setEnabled(true);
         } else {
             // 非操作状态
             textOrderStatus.setText("");

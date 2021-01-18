@@ -216,13 +216,13 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     @Override
-    public void cancelClick(TaskOrder order) {
+    public void cancelClick(final TaskOrder order) {
         CancelDialog cancelDialog = new CancelDialog(mContext);
         cancelDialog.setYesOnclickListener("确定", new CancelDialog.onYesOnclickListener() {
             @Override
             public void onYesClick(String editText) {
                 cancelDialog.dismiss();
-                cancelTask(editText);
+                cancelTask(order,editText);
             }
         });
         cancelDialog.show();
@@ -231,11 +231,12 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
     /**
      * 取消任务
      */
-    private void cancelTask(String editText) {
+    private void cancelTask(TaskOrder order,String editText) {
         // 1、获取当前的经纬度坐标
         LocationInfo locationInfo =  StorageUtils.getCurrentLocation();
 
         TaskHandleCancelReq req = new TaskHandleCancelReq();
+        req.taskNo = order.taskNo;
         req.userNo = mLoginUserInfo.userNo;
         req.userName = mLoginUserInfo.userName;
 
@@ -254,7 +255,7 @@ public class TaskOrderFragment extends BaseFragment implements SwipeRefreshLayou
             @Override
             protected void onFailed(String errCode, String errMsg) {
                 super.onFailed(errCode, errMsg);
-                ToastUtils.showToast(mContext,"取消失败！");
+                ToastUtils.showToast(mContext,"取消失败！"+errMsg);
             }
         });
     }

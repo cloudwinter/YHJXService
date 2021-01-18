@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yhjx.yhservice.R;
+import com.yhjx.yhservice.RunningContext;
 import com.yhjx.yhservice.base.BaseListAdapter;
 import com.yhjx.yhservice.model.TaskOrder;
 import com.yhjx.yhservice.util.DateUtil;
@@ -89,7 +90,10 @@ public class RecordListAdapter extends BaseListAdapter<TaskOrder> {
     }
 
 
-    private String getFormatValue(int resId,Object... params) {
+    private String getFormatValue(int resId,String... params) {
+        if (!YHUtils.validParams(params)) {
+            return String.format(RunningContext.sAppContext.getString(resId), "");
+        }
         return YHUtils.getFormatValue(resId, params);
     }
 
