@@ -88,19 +88,19 @@ public class StorageUtils {
 
 
     public static LocationInfo getCurrentLocation() {
-        String val = PreferenceUtil.getString(KEY.LOCATION_KEY, null);
-        if (TextUtils.isEmpty(val)) {
-            // 如果位置未空开启一次定位
-            return null;
-        }
-        return new Gson().fromJson(val, LocationInfo.class);
+//        String val = PreferenceUtil.getString(KEY.LOCATION_KEY, null);
+//        if (TextUtils.isEmpty(val)) {
+//            // 如果位置未空开启一次定位
+//            return null;
+//        }
+//        return new Gson().fromJson(val, LocationInfo.class);
 
         // FIXME 默认位置是英虎机械的厂址
-//        LocationInfo locationInfo = new LocationInfo();
-//        locationInfo.longitude = "115.153443";
-//        locationInfo.latitude = "38.835898";
-//        locationInfo.address = "河北英虎农业机械制造有限公司";
-//        return locationInfo;
+        LocationInfo locationInfo = new LocationInfo();
+        locationInfo.longitude = "115.153443";
+        locationInfo.latitude = "38.835898";
+        locationInfo.address = "河北英虎农业机械制造有限公司";
+        return locationInfo;
     }
 
 

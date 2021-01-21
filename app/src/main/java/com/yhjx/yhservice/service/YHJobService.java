@@ -143,12 +143,12 @@ public class YHJobService extends JobService {
                 uploadLocation(locationInfo);
             } else {
                 // FIXME 测试
-//                LocationInfo locationInfo = new LocationInfo();
-//                locationInfo.longitude = "115.153443";
-//                locationInfo.latitude = "38.835898";
-//                locationInfo.address = "河北英虎农业机械制造有限公司";
-//                StorageUtils.setCurrentLocation(locationInfo);
-//                uploadLocation(locationInfo);
+                LocationInfo locationInfo = new LocationInfo();
+                locationInfo.longitude = "115.153443";
+                locationInfo.latitude = "38.835898";
+                locationInfo.address = "河北英虎农业机械制造有限公司";
+                StorageUtils.setCurrentLocation(locationInfo);
+                uploadLocation(locationInfo);
             }
 
         }
