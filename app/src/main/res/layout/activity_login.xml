@@ -40,7 +40,7 @@
     <EditText
         android:id="@+id/edit_tel"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="37dp"
         android:layout_marginRight="37dp"
         android:background="@drawable/edittext_background"
@@ -68,7 +68,7 @@
     <EditText
         android:id="@+id/edit_password"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="37dp"
         android:layout_marginRight="37dp"
         android:background="@drawable/edittext_background"

@@ -34,14 +34,14 @@
                 android:text="姓名"
                 android:textColor="#ff242831"
                 android:textSize="14sp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="45dp"
                 />
 
             <EditText
                 android:id="@+id/edit_name"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="37dp"
                 android:layout_marginRight="37dp"
                 android:background="@drawable/edittext_background"
@@ -66,7 +66,7 @@
             <EditText
                 android:id="@+id/edit_tel"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="37dp"
                 android:layout_marginRight="37dp"
                 android:background="@drawable/edittext_background"
@@ -77,34 +77,6 @@
                 android:paddingLeft="17dp"
                 android:inputType="phone"
                 android:maxLength="11"/>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="密码"
-                android:textColor="#ff242831"
-                android:textSize="14sp"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="45dp"
-                android:inputType="number"
-                android:maxLength="32"
-                />
-
-            <EditText
-                android:id="@+id/edit_password"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_marginLeft="37dp"
-                android:layout_marginRight="37dp"
-                android:background="@drawable/edittext_background"
-                android:hint="请输入密码"
-                android:textColorHint="#9fa0a6"
-                android:textSize="14dp"
-                android:inputType="textPassword"
-                android:layout_marginTop="7dp"
-                android:paddingLeft="17dp"/>
-
 
 
             <TextView
@@ -122,7 +94,7 @@
             <EditText
                 android:id="@+id/edit_service_station"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="37dp"
                 android:layout_marginRight="37dp"
                 android:background="@drawable/edittext_background"
@@ -133,6 +105,59 @@
                 android:paddingLeft="17dp"
                 android:focusableInTouchMode="false"
                 android:editable="false"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码"
+                android:textColor="#ff242831"
+                android:textSize="14sp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="45dp"
+                android:inputType="number"
+                android:maxLength="32"
+                />
+
+            <EditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:background="@drawable/edittext_background"
+                android:hint="请输入密码"
+                android:textColorHint="#9fa0a6"
+                android:textSize="14dp"
+                android:inputType="textPassword"
+                android:layout_marginTop="7dp"
+                android:paddingLeft="17dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="确认密码"
+                android:textColor="#ff242831"
+                android:textSize="14sp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="45dp"
+                android:inputType="number"
+                android:maxLength="32"
+                />
+
+            <EditText
+                android:id="@+id/edit_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:background="@drawable/edittext_background"
+                android:hint="请再次输入密码"
+                android:textColorHint="#9fa0a6"
+                android:textSize="14dp"
+                android:inputType="textPassword"
+                android:layout_marginTop="7dp"
+                android:paddingLeft="17dp"/>
 
 
 <!--            <com.yhjx.yhservice.view.CheckBoxView-->

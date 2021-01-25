@@ -100,6 +100,7 @@ public class AddTaskActivity extends BaseActionBarActivity  {
                 if (!hasFocus) {
                     String vin = mVinEditText.getText().toString();
                     if (!TextUtils.isEmpty(vin)) {
+                        vin = "YH"+vin;
                         mVin = vin;
                         queryVehicleInfo(vin.trim());
                     }

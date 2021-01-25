@@ -27,7 +27,7 @@
             <!-- 车架号 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:paddingLeft="12dp"
@@ -43,22 +43,32 @@
                     android:gravity="center_vertical"
                     />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="YH"
+                    android:textColor="#ff4b4f57"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    />
+
                 <EditText
                     android:id="@+id/edit_vin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:hint="请输入车架号"
+                    android:hint="请输入车架号后7位数字"
                     android:textColorHint="#9fa0a6"
                     android:textSize="14dp"
                     android:layout_weight="1"
+                    android:inputType="number"
                     android:textColor="@color/black"/>
             </LinearLayout>
 
             <!-- 客户 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:paddingLeft="12dp"
@@ -89,7 +99,7 @@
             <!-- 电话 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:paddingLeft="12dp"
@@ -159,7 +169,7 @@
             <!-- 车型 输入车架号后自动带入 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:paddingLeft="12dp"
@@ -193,7 +203,7 @@
             <!-- 车型 输入车架号后自动带入 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:paddingLeft="12dp"

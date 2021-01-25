@@ -47,6 +47,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected EditText editUserTel;
     @BindView(R.id.edit_password)
     protected EditText editUserPassword;
+    @BindView(R.id.edit_confirm_password)
+    protected EditText editConfirmPassword;
     @BindView(R.id.edit_service_station)
     protected EditText editServiceStation;
     @BindView(R.id.edit_stagnation_service_station)
@@ -121,11 +123,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private ServiceUserRegisterReq buildReq() {
         ServiceUserRegisterReq req = new ServiceUserRegisterReq();
         req.userName = YHUtils.trim(editUserName.getText().toString());
-        req.userPassword = YHUtils.trim(editUserPassword.getText().toString());
         req.userTel = YHUtils.trim(editUserTel.getText().toString());
+        req.userPassword = YHUtils.trim(editUserPassword.getText().toString());
+        String confirmPassword = YHUtils.trim(editConfirmPassword.getText().toString());
 
         if (!YHUtils.validParams(req.userName, req.userPassword, req.userTel)) {
             ToastUtils.showToast(this,"必填参数缺失！");
+            return null;
+        }
+        if (!req.userPassword.equals(confirmPassword)) {
+            ToastUtils.showToast(this,"两次输入的密码不一致！");
             return null;
         }
         if (mSelectedStationModel.id == null || TextUtils.isEmpty(mSelectedStationModel.stationName)) {
