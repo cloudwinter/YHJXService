@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YHJXService</string>
+    <string name="app_name">英虎机械</string>
 
     <string name="task_fragment_show_user_name">%s，欢迎您！</string>
     <string name="task_item_order_no">任务订单号：%s</string>
