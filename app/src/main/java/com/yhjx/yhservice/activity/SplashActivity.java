@@ -56,10 +56,6 @@ public class SplashActivity extends BaseActivity {
      */
     private void initView() {
         mLoginUserInfo = RunningContext.getsLoginUserInfo();
-        if (mLoginUserInfo != null && !StorageUtils.isLoginUserExpire()) {
-            // 超过缓存有效期，重新登录
-            asyncRequestLogin(mLoginUserInfo);
-        }
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.welcome_alpha);
         //启动Fill保持
         animation.setFillEnabled(true);
@@ -90,7 +86,11 @@ public class SplashActivity extends BaseActivity {
     private void jumpIntent() {
         Intent intent = new Intent();
         if (mLoginUserInfo == null) {
-//            intent.setClass(SplashActivity.this, TaskDetailsActivity.class);
+            intent.setClass(SplashActivity.this, LoginActivity.class);
+        } else if (mLoginUserInfo != null && !StorageUtils.isLoginUserExpire()) {
+            // 超过缓存有效期，重新自动登录
+            //asyncRequestLogin(mLoginUserInfo);
+            intent.putExtra(LoginActivity.EXTRA_AUTO_LOGIN_KEY, true);
             intent.setClass(SplashActivity.this, LoginActivity.class);
         } else {
             intent.setClass(SplashActivity.this, HomeActivity.class);
@@ -101,6 +101,7 @@ public class SplashActivity extends BaseActivity {
 
     /**
      * 异步同步用户信息
+     *
      * @param loginUserInfo
      */
     private void asyncRequestLogin(final LoginUserInfo loginUserInfo) {

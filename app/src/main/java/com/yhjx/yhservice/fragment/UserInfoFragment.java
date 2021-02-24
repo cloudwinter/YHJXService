@@ -25,7 +25,7 @@ import com.yhjx.yhservice.activity.LoginActivity;
 import com.yhjx.yhservice.api.UpdateHttpManager;
 import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.model.LoginUserInfo;
-import com.yhjx.yhservice.service.YHJobService;
+import com.yhjx.yhservice.service.YHService;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.ToastUtils;
@@ -167,14 +167,14 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
                 .setHttpManager(new UpdateHttpManager())
                 .setPost(true)
                 .build()
-                .checkNewApp(new UpdateCallback(){
+                .checkNewApp(new UpdateCallback() {
                     @Override
                     protected UpdateAppBean parseJson(String json) {
                         UpdateAppBean updateAppBean = new UpdateAppBean();
                         try {
                             JSONObject jsonObject = new JSONObject(json);
                             int latestVersionCode = (int) jsonObject.get("latestVersionCode");
-                            String update = latestVersionCode > RunningContext.getVersionCode()?"Yes":"No";
+                            String update = latestVersionCode > RunningContext.getVersionCode() ? "Yes" : "No";
 
 
                             updateAppBean
@@ -208,7 +208,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
                     @Override
                     protected void noNewApp(String error) {
-                        ToastUtils.showToast(mContext,"没有新版本");
+                        ToastUtils.showToast(mContext, "没有新版本");
                     }
                 });
         ;
@@ -226,6 +226,8 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 StorageUtils.clearLogin();
+                Intent stopServiceIntent = new Intent(mContext, YHService.class);
+                mContext.stopService(stopServiceIntent);
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 mContext.startActivity(intent);

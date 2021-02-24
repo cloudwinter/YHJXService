@@ -1,8 +1,11 @@
 package com.yhjx.yhservice.activity;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -17,6 +20,8 @@ import com.yhjx.yhservice.base.BaseFragment;
 import com.yhjx.yhservice.fragment.RecordFragment;
 import com.yhjx.yhservice.fragment.TaskOrderFragment;
 import com.yhjx.yhservice.fragment.UserInfoFragment;
+import com.yhjx.yhservice.service.YHService;
+import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.view.NoScrollViewPager;
 import com.yhjx.yhservice.view.TranslucentActionBar;
 
@@ -95,6 +100,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         viewPager.setScroll(true);
         viewPager.setOffscreenPageLimit(3);
 
+        // 启动蓝牙service
+        Intent blueServiceIntent = new Intent(HomeActivity.this, YHService.class);
+        startService(blueServiceIntent);
+        bindService(blueServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
         setCurrentTab(1);
     }
 
@@ -107,7 +117,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         viewPager.setCurrentItem(tab-1);
         switch (tab) {
             case 1:
-                RunningContext.startLocation(HomeActivity.this,true);
+                startLocation();
                 tabTaskImg.setSelected(true);
                 tabTaskText.setSelected(true);
                 tabRecordImg.setSelected(false);
@@ -119,7 +129,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 actionBar.setTitle("任务单");
                 break;
             case 2:
-                RunningContext.startLocation(HomeActivity.this,true);
+                startLocation();
                 tabTaskImg.setSelected(false);
                 tabTaskText.setSelected(false);
                 tabRecordImg.setSelected(true);
@@ -131,7 +141,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 actionBar.setTitle("维修记录");
                 break;
             case 3:
-                RunningContext.startLocation(HomeActivity.this,true);
+                startLocation();
                 tabTaskImg.setSelected(false);
                 tabTaskText.setSelected(false);
                 tabRecordImg.setSelected(false);
@@ -143,6 +153,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 actionBar.setTitle("个人信息");
                 break;
         }
+    }
+
+    public void startLocation() {
+        viewPager.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                RunningContext.startLocation(HomeActivity.this,true);
+            }
+        },1000);
     }
 
 
@@ -160,6 +179,21 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 break;
         }
     }
+
+    /* BluetoothLeService绑定的回调函数 */
+    private final ServiceConnection mServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            LogUtils.d(TAG, "BluetoothLeService 已启动");
+            //RunningContext.yhService = ((YHService.LocalBinder) service).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            LogUtils.i(TAG, "BluetoothLeService 已断开");
+        }
+    };
 
     @Override
     public void onLeftClick() {

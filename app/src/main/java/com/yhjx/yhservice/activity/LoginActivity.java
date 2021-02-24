@@ -45,6 +45,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     public static int PERMISSIONS_REQUEST_CODE = 300;
 
+    public static String EXTRA_AUTO_LOGIN_KEY = "AUTO_LOGIN";
+
     public static final String TAG = "LoginActivity";
 
     @BindView(R.id.edit_tel)
@@ -61,24 +63,38 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     WaitDialog waitDialog;
 
+    // 自动登录
+    private boolean autoLogin;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        autoLogin = getIntent().getBooleanExtra("EXTRA_AUTO_LOGIN_KEY", false);
         buttonLogin.setOnClickListener(this);
         textViewRegister.setOnClickListener(this);
         waitDialog = new WaitDialog(this);
         requestPermissions();
+
+        LoginUserInfo loginUserInfo = RunningContext.getsLoginUserInfo();
+        if (loginUserInfo != null) {
+            useTel = loginUserInfo.userTel;
+            userPassword = loginUserInfo.userPassword;
+            editTextTel.setText(useTel);
+            editTextPassword.setText(userPassword);
+        }
+
+        if (autoLogin) {
+            login();
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                if (checkParam()) {
-                    login();
-                }
+                login();
                 break;
             case R.id.text_register:
                 Intent intent = new Intent();
@@ -136,6 +152,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void login() {
         if (!RunningContext.checkNetWork()) {
             ToastUtils.showNotNetwork(this);
+            return;
+        }
+        if (!checkParam()) {
             return;
         }
         ServiceUserLoginReq req = new ServiceUserLoginReq();

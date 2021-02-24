@@ -14,7 +14,7 @@ import java.util.List;
 public class StorageUtils {
 
     // 登录缓存有效周期1天
-    public static long LOGIN_KEEP_INTERVAL_VALID_TIME = 23 * 60 * 60 * 1000;
+    public static long LOGIN_KEEP_INTERVAL_VALID_TIME = 24 * 60 * 60 * 1000;
 
     static class KEY {
         public static String LOGIN_USER_KEY = "login_user";

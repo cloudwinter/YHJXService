@@ -43,7 +43,7 @@
         <activity android:name=".activity.TaskDetailsActivity"></activity>
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="770baf84e13f90441fcdc902ad29aaa6" />
+            android:value="1b05f2e7cb7e9a4a2b78f7b20d53dd13" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.yhjx.yhservice.fileprovider"
@@ -58,10 +58,15 @@
             android:name="com.amap.api.location.APSService"
             android:foregroundServiceType="location"></service>
 
+<!--        <service-->
+<!--            android:name=".service.YHJobService"-->
+<!--            android:exported="true"-->
+<!--            android:permission="android.permission.BIND_JOB_SERVICE" />-->
+
         <service
-            android:name=".service.YHJobService"
+            android:name=".service.YHService"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            />
 
     </application>
     <!--用于访问GPS定位-->

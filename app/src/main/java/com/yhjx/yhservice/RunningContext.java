@@ -13,6 +13,7 @@ import android.os.Build;
 
 import com.amap.api.location.AMapLocationClient;
 import com.yhjx.yhservice.model.LoginUserInfo;
+import com.yhjx.yhservice.service.YHService;
 import com.yhjx.yhservice.util.LogUtils;
 import com.yhjx.yhservice.util.StorageUtils;
 import com.yhjx.yhservice.util.YHUtils;
@@ -37,9 +38,9 @@ public class RunningContext {
     /**
      * FIXME 更新接口地址
      */
-//    public static String BASEURL = "http://47.116.73.239:8080/web/";
+    public static String BASEURL = "http://47.116.73.239:8080/web/";
 //    public static String BASEURL = "http://192.168.31.212:8080/";
-    public static String BASEURL = "http://10.9.6.140:8080/";
+//    public static String BASEURL = "http://172.20.10.2:8080/";
 
     /**
      * 动态申请权限request_code
@@ -72,6 +73,8 @@ public class RunningContext {
     public static AMapLocationClient sAMapLocationClient;
 
     public static JobScheduler jobScheduler;
+
+//    public static YHService yhService;
 
 
     public static void init(Application app) {
