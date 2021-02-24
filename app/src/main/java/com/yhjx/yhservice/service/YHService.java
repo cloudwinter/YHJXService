@@ -65,6 +65,7 @@ public class YHService extends Service {
 
     @Override
     public void onCreate() {
+        LogUtils.d(TAG,"YHService--->onCreate()");
         super.onCreate();
         mHandler = new ServiceHandler(this);
         mServiceRunning = true;
@@ -94,6 +95,7 @@ public class YHService extends Service {
 
     @Override
     public void onDestroy() {
+        LogUtils.d(TAG,"YHService--->onDestroy()");
         super.onDestroy();
         mServiceRunning = false;
         if (mHandler != null) {
@@ -138,9 +140,9 @@ public class YHService extends Service {
                 LogUtils.e(TAG, "当前service非运行状态");
             }
             if (msg.what == MSG_LOCATION_WHAT) {
-                yhService.startLocation();
                 // 定时任务发送定位信息
                 sendEmptyMessageDelayed(MSG_LOCATION_WHAT, LENGTH_OF_TIMING);
+                yhService.startLocation();
             }
 
         }
